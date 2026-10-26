@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -22,6 +21,7 @@
         rel="stylesheet"
     >
 
+
     <style>
 
         * {
@@ -29,22 +29,12 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html,
+
         body {
-            width: 100%;
-            height: 100%;
+
             margin: 0;
-        }
 
-        body {
-
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #172554 0%,
-                    #0f172a 42%,
-                    #070b14 100%
-                );
+            background-color: #0f172a;
 
             color: white;
 
@@ -56,67 +46,45 @@
         }
 
 
-        /* =========================================
-           ЗВЁЗДЫ
-        ========================================= */
+        .bg-space {
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #1e3a8a 0%,
+                    #0f172a 80%
+                );
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
 
         .stars {
 
-            position: fixed;
+            position: absolute;
 
             inset: 0;
 
+            background:
+                transparent
+                url('https://www.transparenttextures.com/patterns/stardust.png')
+                repeat;
+
+            opacity: 0.4;
+
             pointer-events: none;
-
-            opacity: .35;
-
-            background-image:
-                radial-gradient(
-                    circle,
-                    rgba(255,255,255,.8) 1px,
-                    transparent 1px
-                ),
-                radial-gradient(
-                    circle,
-                    rgba(255,255,255,.4) 1px,
-                    transparent 1px
-                );
-
-            background-size:
-                90px 90px,
-                140px 140px;
-
-            background-position:
-                10px 20px,
-                50px 80px;
-
-            animation:
-                starsMove 25s linear infinite;
         }
 
-        @keyframes starsMove {
-
-            from {
-                transform: translateY(0);
-            }
-
-            to {
-                transform: translateY(100px);
-            }
-
-        }
-
-
-        /* =========================================
-           TABS
-        ========================================= */
 
         .tab-content {
 
             display: none;
 
-            padding-bottom: 105px;
+            padding-bottom: 90px;
         }
+
 
         .tab-content.active {
 
@@ -125,316 +93,24 @@
 
 
         /* =========================================
-           APP
+           РАКЕТКА
         ========================================= */
 
-        #app {
+        .rocket-container {
 
-            position: relative;
-
-            z-index: 10;
-
-            width: 100%;
-
-            height: calc(100vh - 65px);
-
-            overflow-y: auto;
-
-            overflow-x: hidden;
-
-            padding: 12px;
-        }
-
-        #app::-webkit-scrollbar {
-            display: none;
-        }
-
-
-        /* =========================================
-           TOP BAR
-        ========================================= */
-
-        .top-bar {
-
-            position: sticky;
-
-            top: 0;
-
-            z-index: 40;
+            height: 260px;
 
             display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 8px 4px 12px;
-
-            background:
-                rgba(7, 11, 22, .72);
-
-            backdrop-filter:
-                blur(15px);
-
-            -webkit-backdrop-filter:
-                blur(15px);
-        }
-
-
-        .brand {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-        }
-
-
-        .brand-cloud {
-
-            width: 40px;
-
-            height: 40px;
-
-            display: flex;
-
-            align-items: center;
 
             justify-content: center;
 
-            border-radius: 13px;
-
-            background:
-                rgba(59,130,246,.15);
-
-            border:
-                1px solid rgba(96,165,250,.18);
-
-            font-size: 24px;
-        }
-
-
-        .brand-title {
-
-            font-size: 18px;
-
-            line-height: 18px;
-
-            font-weight: 700;
-
-            letter-spacing: .7px;
-        }
-
-
-        .brand-subtitle {
-
-            color: #60a5fa;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.4px;
-        }
-
-
-        .balance-box {
-
-            display: flex;
-
             align-items: center;
-
-            gap: 7px;
-
-            padding:
-                9px 13px;
-
-            border-radius: 13px;
-
-            background:
-                rgba(30,41,59,.85);
-
-            border:
-                1px solid rgba(100,116,139,.22);
-        }
-
-
-        .balance-symbol {
-
-            color: #4ade80;
-
-            font-size: 17px;
-
-            font-weight: 700;
-        }
-
-
-        .balance-value {
-
-            font-size: 15px;
-
-            font-weight: 700;
-        }
-
-
-        /* =========================================
-           CRASH HISTORY
-        ========================================= */
-
-        .history {
-
-            display: flex;
-
-            gap: 6px;
-
-            overflow-x: auto;
-
-            padding:
-                3px 1px 8px;
-
-            scrollbar-width: none;
-        }
-
-        .history::-webkit-scrollbar {
-            display: none;
-        }
-
-
-        .history-item {
-
-            flex: 0 0 auto;
-
-            padding:
-                5px 11px;
-
-            border-radius: 9px;
-
-            background:
-                rgba(30,41,59,.7);
-
-            border:
-                1px solid rgba(71,85,105,.25);
-
-            font-size: 10px;
-
-            font-weight: 700;
-        }
-
-
-        .history-low {
-
-            color: #60a5fa;
-        }
-
-
-        .history-medium {
-
-            color: #a78bfa;
-        }
-
-
-        .history-high {
-
-            color: #4ade80;
-        }
-
-
-        /* =========================================
-           CRASH GAME
-        ========================================= */
-
-        .crash-game {
 
             position: relative;
 
-            width: 100%;
-
-            height: 310px;
-
             overflow: hidden;
-
-            border-radius: 25px;
-
-            margin-bottom: 12px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 48%,
-                    rgba(37,99,235,.16),
-                    transparent 48%
-                ),
-                linear-gradient(
-                    180deg,
-                    rgba(15,23,42,.65),
-                    rgba(8,13,25,.85)
-                );
-
-            border:
-                1px solid rgba(71,85,105,.18);
-
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,.025),
-                0 15px 40px rgba(0,0,0,.2);
         }
 
-
-        .crash-game::before {
-
-            content: "";
-
-            position: absolute;
-
-            left: 8%;
-
-            right: 8%;
-
-            bottom: 63px;
-
-            height: 1px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(59,130,246,.3),
-                    transparent
-                );
-        }
-
-
-        .crash-glow {
-
-            position: absolute;
-
-            left: 50%;
-
-            top: 43%;
-
-            width: 190px;
-
-            height: 190px;
-
-            transform:
-                translate(-50%,-50%);
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(37,99,235,.18),
-                    transparent 70%
-                );
-
-            filter:
-                blur(15px);
-
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-           РАКЕТА
-        ========================================= */
 
         #rocket-wrap {
 
@@ -444,30 +120,30 @@
 
             top: 43%;
 
-            width: 145px;
+            width: 130px;
 
-            height: 145px;
+            height: 130px;
 
-            display: flex !important;
+            transform:
+                translate(-50%, -50%);
 
-            align-items: center;
+            display: flex;
 
             justify-content: center;
 
-            transform:
-                translate(-50%,-50%);
+            align-items: center;
 
-            z-index: 8;
+            z-index: 5;
         }
 
 
-        #rocket {
+        .rocket-img {
 
             display: block;
 
-            width: 125px;
+            width: 115px;
 
-            height: 125px;
+            height: 115px;
 
             object-fit: contain;
 
@@ -475,587 +151,105 @@
 
             margin: 0;
 
-            padding: 0;
-
             filter:
                 drop-shadow(
-                    0 0 12px
-                    rgba(59,130,246,.65)
+                    0 0 15px
+                    rgba(56,189,248,.65)
                 )
                 drop-shadow(
-                    0 12px 20px
+                    0 10px 15px
                     rgba(0,0,0,.55)
                 );
-
-            transform-origin: center;
 
             z-index: 10;
         }
 
 
-        #rocket.flying {
+        .rocket-img.flying {
 
             animation:
-                rocketFly .45s
-                ease-in-out
-                infinite
-                alternate;
+                fly .4s infinite alternate;
         }
 
 
-        @keyframes rocketFly {
+        @keyframes fly {
 
             from {
 
                 transform:
-                    translateY(3px)
-                    rotate(2deg);
+                    translateY(2px)
+                    rotate(3deg);
             }
+
 
             to {
 
                 transform:
-                    translateY(-8px)
-                    rotate(7deg);
+                    translateY(-9px)
+                    rotate(8deg);
             }
 
         }
 
 
-        #rocket.crashed {
-
-            animation: none;
+        .rocket-img.crashed {
 
             filter:
                 grayscale(100%)
-                opacity(.55)
-                drop-shadow(
-                    0 5px 10px
-                    rgba(0,0,0,.65)
-                );
+                opacity(.7);
 
             transform:
-                rotate(145deg)
-                translateY(12px);
+                rotate(160deg)
+                translateY(15px) !important;
+
+            animation: none;
         }
 
 
         /* =========================================
-           КОЭФФИЦИЕНТ
+           МИНЫ
         ========================================= */
-
-        .crash-center {
-
-            position: absolute;
-
-            left: 50%;
-
-            top: 67%;
-
-            transform:
-                translate(-50%,-50%);
-
-            z-index: 15;
-
-            text-align: center;
-
-            pointer-events: none;
-        }
-
-
-        #crash-timer {
-
-            font-size: 22px;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-
-            text-shadow:
-                0 4px 12px
-                rgba(0,0,0,.8);
-        }
-
-
-        #multiplier {
-
-            font-size: 43px;
-
-            line-height: 1;
-
-            font-weight: 700;
-
-            text-shadow:
-                0 4px 15px
-                rgba(0,0,0,.85);
-        }
-
-
-        #multiplier-caption {
-
-            margin-top: 5px;
-
-            color: #64748b;
-
-            font-size: 9px;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1.4px;
-        }
-
-
-        #crash-msg {
-
-            font-size: 26px;
-
-            font-weight: 700;
-
-            color: #ef4444;
-
-            text-shadow:
-                0 0 20px
-                rgba(239,68,68,.25),
-                0 4px 12px
-                rgba(0,0,0,.8);
-        }
-
-
-        /* =========================================
-           BET PANEL
-        ========================================= */
-
-        .bet-panel {
-
-            padding: 12px;
-
-            margin-bottom: 12px;
-
-            border-radius: 21px;
-
-            background:
-                rgba(13,20,35,.9);
-
-            border:
-                1px solid rgba(71,85,105,.18);
-        }
-
-
-        .bet-label {
-
-            color: #738197;
-
-            font-size: 10px;
-
-            font-weight: 600;
-
-            text-transform: uppercase;
-
-            letter-spacing: .8px;
-
-            margin-bottom: 6px;
-        }
-
-
-        .bet-row {
-
-            display: flex;
-
-            gap: 8px;
-        }
-
-
-        .bet-input-wrap {
-
-            position: relative;
-
-            flex: 1;
-        }
-
-
-        .bet-input {
-
-            width: 100%;
-
-            height: 50px;
-
-            padding:
-                0 40px 0 14px;
-
-            border:
-                1px solid rgba(71,85,105,.3);
-
-            border-radius: 14px;
-
-            outline: none;
-
-            background:
-                #080e1b;
-
-            color: white;
-
-            font-size: 16px;
-
-            font-weight: 700;
-        }
-
-
-        .bet-input:focus {
-
-            border-color:
-                rgba(59,130,246,.6);
-        }
-
-
-        .currency {
-
-            position: absolute;
-
-            right: 13px;
-
-            top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            color: #64748b;
-
-            font-size: 14px;
-
-            font-weight: 700;
-        }
-
-
-        .main-button {
-
-            flex: 1.2;
-
-            min-height: 50px;
-
-            border: 0;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #3b82f6,
-                    #2563eb
-                );
-
-            color: white;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            letter-spacing: .4px;
-
-            box-shadow:
-                0 7px 20px
-                rgba(37,99,235,.25);
-
-            transition: .12s ease;
-        }
-
-
-        .main-button:active:not(:disabled) {
-
-            transform:
-                translateY(2px);
-        }
-
-
-        .main-button:disabled {
-
-            background:
-                #273247;
-
-            color:
-                #78859a;
-
-            box-shadow: none;
-        }
-
-
-        .main-button.cashout {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #16a34a
-                );
-
-            box-shadow:
-                0 7px 20px
-                rgba(34,197,94,.2);
-        }
-
-
-        /* =========================================
-           PLAYERS
-        ========================================= */
-
-        .players-panel {
-
-            padding: 12px;
-
-            border-radius: 21px;
-
-            background:
-                rgba(13,20,35,.9);
-
-            border:
-                1px solid rgba(71,85,105,.18);
-        }
-
-
-        .players-header {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            margin-bottom: 9px;
-        }
-
-
-        .players-title {
-
-            color: #d6deeb;
-
-            font-size: 12px;
-
-            font-weight: 700;
-        }
-
-
-        .players-count {
-
-            color: #59677d;
-
-            font-size: 9px;
-
-            font-weight: 600;
-        }
-
-
-        #live-bets {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 5px;
-        }
-
-
-        .player {
-
-            min-height: 46px;
-
-            display: grid;
-
-            grid-template-columns:
-                minmax(0,1fr)
-                auto
-                auto;
-
-            align-items: center;
-
-            gap: 7px;
-
-            padding: 6px 8px;
-
-            border-radius: 12px;
-
-            background:
-                rgba(7,13,25,.7);
-
-            border:
-                1px solid rgba(51,65,85,.15);
-        }
-
-
-        .player.you {
-
-            background:
-                rgba(30,64,175,.18);
-
-            border-color:
-                rgba(59,130,246,.28);
-        }
-
-
-        .player-info {
-
-            min-width: 0;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-        }
-
-
-        .player-avatar {
-
-            width: 30px;
-
-            height: 30px;
-
-            flex: 0 0 30px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            overflow: hidden;
-
-            border-radius: 50%;
-
-            background:
-                #202b40;
-
-            font-size: 15px;
-        }
-
-
-        .player-avatar img {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-        }
-
-
-        .player-name {
-
-            max-width: 105px;
-
-            overflow: hidden;
-
-            white-space: nowrap;
-
-            text-overflow: ellipsis;
-
-            color: #d7dfec;
-
-            font-size: 10px;
-
-            font-weight: 600;
-        }
-
-
-        .player-bet {
-
-            color: #718096;
-
-            font-size: 9px;
-
-            font-weight: 600;
-        }
-
-
-        .player-mult {
-
-            color: #4ade80;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            text-align: right;
-        }
-
-
-        .player-mult.waiting {
-
-            color: #64748b;
-        }
-
-
-        .player-mult.crashed {
-
-            color: #ef4444;
-        }
-
-
-        /* =========================================
-           MINES
-        ========================================= */
-
-        .mines-title {
-
-            margin:
-                5px 0 13px;
-
-            text-align: center;
-
-            font-size: 23px;
-
-            font-weight: 700;
-        }
-
-
-        .mines-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(5,1fr);
-
-            gap: 7px;
-
-            margin-bottom: 13px;
-        }
-
 
         .mine-cell {
 
             aspect-ratio: 1;
 
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border: 0;
-
-            border-radius: 13px;
-
             background:
                 linear-gradient(
                     145deg,
                     #1e293b,
-                    #111827
+                    #172033
                 );
 
-            box-shadow:
-                inset 0 1px 0
-                rgba(255,255,255,.025),
-                0 5px 10px
-                rgba(0,0,0,.18);
+            border-radius: 12px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
 
             cursor: pointer;
 
-            transition: .15s ease;
+            transition:
+                .15s ease;
+
+            border-bottom:
+                4px solid #0f172a;
+
+            font-size: 2rem;
+
+            overflow: hidden;
         }
 
 
         .mine-cell:active {
 
             transform:
-                scale(.94);
+                translateY(4px);
+
+            border-bottom-width: 0;
+
         }
 
 
@@ -1068,8 +262,11 @@
                     #1d4ed8
                 );
 
+            border-bottom-color:
+                #1d4ed8;
+
             animation:
-                minePop .2s ease-out;
+                pop .25s ease-out;
         }
 
 
@@ -1082,30 +279,36 @@
                     #b91c1c
                 );
 
+            border-bottom-color:
+                #b91c1c;
+
             animation:
-                minePop .2s ease-out;
+                pop .25s ease-out;
         }
 
 
         .mine-cell img {
 
-            width: 30px;
+            width: 38px;
 
-            height: 30px;
+            height: 38px;
 
             object-fit: contain;
+
+            pointer-events: none;
         }
 
 
-        @keyframes minePop {
+        @keyframes pop {
 
-            from {
+            0% {
 
                 transform:
-                    scale(.75);
+                    scale(.7);
             }
 
-            to {
+
+            100% {
 
                 transform:
                     scale(1);
@@ -1114,449 +317,154 @@
         }
 
 
-        .mines-panel {
+        /* =========================================
+           КНОПКИ
+        ========================================= */
 
-            padding: 14px;
+        .btn-tucha {
 
-            border-radius: 21px;
+            border: none;
 
-            background:
-                rgba(13,20,35,.9);
+            border-bottom:
+                5px solid
+                rgba(0,0,0,.3);
 
-            border:
-                1px solid rgba(71,85,105,.18);
+            transition:
+                all .1s;
         }
 
 
-        .field-label {
+        .btn-tucha:active:not(:disabled) {
 
-            display: block;
+            transform:
+                translateY(5px);
 
-            color: #738197;
+            border-bottom: 0;
 
-            font-size: 10px;
-
-            font-weight: 600;
-
-            text-transform: uppercase;
-
-            margin-bottom: 7px;
+            margin-top: 5px;
         }
 
 
-        .number-input {
+        .btn-tucha:disabled {
 
-            width: 100%;
+            opacity: .7;
 
-            height: 49px;
+            transform: none;
 
-            padding:
-                0 14px;
+            border-bottom:
+                5px solid
+                rgba(0,0,0,.3);
 
-            border:
-                1px solid rgba(71,85,105,.3);
+            margin-top: 0;
 
-            border-radius: 14px;
-
-            outline: none;
-
-            background:
-                #080e1b;
-
-            color: white;
-
-            font-size: 17px;
-
-            font-weight: 700;
+            cursor: not-allowed;
         }
 
 
-        .mine-settings {
-
-            margin-top: 12px;
-
-            padding: 13px;
-
-            border-radius: 15px;
-
-            background:
-                rgba(7,12,23,.7);
-
-            border:
-                1px solid rgba(71,85,105,.15);
-        }
-
-
-        .mine-settings-top {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            margin-bottom: 10px;
-        }
-
-
-        .mine-settings-label {
-
-            color: #8b98ab;
-
-            font-size: 10px;
-
-            font-weight: 600;
-        }
-
-
-        .mine-count {
-
-            color: #facc15;
-
-            font-size: 13px;
-
-            font-weight: 700;
-        }
-
+        /* =========================================
+           SLIDER
+        ========================================= */
 
         input[type=range] {
 
-            width: 100%;
-
-            height: 5px;
+            -webkit-appearance: none;
 
             appearance: none;
 
-            -webkit-appearance: none;
-
-            background:
-                #263248;
-
-            border-radius: 10px;
-
-            outline: none;
+            background: transparent;
         }
 
 
         input[type=range]::-webkit-slider-thumb {
 
-            appearance: none;
-
             -webkit-appearance: none;
 
-            width: 19px;
+            appearance: none;
 
-            height: 19px;
+            height: 24px;
+
+            width: 24px;
 
             border-radius: 50%;
 
-            background:
-                #facc15;
+            background: #facc15;
+
+            cursor: pointer;
+
+            margin-top: -8px;
 
             box-shadow:
-                0 2px 7px
+                0 2px 5px
                 rgba(0,0,0,.5);
         }
 
 
-        .mine-mult {
+        input[type=range]::-webkit-slider-runnable-track {
 
-            margin:
-                12px 0;
+            width: 100%;
 
-            text-align: center;
+            height: 8px;
 
-            color: #4ade80;
+            background: #334155;
 
-            font-size: 15px;
-
-            font-weight: 700;
+            border-radius: 4px;
         }
 
 
         /* =========================================
-           PROFILE
+           PLAYERS
         ========================================= */
 
-        .profile-page {
-
-            padding-top: 18px;
-        }
-
-
-        .profile-card {
-
-            padding: 22px 15px;
-
-            border-radius: 23px;
-
-            text-align: center;
-
-            background:
-                rgba(13,20,35,.9);
-
-            border:
-                1px solid rgba(71,85,105,.18);
-        }
-
-
-        .profile-avatar {
-
-            width: 88px;
-
-            height: 88px;
-
-            margin:
-                0 auto 12px;
+        .player-row {
 
             display: flex;
 
+            justify-content: space-between;
+
             align-items: center;
 
-            justify-content: center;
-
-            overflow: hidden;
-
-            border-radius: 50%;
+            padding: 10px;
 
             background:
-                #202b40;
+                rgba(15,23,42,.6);
+
+            border-radius: 12px;
 
             border:
-                3px solid
-                rgba(59,130,246,.3);
-
-            font-size: 37px;
-        }
-
-
-        .profile-avatar img {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-        }
-
-
-        .profile-name {
-
-            font-size: 22px;
-
-            font-weight: 700;
-        }
-
-
-        .profile-balance {
-
-            width: fit-content;
-
-            margin:
-                15px auto;
-
-            padding:
-                9px 20px;
-
-            border-radius: 14px;
-
-            background:
-                rgba(7,12,23,.8);
-
-            color: #4ade80;
-
-            font-size: 25px;
-
-            font-weight: 700;
-        }
-
-
-        .bonus-button {
-
-            width: 100%;
-
-            min-height: 50px;
-
-            border: 0;
-
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #16a34a
-                );
-
-            color: white;
-
-            font-size: 13px;
-
-            font-weight: 700;
-        }
-
-
-        /* =========================================
-           BOTTOM NAV
-        ========================================= */
-
-        .bottom-nav {
-
-            position: fixed;
-
-            left: 0;
-
-            right: 0;
-
-            bottom: 0;
-
-            z-index: 100;
-
-            padding:
-                6px 7px
-                calc(
-                    6px +
-                    env(safe-area-inset-bottom)
-                );
-
-            background:
-                rgba(6,10,20,.94);
-
-            backdrop-filter:
-                blur(18px);
-
-            -webkit-backdrop-filter:
-                blur(18px);
-
-            border-top:
                 1px solid
-                rgba(71,85,105,.18);
+                rgba(71,85,105,.25);
         }
 
 
-        .nav-inner {
+        .player-row.you {
 
-            max-width: 500px;
+            background:
+                rgba(30,64,175,.45);
 
-            margin: 0 auto;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3,1fr);
-        }
-
-
-        .nav-button {
-
-            border: 0;
-
-            background: transparent;
-
-            color: #56647b;
-
-            padding:
-                5px 4px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 2px;
-
-            transition: .15s ease;
-        }
-
-
-        .nav-button.active {
-
-            color: #60a5fa;
-        }
-
-
-        .nav-icon {
-
-            width: 29px;
-
-            height: 29px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            overflow: hidden;
-
-            border-radius: 8px;
-        }
-
-
-        .nav-icon img {
-
-            width: 26px;
-
-            height: 26px;
-
-            object-fit: contain;
-        }
-
-
-        .nav-label {
-
-            font-size: 9px;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: .7px;
+            border-color:
+                rgba(59,130,246,.55);
         }
 
 
         /* =========================================
-           MOBILE
+           ОШИБКА / КРАШ
         ========================================= */
 
-        @media (max-height: 650px) {
+        #crash-msg {
 
-            .crash-game {
-
-                height: 255px;
-            }
-
-            #rocket-wrap {
-
-                width: 120px;
-
-                height: 120px;
-            }
-
-            #rocket {
-
-                width: 105px;
-
-                height: 105px;
-            }
-
-            #multiplier {
-
-                font-size: 36px;
-            }
-
+            pointer-events: none;
         }
+
 
     </style>
 
 </head>
 
 
-<body>
+<body
+    class="bg-space h-screen w-screen overflow-hidden flex flex-col"
+>
 
-
-    <!-- ФОН -->
 
     <div class="stars"></div>
 
@@ -1565,59 +473,143 @@
          ВЕРХНЯЯ ПАНЕЛЬ
     ========================================= -->
 
-    <header class="top-bar">
+    <div
+        class="
+            flex
+            justify-between
+            items-center
+            p-4
+            bg-slate-900/60
+            backdrop-blur-md
+            sticky
+            top-0
+            z-40
+            border-b
+            border-slate-700/50
+        "
+    >
 
-        <div class="brand">
 
-            <div class="brand-cloud">
+        <div
+            class="
+                flex
+                items-center
+                gap-2
+            "
+        >
+
+            <span
+                class="
+                    text-3xl
+                    drop-shadow-md
+                "
+            >
                 ☁️
-            </div>
+            </span>
 
-            <div>
 
-                <div class="brand-title">
+            <div
+                class="
+                    leading-none
+                    flex
+                    flex-col
+                    justify-center
+                "
+            >
+
+                <span
+                    class="
+                        text-white
+                        font-extrabold
+                        text-xl
+                        leading-tight
+                        tracking-wide
+                    "
+                >
                     TUCHA
-                </div>
+                </span>
 
-                <div class="brand-subtitle">
+
+                <span
+                    class="
+                        text-yellow-400
+                        font-extrabold
+                        text-sm
+                        leading-tight
+                        tracking-wide
+                    "
+                >
                     GAMES
-                </div>
+                </span>
 
             </div>
 
         </div>
 
 
-        <div class="balance-box">
+        <div
+            class="
+                bg-slate-800/80
+                px-4
+                py-2
+                rounded-xl
+                border
+                border-slate-600
+                shadow-inner
+                flex
+                items-center
+                gap-2
+            "
+        >
 
-            <span class="balance-symbol">
+            <span
+                class="
+                    text-green-400
+                    text-lg
+                    font-bold
+                "
+            >
                 $
             </span>
 
+
             <span
                 id="header-balance"
-                class="balance-value"
+                class="
+                    font-bold
+                    text-white
+                    text-lg
+                "
             >
                 0.00
             </span>
 
         </div>
 
-    </header>
+    </div>
 
 
     <!-- =========================================
          APP
     ========================================= -->
 
-    <main id="app">
+    <div
+        id="app"
+        class="
+            flex-1
+            overflow-y-auto
+            relative
+            z-10
+            p-4
+        "
+    >
 
 
         <!-- =====================================
              CRASH
         ====================================== -->
 
-        <section
+        <div
             id="tab-crash"
             class="tab-content active"
         >
@@ -1627,93 +619,146 @@
 
             <div
                 id="crash-history"
-                class="history"
+                class="
+                    flex
+                    overflow-x-auto
+                    pb-2
+                    mb-3
+                    whitespace-nowrap
+                    gap-2
+                "
             >
 
-                <span class="history-item history-low">
+                <span
+                    class="
+                        bg-slate-800/50
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-bold
+                        text-blue-400
+                        border
+                        border-blue-900
+                    "
+                >
                     1.45x
                 </span>
 
-                <span class="history-item history-medium">
+
+                <span
+                    class="
+                        bg-slate-800/50
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-bold
+                        text-purple-400
+                        border
+                        border-purple-900
+                    "
+                >
                     2.80x
                 </span>
 
-                <span class="history-item history-low">
-                    1.12x
-                </span>
 
-                <span class="history-item history-high">
-                    3.41x
+                <span
+                    class="
+                        bg-slate-800/50
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-bold
+                        text-green-400
+                        border
+                        border-green-900
+                    "
+                >
+                    1.12x
                 </span>
 
             </div>
 
 
-            <!-- =================================
-                 ИГРОВОЕ ПОЛЕ
-            ================================== -->
+            <!-- ИГРОВОЕ ПОЛЕ -->
 
-            <div class="crash-game">
+            <div
+                class="
+                    rocket-container
+                    bg-slate-800/40
+                    rounded-3xl
+                    mb-4
+                    border
+                    border-slate-700
+                    shadow-lg
+                "
+            >
 
 
-                <div class="crash-glow"></div>
+                <!-- НАСТОЯЩАЯ GIF -->
 
-
-                <!--
-                    ТВОЯ GIF РАКЕТЫ.
-
-                    ВАЖНО:
-                    Здесь НЕТ fallback на 🚀.
-
-                    Поэтому используется именно
-                    rocket.gif.
-                -->
-
-                <div id="rocket-wrap">
+                <div
+                    id="rocket-wrap"
+                >
 
                     <img
                         src="./rocket.gif"
                         id="rocket"
+                        class="rocket-img flying"
                         alt="Rocket"
                     >
 
                 </div>
 
 
-                <!-- ЦЕНТР -->
+                <!-- ТАЙМЕР -->
 
-                <div class="crash-center">
-
-                    <div
-                        id="crash-timer"
-                    >
-                        ОЖИДАНИЕ
-                    </div>
-
-
-                    <div
-                        id="multiplier"
-                        style="display:none;"
-                    >
-                        1.00x
-                    </div>
+                <div
+                    id="crash-timer"
+                    class="
+                        text-4xl
+                        font-extrabold
+                        text-white
+                        z-10
+                    "
+                >
+                    ОЖИДАНИЕ
+                </div>
 
 
-                    <div
-                        id="multiplier-caption"
-                        style="display:none;"
-                    >
-                        коэффициент
-                    </div>
+                <!-- КОЭФФИЦИЕНТ -->
+
+                <div
+                    id="multiplier"
+                    class="
+                        text-5xl
+                        font-extrabold
+                        text-white
+                        z-10
+                        drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]
+                    "
+                    style="display:none;"
+                >
+                    1.00x
+                </div>
 
 
-                    <div
-                        id="crash-msg"
-                        style="display:none;"
-                    >
-                        КРАШ!
-                    </div>
+                <!-- КРАШ -->
 
+                <div
+                    id="crash-msg"
+                    class="
+                        text-3xl
+                        font-extrabold
+                        text-red-500
+                        z-10
+                        drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]
+                    "
+                    style="display:none;"
+                >
+                    КРАШ!
                 </div>
 
 
@@ -1721,134 +766,241 @@
 
 
             <!-- =================================
-                 СТАВКА
+                 СТАВКА CRASH
             ================================== -->
 
-            <div class="bet-panel">
+            <div
+                class="
+                    bg-slate-800/80
+                    backdrop-blur-sm
+                    rounded-3xl
+                    p-5
+                    mb-4
+                    border
+                    border-slate-700
+                "
+            >
 
-                <div class="bet-label">
-                    Сумма ставки
-                </div>
+                <div
+                    class="
+                        flex
+                        justify-between
+                        text-sm
+                        mb-2
+                        text-slate-400
+                        font-semibold
+                    "
+                >
 
-
-                <div class="bet-row">
-
-
-                    <div class="bet-input-wrap">
-
-                        <input
-                            type="number"
-                            id="crash-bet"
-                            class="bet-input"
-                            value="0.10"
-                            min="0.01"
-                            step="0.01"
-                            inputmode="decimal"
-                        >
-
-                        <span class="currency">
-                            $
-                        </span>
-
-                    </div>
-
-
-                    <button
-                        id="btn-crash-action"
-                        class="main-button"
-                        onclick="handleCrashAction()"
-                    >
-                        СДЕЛАТЬ СТАВКУ
-                    </button>
-
+                    <span>
+                        Сумма ставки ($)
+                    </span>
 
                 </div>
+
+
+                <input
+                    type="number"
+                    id="crash-bet"
+                    value="0.10"
+                    min="0.01"
+                    step="0.01"
+                    inputmode="decimal"
+                    class="
+                        w-full
+                        bg-slate-900
+                        text-white
+                        p-4
+                        rounded-2xl
+                        text-2xl
+                        font-bold
+                        text-center
+                        mb-4
+                        outline-none
+                        border
+                        border-slate-700
+                    "
+                >
+
+
+                <button
+                    id="btn-crash-action"
+                    onclick="handleCrashAction()"
+                    class="
+                        btn-tucha
+                        w-full
+                        bg-blue-500
+                        text-white
+                        font-extrabold
+                        py-4
+                        rounded-2xl
+                        text-xl
+                        uppercase
+                        tracking-wide
+                    "
+                >
+                    Сделать ставку
+                </button>
 
             </div>
 
 
             <!-- =================================
-                 ИГРОКИ
+                 СТАВКИ ИГРОКОВ
             ================================== -->
 
-            <div class="players-panel">
+            <div
+                class="
+                    bg-slate-800/60
+                    rounded-3xl
+                    p-4
+                    border
+                    border-slate-700
+                "
+            >
 
-                <div class="players-header">
-
-                    <div class="players-title">
-                        Ставки игроков
-                    </div>
-
-                    <div
-                        id="live-bets-count"
-                        class="players-count"
-                    >
-                        0 ставок
-                    </div>
-
+                <div
+                    class="
+                        text-sm
+                        text-slate-400
+                        mb-3
+                        text-center
+                        font-bold
+                        uppercase
+                        tracking-wider
+                    "
+                >
+                    Текущие ставки раунда
                 </div>
 
 
-                <div id="live-bets"></div>
+                <div
+                    id="live-bets"
+                    class="
+                        space-y-2
+                        max-h-40
+                        overflow-hidden
+                        text-sm
+                        font-semibold
+                    "
+                ></div>
 
             </div>
 
 
-        </section>
+        </div>
 
 
         <!-- =====================================
-             MINES
+             МИНЫ
         ====================================== -->
 
-        <section
+        <div
             id="tab-mines"
             class="tab-content"
         >
 
 
-            <div class="mines-title">
-                💣 Мины
-            </div>
-
-
             <div
                 id="mines-grid"
-                class="mines-grid"
+                class="
+                    grid
+                    grid-cols-5
+                    gap-2
+                    mb-6
+                "
             ></div>
 
 
-            <div class="mines-panel">
+            <div
+                class="
+                    bg-slate-800/80
+                    backdrop-blur-sm
+                    rounded-3xl
+                    p-5
+                    border
+                    border-slate-700
+                "
+            >
 
 
-                <label class="field-label">
-                    Сумма ставки
-                </label>
+                <div
+                    class="
+                        flex
+                        justify-between
+                        text-sm
+                        mb-2
+                        text-slate-400
+                        font-semibold
+                    "
+                >
+
+                    <span>
+                        Сумма ставки ($)
+                    </span>
+
+                </div>
 
 
                 <input
                     type="number"
                     id="mines-bet"
-                    class="number-input"
                     value="0.10"
                     min="0.01"
                     step="0.01"
                     inputmode="decimal"
+                    class="
+                        w-full
+                        bg-slate-900
+                        text-white
+                        p-4
+                        rounded-2xl
+                        text-2xl
+                        font-bold
+                        text-center
+                        mb-6
+                        outline-none
+                        border
+                        border-slate-700
+                    "
                 >
 
 
-                <div class="mine-settings">
+                <!-- БОМБЫ -->
 
+                <div
+                    class="
+                        mb-6
+                        bg-slate-900/50
+                        p-4
+                        rounded-2xl
+                        border
+                        border-slate-700
+                    "
+                >
 
-                    <div class="mine-settings-top">
+                    <div
+                        class="
+                            flex
+                            justify-between
+                            text-sm
+                            text-slate-300
+                            mb-4
+                            font-bold
+                        "
+                    >
 
-                        <span class="mine-settings-label">
-                            Количество бомб
+                        <span>
+                            Количество бомб 💣
                         </span>
+
 
                         <span
                             id="mines-count-val"
-                            class="mine-count"
+                            class="
+                                text-yellow-400
+                                text-lg
+                            "
                         >
                             3
                         </span>
@@ -1862,6 +1014,7 @@
                         min="1"
                         max="24"
                         value="3"
+                        class="w-full"
                         oninput="
                             document.getElementById(
                                 'mines-count-val'
@@ -1869,30 +1022,62 @@
                         "
                     >
 
-
                 </div>
 
 
+                <!-- МНОЖИТЕЛЬ -->
+
                 <div
                     id="mines-multiplier-display"
-                    class="mine-mult"
+                    class="
+                        text-center
+                        text-green-400
+                        font-bold
+                        text-xl
+                        mb-4
+                    "
                     style="display:none;"
                 >
 
                     Коэффициент:
 
-                    <span id="current-mine-mult">
+                    <span
+                        id="current-mine-mult"
+                    >
                         1.00
-                    </span>x
+                    </span>
+
+                    x
 
                 </div>
 
 
+                <!--
+                    ВАЖНО:
+
+                    После окончания игры
+                    эта кнопка становится
+                    "ИГРАТЬ СНОВА".
+
+                    Новый раунд начинается
+                    ТОЛЬКО после нажатия.
+                -->
+
                 <button
                     id="btn-mines-action"
-                    class="main-button"
-                    style="width:100%;"
                     onclick="handleMinesAction()"
+                    class="
+                        btn-tucha
+                        w-full
+                        bg-blue-500
+                        text-white
+                        font-extrabold
+                        py-4
+                        rounded-2xl
+                        text-xl
+                        uppercase
+                        tracking-wide
+                    "
                 >
                     ИГРАТЬ
                 </button>
@@ -1901,148 +1086,313 @@
             </div>
 
 
-        </section>
+        </div>
 
 
         <!-- =====================================
-             PROFILE
+             ПРОФИЛЬ
         ====================================== -->
 
-        <section
+        <div
             id="tab-profile"
             class="tab-content"
         >
 
 
-            <div class="profile-page">
+            <div
+                class="
+                    flex
+                    flex-col
+                    items-center
+                    pt-6
+                "
+            >
 
 
-                <div class="profile-card">
+                <div
+                    id="tg-avatar"
+                    class="
+                        w-28
+                        h-28
+                        bg-slate-700
+                        rounded-full
+                        mb-4
+                        flex
+                        items-center
+                        justify-center
+                        text-5xl
+                        shadow-xl
+                        border-4
+                        border-slate-600
+                        overflow-hidden
+                        relative
+                    "
+                >
+                    👤
+                </div>
 
 
-                    <div
-                        id="tg-avatar"
-                        class="profile-avatar"
+                <h2
+                    id="tg-name"
+                    class="
+                        text-3xl
+                        font-extrabold
+                        mb-1
+                    "
+                >
+                    Загрузка...
+                </h2>
+
+
+                <div
+                    class="
+                        bg-slate-800/80
+                        px-8
+                        py-3
+                        rounded-2xl
+                        mt-4
+                        mb-8
+                        border
+                        border-slate-600
+                        shadow-inner
+                    "
+                >
+
+                    <span
+                        class="
+                            text-green-400
+                            font-extrabold
+                            text-3xl
+                        "
                     >
-                        👤
-                    </div>
-
-
-                    <div
-                        id="tg-name"
-                        class="profile-name"
-                    >
-                        Загрузка...
-                    </div>
-
-
-                    <div class="profile-balance">
 
                         $
 
-                        <span id="profile-balance">
+                        <span
+                            id="profile-balance"
+                        >
                             0.00
                         </span>
 
-                    </div>
-
-
-                    <button
-                        id="test-bonus-btn"
-                        class="bonus-button"
-                        onclick="claimTestBonus()"
-                    >
-
-                        🎁 Забрать $1.00
-
-                        (
-
-                        <span id="bonus-left">
-                            2
-                        </span>
-
-                        /2)
-
-                    </button>
-
+                    </span>
 
                 </div>
+
+
+                <button
+                    id="test-bonus-btn"
+                    onclick="claimTestBonus()"
+                    class="
+                        btn-tucha
+                        w-full
+                        bg-green-500
+                        py-4
+                        rounded-2xl
+                        font-extrabold
+                        text-lg
+                        uppercase
+                        tracking-wide
+                        mb-4
+                        shadow-[0_0_20px_rgba(34,197,94,0.4)]
+                    "
+                >
+
+                    🎁 Забрать $1.00
+
+                    (
+
+                    <span id="bonus-left">
+                        2
+                    </span>
+
+                    /2)
+
+                </button>
 
 
             </div>
 
 
-        </section>
+        </div>
 
 
-    </main>
+    </div>
 
 
     <!-- =========================================
          НИЖНЕЕ МЕНЮ
     ========================================= -->
 
-    <nav class="bottom-nav">
+    <div
+        class="
+            fixed
+            bottom-0
+            w-full
+            bg-slate-900
+            border-t
+            border-slate-700
+            pb-safe
+            z-50
+        "
+    >
 
 
-        <div class="nav-inner">
+        <div
+            class="
+                flex
+                justify-around
+                items-center
+                p-2
+            "
+        >
 
+
+            <!-- CRASH -->
 
             <button
                 onclick="switchTab('crash')"
-                class="nav-button active"
+                class="
+                    nav-btn
+                    text-blue-400
+                    flex
+                    flex-col
+                    items-center
+                    p-2
+                    transition-transform
+                    active:scale-95
+                "
                 data-tab="crash"
             >
 
-                <span class="nav-icon">
+                <span
+                    class="
+                        text-3xl
+                        mb-1
+                        drop-shadow-md
+                        flex
+                        items-center
+                        justify-center
+                    "
+                >
 
                     <img
                         src="./rocket.gif"
+                        class="
+                            w-8
+                            h-8
+                            object-contain
+                        "
                         alt="Crash"
                     >
 
                 </span>
 
-                <span class="nav-label">
+
+                <span
+                    class="
+                        text-[11px]
+                        font-extrabold
+                        uppercase
+                        tracking-wide
+                    "
+                >
                     Краш
                 </span>
 
             </button>
 
 
+            <!-- MINES -->
+
             <button
                 onclick="switchTab('mines')"
-                class="nav-button"
+                class="
+                    nav-btn
+                    text-slate-500
+                    flex
+                    flex-col
+                    items-center
+                    p-2
+                    transition-transform
+                    active:scale-95
+                "
                 data-tab="mines"
             >
 
-                <span class="nav-icon">
+                <span
+                    class="
+                        text-3xl
+                        mb-1
+                        drop-shadow-md
+                        flex
+                        items-center
+                        justify-center
+                    "
+                >
 
                     <img
                         src="./bomb.png"
+                        class="
+                            w-8
+                            h-8
+                            object-contain
+                        "
                         alt="Mines"
                     >
 
                 </span>
 
-                <span class="nav-label">
+
+                <span
+                    class="
+                        text-[11px]
+                        font-extrabold
+                        uppercase
+                        tracking-wide
+                    "
+                >
                     Мины
                 </span>
 
             </button>
 
 
+            <!-- PROFILE -->
+
             <button
                 onclick="switchTab('profile')"
-                class="nav-button"
+                class="
+                    nav-btn
+                    text-slate-500
+                    flex
+                    flex-col
+                    items-center
+                    p-2
+                    transition-transform
+                    active:scale-95
+                "
                 data-tab="profile"
             >
 
-                <span class="nav-icon">
+                <span
+                    class="
+                        text-3xl
+                        mb-1
+                        drop-shadow-md
+                    "
+                >
                     👤
                 </span>
 
-                <span class="nav-label">
+
+                <span
+                    class="
+                        text-[11px]
+                        font-extrabold
+                        uppercase
+                        tracking-wide
+                    "
+                >
                     Профиль
                 </span>
 
@@ -2051,7 +1401,7 @@
 
         </div>
 
-    </nav>
+    </div>
 
 
     <!-- =========================================
@@ -2075,11 +1425,11 @@
         try {
 
             tg.setHeaderColor(
-                '#070b14'
+                '#0f172a'
             );
 
             tg.setBackgroundColor(
-                '#070b14'
+                '#0f172a'
             );
 
         } catch (e) {}
@@ -2125,6 +1475,7 @@
 
                     <img
                         src="${tg.initDataUnsafe.user.photo_url}"
+                        class="w-full h-full object-cover"
                         alt=""
                     >
 
@@ -2150,27 +1501,30 @@
         };
 
 
-        let balance = parseFloat(
-            localStorage.getItem(
-                storageKeys.balance
-            )
-        );
+        let balance =
+            parseFloat(
+                localStorage.getItem(
+                    storageKeys.balance
+                )
+            );
 
 
         if (
             isNaN(balance)
         ) {
 
-            balance = 1.00;
+            balance =
+                1.00;
 
         }
 
 
-        let bonusCount = parseInt(
-            localStorage.getItem(
-                storageKeys.bonusCount
-            )
-        ) || 0;
+        let bonusCount =
+            parseInt(
+                localStorage.getItem(
+                    storageKeys.bonusCount
+                )
+            ) || 0;
 
 
         function saveStats() {
@@ -2190,7 +1544,7 @@
 
 
         /* =========================================
-           USER UI
+           PROFILE
         ========================================= */
 
         document.getElementById(
@@ -2211,7 +1565,7 @@
             );
 
 
-        const bonusLeft =
+        const bonusLeftSpan =
             document.getElementById(
                 'bonus-left'
             );
@@ -2232,7 +1586,7 @@
 
             } else {
 
-                bonusLeft.innerText =
+                bonusLeftSpan.innerText =
                     left;
 
             }
@@ -2242,10 +1596,6 @@
 
         updateBonusButton();
 
-
-        /* =========================================
-           BALANCE
-        ========================================= */
 
         function updateBalanceDisplay() {
 
@@ -2281,7 +1631,8 @@
             }
 
 
-            balance += 1.00;
+            balance +=
+                1.00;
 
 
             bonusCount++;
@@ -2340,14 +1691,19 @@
 
             document
                 .querySelectorAll(
-                    '.nav-button'
+                    '.nav-btn'
                 )
                 .forEach(
                     button => {
 
                         button.classList
                             .remove(
-                                'active'
+                                'text-blue-400'
+                            );
+
+                        button.classList
+                            .add(
+                                'text-slate-500'
                             );
 
 
@@ -2357,8 +1713,13 @@
                         ) {
 
                             button.classList
+                                .remove(
+                                    'text-slate-500'
+                                );
+
+                            button.classList
                                 .add(
-                                    'active'
+                                    'text-blue-400'
                                 );
 
                         }
@@ -2407,11 +1768,8 @@
             null;
 
 
-        let playerUpdateInterval =
+        let crashCountdownInterval =
             null;
-
-
-        let fakePlayers = [];
 
 
         const rocketWrap =
@@ -2438,12 +1796,6 @@
             );
 
 
-        const rktCaption =
-            document.getElementById(
-                'multiplier-caption'
-            );
-
-
         const rktMsg =
             document.getElementById(
                 'crash-msg'
@@ -2456,422 +1808,209 @@
             );
 
 
-        const liveBets =
+        const liveBetsContainer =
             document.getElementById(
                 'live-bets'
             );
 
 
-        const liveBetsCount =
-            document.getElementById(
-                'live-bets-count'
-            );
-
-
-        const crashHistory =
+        const crashHistoryContainer =
             document.getElementById(
                 'crash-history'
             );
 
 
         /* =========================================
-           RANDOM PLAYERS
+           FAKE PLAYERS
         ========================================= */
 
-        const playerNames = [
+        function generateFakeBets(
+            includeUser = false,
+            userAmount = 0
+        ) {
 
-            'Саня',
-            'Маша',
-            'Crypto',
-            'Макс',
-            'Даня',
-            'Tucha',
-            'Алекс',
-            'Влад',
-            'Lucky',
-            'Дима',
-            'Артур',
-            'Nika',
-            'Roman',
-            'Fire',
-            'Leo',
-            'Миша',
-            'Storm',
-            'Fox'
+            const names = [
 
-        ];
+                'Саня',
 
+                'CryptoKing',
 
-        const playerAvatars = [
+                'Маша99',
 
-            '👤',
-            '🧑',
-            '👨',
-            '👩',
-            '😎',
-            '🤠',
-            '🧔',
-            '👨‍💻',
-            '🧑‍🚀',
-            '🐱',
-            '🐼',
-            '🦊',
-            '🐸'
+                'DarkPro',
 
-        ];
+                'Иван',
 
+                'TuchaFan',
 
-        function randomName() {
+                'Макс',
 
-            return playerNames[
-                Math.floor(
-                    Math.random() *
-                    playerNames.length
-                )
+                'Алекс',
+
+                'Lucky',
+
+                'Роман'
+
             ];
 
-        }
 
-
-        function randomAvatar() {
-
-            return playerAvatars[
-                Math.floor(
-                    Math.random() *
-                    playerAvatars.length
-                )
-            ];
-
-        }
-
-
-        function randomBet() {
-
-            const r =
-                Math.random();
-
-
-            if (
-                r < .55
-            ) {
-
-                return (
-                    Math.random() *
-                    .35 +
-                    .10
-                );
-
-            }
-
-
-            if (
-                r < .88
-            ) {
-
-                return (
-                    Math.random() *
-                    .8 +
-                    .25
-                );
-
-            }
-
-
-            return (
-                Math.random() *
-                2 +
-                .7
-            );
-
-        }
-
-
-        function randomCashout() {
-
-            const r =
-                Math.random();
-
-
-            if (
-                r < .55
-            ) {
-
-                return (
-                    Math.random() *
-                    .55 +
-                    1.10
-                );
-
-            }
-
-
-            if (
-                r < .88
-            ) {
-
-                return (
-                    Math.random() *
-                    1.4 +
-                    1.25
-                );
-
-            }
-
-
-            return (
-                Math.random() *
-                2.5 +
-                1.5
-            );
-
-        }
-
-
-        /* =========================================
-           CREATE PLAYERS
-        ========================================= */
-
-        function createFakePlayers() {
-
-            fakePlayers = [];
-
-
-            const amount =
-                Math.floor(
-                    Math.random() * 3
-                ) + 4;
-
-
-            for (
-                let i = 0;
-                i < amount;
-                i++
-            ) {
-
-                fakePlayers.push({
-
-                    name:
-                        randomName(),
-
-                    avatar:
-                        randomAvatar(),
-
-                    bet:
-                        randomBet(),
-
-                    cashoutAt:
-                        randomCashout(),
-
-                    currentMult:
-                        1.00,
-
-                    status:
-                        'waiting',
-
-                    win:
-                        0
-
-                });
-
-            }
-
-        }
-
-
-        /* =========================================
-           RENDER PLAYERS
-        ========================================= */
-
-        function renderPlayers() {
-
-            liveBets.innerHTML =
+            liveBetsContainer.innerHTML =
                 '';
 
 
             if (
-                userInCrash
+                includeUser
             ) {
 
-                liveBets.insertAdjacentHTML(
-                    'beforeend',
-                    `
+                liveBetsContainer.innerHTML += `
 
-                    <div class="player you">
+                    <div
+                        class="
+                            player-row
+                            you
+                        "
+                    >
 
-                        <div class="player-info">
+                        <span
+                            class="
+                                flex
+                                items-center
+                                gap-2
+                            "
+                        >
 
-                            <div class="player-avatar">
+                            <span
+                                class="
+                                    w-7
+                                    h-7
+                                    rounded-full
+                                    overflow-hidden
+                                    bg-slate-700
+                                    flex
+                                    items-center
+                                    justify-center
+                                    text-xs
+                                "
+                            >
                                 ${userAvatarHTML}
-                            </div>
-
-                            <div>
-
-                                <div class="player-name">
-                                    ${escapeHTML(userName)}
-                                </div>
-
-                                <div class="player-bet">
-                                    $${userCrashBet.toFixed(2)}
-                                </div>
-
-                            </div>
-
-                        </div>
+                            </span>
 
 
-                        <div
-                            id="user-player-mult"
-                            class="player-mult waiting"
+                            <span
+                                class="
+                                    text-white
+                                    font-bold
+                                "
+                            >
+                                ${escapeHTML(userName)}
+                            </span>
+
+                        </span>
+
+
+                        <span
+                            class="
+                                text-green-400
+                                font-bold
+                            "
                         >
-                            1.00x
-                        </div>
-
-
-                        <div
-                            id="user-player-win"
-                            class="player-bet"
-                        >
-                            —
-                        </div>
+                            $${userAmount.toFixed(2)}
+                        </span>
 
                     </div>
 
-                    `
-                );
+                `;
 
             }
 
 
-            fakePlayers.forEach(
-                (player, index) => {
+            const playersCount =
+                4 +
+                Math.floor(
+                    Math.random() * 4
+                );
 
 
-                    let multText =
-                        '1.00x';
+            for (
+                let i = 0;
+                i < playersCount;
+                i++
+            ) {
+
+                const name =
+                    names[
+                        Math.floor(
+                            Math.random() *
+                            names.length
+                        )
+                    ];
 
 
-                    let multClass =
-                        'waiting';
-
-
-                    let winText =
-                        '';
-
-
-                    if (
-                        player.status ===
-                        'active'
-                    ) {
-
-                        multText =
-                            currentCrashMult
-                                .toFixed(2) +
-                            'x';
-
-                        multClass =
-                            '';
-
-                    }
-
-
-                    if (
-                        player.status ===
-                        'cashed'
-                    ) {
-
-                        multText =
-                            player.cashoutAt
-                                .toFixed(2) +
-                            'x';
-
-                        multClass =
-                            '';
-
-                        winText =
-                            '$' +
-                            player.win
-                                .toFixed(2);
-
-                    }
-
-
-                    if (
-                        player.status ===
-                        'crashed'
-                    ) {
-
-                        multText =
-                            'КРАШ';
-
-                        multClass =
-                            'crashed';
-
-                    }
-
-
-                    liveBets.insertAdjacentHTML(
-                        'beforeend',
-                        `
-
-                        <div class="player">
-
-                            <div class="player-info">
-
-                                <div class="player-avatar">
-                                    ${player.avatar}
-                                </div>
-
-                                <div>
-
-                                    <div class="player-name">
-                                        ${escapeHTML(player.name)}
-                                    </div>
-
-                                    <div class="player-bet">
-                                        $${player.bet.toFixed(2)}
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div
-                                id="fake-mult-${index}"
-                                class="player-mult ${multClass}"
-                            >
-                                ${multText}
-                            </div>
-
-
-                            <div
-                                id="fake-win-${index}"
-                                class="player-bet"
-                            >
-                                ${winText}
-                            </div>
-
-                        </div>
-
-                        `
-                    );
-
-                }
-            );
-
-
-            liveBetsCount.innerText =
-
-                (
-                    fakePlayers.length +
+                const amount =
                     (
-                        userInCrash
-                            ? 1
-                            : 0
-                    )
-                ) +
+                        Math.random() *
+                        2.5 +
+                        0.10
+                    ).toFixed(2);
 
-                ' ставок';
+
+                liveBetsContainer.innerHTML += `
+
+                    <div
+                        class="
+                            player-row
+                        "
+                    >
+
+                        <span
+                            class="
+                                flex
+                                items-center
+                                gap-2
+                            "
+                        >
+
+                            <span
+                                class="
+                                    w-7
+                                    h-7
+                                    rounded-full
+                                    bg-slate-700
+                                    flex
+                                    items-center
+                                    justify-center
+                                    text-xs
+                                "
+                            >
+                                👤
+                            </span>
+
+
+                            <span
+                                class="
+                                    text-slate-300
+                                "
+                            >
+                                ${escapeHTML(name)}
+                            </span>
+
+                        </span>
+
+
+                        <span
+                            class="
+                                text-yellow-400
+                                font-bold
+                            "
+                        >
+                            $${amount}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
 
         }
 
@@ -2896,251 +2035,80 @@
 
 
         /* =========================================
-           UPDATE PLAYERS
-        ========================================= */
-
-        function updatePlayers() {
-
-            fakePlayers.forEach(
-                (player, index) => {
-
-
-                    if (
-                        player.status ===
-                        'waiting'
-                    ) {
-
-                        player.status =
-                            'active';
-
-                    }
-
-
-                    if (
-                        player.status ===
-                        'active'
-                    ) {
-
-                        player.currentMult =
-                            currentCrashMult;
-
-
-                        if (
-                            currentCrashMult >=
-                            player.cashoutAt
-                        ) {
-
-                            player.status =
-                                'cashed';
-
-
-                            player.win =
-                                player.bet *
-                                player.cashoutAt;
-
-                        }
-
-                    }
-
-
-                    const mult =
-                        document.getElementById(
-                            'fake-mult-' +
-                            index
-                        );
-
-
-                    const win =
-                        document.getElementById(
-                            'fake-win-' +
-                            index
-                        );
-
-
-                    if (
-                        !mult
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    if (
-                        player.status ===
-                        'active'
-                    ) {
-
-                        mult.innerText =
-                            currentCrashMult
-                                .toFixed(2) +
-                            'x';
-
-
-                        mult.className =
-                            'player-mult';
-
-                    }
-
-
-                    else if (
-                        player.status ===
-                        'cashed'
-                    ) {
-
-                        mult.innerText =
-                            player.cashoutAt
-                                .toFixed(2) +
-                            'x';
-
-
-                        mult.className =
-                            'player-mult';
-
-
-                        if (win) {
-
-                            win.innerText =
-                                '$' +
-                                player.win
-                                    .toFixed(2);
-
-                        }
-
-                    }
-
-
-                    else if (
-                        player.status ===
-                        'crashed'
-                    ) {
-
-                        mult.innerText =
-                            'КРАШ';
-
-
-                        mult.className =
-                            'player-mult crashed';
-
-                    }
-
-                }
-            );
-
-
-            if (
-                userInCrash
-            ) {
-
-                const userMult =
-                    document.getElementById(
-                        'user-player-mult'
-                    );
-
-
-                const userWin =
-                    document.getElementById(
-                        'user-player-win'
-                    );
-
-
-                if (
-                    userMult
-                ) {
-
-                    userMult.innerText =
-                        currentCrashMult
-                            .toFixed(2) +
-                        'x';
-
-
-                    userMult.className =
-                        'player-mult';
-
-                }
-
-
-                if (
-                    userWin
-                ) {
-
-                    userWin.innerText =
-                        '$' +
-                        (
-                            userCrashBet *
-                            currentCrashMult
-                        ).toFixed(2);
-
-                }
-
-            }
-
-        }
-
-
-        /* =========================================
-           HISTORY
+           CRASH HISTORY
         ========================================= */
 
         function addCrashHistory(
             mult
         ) {
 
-            const item =
+            const span =
                 document.createElement(
                     'span'
                 );
 
 
-            item.className =
-                'history-item';
+            let colorClass =
+                'text-blue-400';
 
 
             if (
-                mult < 1.5
+                mult >= 3
             ) {
 
-                item.classList.add(
-                    'history-low'
-                );
+                colorClass =
+                    'text-green-400';
 
-            }
-
-            else if (
-                mult < 3
+            } else if (
+                mult >= 2
             ) {
 
-                item.classList.add(
-                    'history-medium'
-                );
-
-            }
-
-            else {
-
-                item.classList.add(
-                    'history-high'
-                );
+                colorClass =
+                    'text-purple-400';
 
             }
 
 
-            item.innerText =
+            span.className = `
+
+                bg-slate-800/50
+
+                px-3
+
+                py-1
+
+                rounded-full
+
+                text-xs
+
+                font-bold
+
+                ${colorClass}
+
+                border
+
+                border-slate-700
+
+            `;
+
+
+            span.innerText =
                 mult.toFixed(2) +
                 'x';
 
 
-            crashHistory.prepend(
-                item
+            crashHistoryContainer.prepend(
+                span
             );
 
 
             while (
-                crashHistory.children.length >
-                9
+                crashHistoryContainer.children.length >
+                7
             ) {
 
-                crashHistory.lastElementChild
+                crashHistoryContainer
+                    .lastElementChild
                     .remove();
 
             }
@@ -3149,41 +2117,7 @@
 
 
         /* =========================================
-           INITIAL HISTORY
-        ========================================= */
-
-        function createInitialHistory() {
-
-            const values = [
-
-                1.44,
-                1.00,
-                2.18,
-                1.29,
-                1.67,
-                3.12,
-                1.13,
-                2.44,
-                1.78
-
-            ];
-
-
-            values.forEach(
-                value => {
-
-                    addCrashHistory(
-                        value
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =========================================
-           CRASH START
+           START CRASH ROUND
         ========================================= */
 
         function startCrashLoop() {
@@ -3194,7 +2128,7 @@
 
 
             clearInterval(
-                playerUpdateInterval
+                crashCountdownInterval
             );
 
 
@@ -3210,45 +2144,32 @@
                 0;
 
 
-            currentCrashMult =
-                1.00;
-
-
-            createFakePlayers();
-
-
-            renderPlayers();
+            rocketImg.className =
+                'rocket-img flying';
 
 
             /*
-                РАКЕТА НЕ СКРЫВАЕТСЯ.
+                ВАЖНО:
 
-                Она сразу существует
-                в игровом поле.
+                GIF остаётся настоящей GIF.
+
+                Она не заменяется текстом.
             */
 
             rocketWrap.style.display =
                 'flex';
 
 
-            rocketImg.className =
-                'flying';
-
-
-            rktTimer.style.display =
-                'block';
-
-
             rktMult.style.display =
-                'none';
-
-
-            rktCaption.style.display =
                 'none';
 
 
             rktMsg.style.display =
                 'none';
+
+
+            rktTimer.style.display =
+                'block';
 
 
             rktBtn.disabled =
@@ -3259,30 +2180,46 @@
                 'СДЕЛАТЬ СТАВКУ';
 
 
-            rktBtn.className =
-                'main-button';
+            rktBtn.className = `
+
+                btn-tucha
+
+                w-full
+
+                bg-blue-500
+
+                text-white
+
+                font-extrabold
+
+                py-4
+
+                rounded-2xl
+
+                text-xl
+
+                uppercase
+
+                tracking-wide
+
+            `;
 
 
-            let timer = 5;
+            generateFakeBets(
+                false,
+                0
+            );
+
+
+            let timer =
+                5;
 
 
             rktTimer.innerText =
-                'СТАРТ ЧЕРЕЗ ' +
-                timer;
+                `СТАРТ ЧЕРЕЗ ${timer}`;
 
 
-            playerUpdateInterval =
-                setInterval(
-                    () => {
-
-                        renderPlayers();
-
-                    },
-                    1200
-                );
-
-
-            const countInterval =
+            crashCountdownInterval =
                 setInterval(
                     () => {
 
@@ -3294,8 +2231,7 @@
                         ) {
 
                             rktTimer.innerText =
-                                'СТАРТ ЧЕРЕЗ ' +
-                                timer;
+                                `СТАРТ ЧЕРЕЗ ${timer}`;
 
                         }
 
@@ -3305,7 +2241,7 @@
                         ) {
 
                             clearInterval(
-                                countInterval
+                                crashCountdownInterval
                             );
 
 
@@ -3321,15 +2257,10 @@
 
 
         /* =========================================
-           FLY
+           CRASH FLIGHT
         ========================================= */
 
         function flyCrash() {
-
-            clearInterval(
-                playerUpdateInterval
-            );
-
 
             crashState =
                 'flying';
@@ -3344,14 +2275,10 @@
 
 
             rocketImg.className =
-                'flying';
+                'rocket-img flying';
 
 
             rktMult.style.display =
-                'block';
-
-
-            rktCaption.style.display =
                 'block';
 
 
@@ -3374,7 +2301,7 @@
 
 
             /*
-                Редкие высокие раунды.
+                Иногда высокий раунд.
             */
 
             if (
@@ -3393,22 +2320,6 @@
             }
 
 
-            fakePlayers.forEach(
-                player => {
-
-                    player.status =
-                        'active';
-
-                    player.currentMult =
-                        1.00;
-
-                }
-            );
-
-
-            renderPlayers();
-
-
             if (
                 userInCrash
             ) {
@@ -3418,15 +2329,35 @@
 
 
                 rktBtn.innerText =
-                    'ЗАБРАТЬ $' +
-                    (
+                    `ЗАБРАТЬ $${(
                         userCrashBet *
                         currentCrashMult
-                    ).toFixed(2);
+                    ).toFixed(2)}`;
 
 
-                rktBtn.className =
-                    'main-button cashout';
+                rktBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-green-500
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
 
             }
 
@@ -3440,8 +2371,29 @@
                     'ПОЛЁТ...';
 
 
-                rktBtn.className =
-                    'main-button';
+                rktBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-slate-600
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
 
             }
 
@@ -3449,7 +2401,6 @@
             flyInterval =
                 setInterval(
                     () => {
-
 
                         currentCrashMult +=
                             .01;
@@ -3461,19 +2412,15 @@
                             'x';
 
 
-                        updatePlayers();
-
-
                         if (
                             userInCrash
                         ) {
 
                             rktBtn.innerText =
-                                'ЗАБРАТЬ $' +
-                                (
+                                `ЗАБРАТЬ $${(
                                     userCrashBet *
                                     currentCrashMult
-                                ).toFixed(2);
+                                ).toFixed(2)}`;
 
                         }
 
@@ -3514,40 +2461,11 @@
                 'crashed';
 
 
-            fakePlayers.forEach(
-                player => {
-
-                    if (
-                        player.status ===
-                        'active'
-                    ) {
-
-                        player.status =
-                            'crashed';
-
-                    }
-
-                }
-            );
-
-
-            updatePlayers();
-
-
-            /*
-                Здесь GIF больше не двигается
-                и визуально падает.
-            */
-
             rocketImg.className =
-                'crashed';
+                'rocket-img crashed';
 
 
             rktMult.style.display =
-                'none';
-
-
-            rktCaption.style.display =
                 'none';
 
 
@@ -3556,9 +2474,7 @@
 
 
             rktMsg.innerText =
-                'КРАШ ' +
-                targetCrashPoint.toFixed(2) +
-                'x';
+                `КРАШ ${targetCrashPoint.toFixed(2)}x`;
 
 
             addCrashHistory(
@@ -3593,20 +2509,43 @@
                 true;
 
 
-            rktBtn.className =
-                'main-button';
+            rktBtn.className = `
+
+                btn-tucha
+
+                w-full
+
+                bg-slate-700
+
+                text-white
+
+                font-extrabold
+
+                py-4
+
+                rounded-2xl
+
+                text-xl
+
+                uppercase
+
+                tracking-wide
+
+            `;
 
 
             rktBtn.innerText =
                 'ПРОИГРЫШ';
 
 
+            /*
+                Следующий Crash
+                пока оставляем автоматическим,
+                как было в твоей игре.
+            */
+
             setTimeout(
-                () => {
-
-                    startCrashLoop();
-
-                },
+                startCrashLoop,
                 3000
             );
 
@@ -3619,10 +2558,6 @@
 
         function handleCrashAction() {
 
-
-            /*
-                СДЕЛАТЬ СТАВКУ
-            */
 
             if (
                 crashState ===
@@ -3638,9 +2573,9 @@
 
 
                 if (
+                    bet > balance ||
                     bet <= 0 ||
-                    isNaN(bet) ||
-                    bet > balance
+                    isNaN(bet)
                 ) {
 
                     try {
@@ -3678,15 +2613,39 @@
                 updateBalanceDisplay();
 
 
-                renderPlayers();
-
-
-                rktBtn.disabled =
-                    true;
+                generateFakeBets(
+                    true,
+                    bet
+                );
 
 
                 rktBtn.innerText =
-                    'СТАВКА ПРИНЯТА';
+                    'СТАВКА ПРИНЯТА (ОЖИДАНИЕ)';
+
+
+                rktBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-slate-600
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
 
 
                 try {
@@ -3703,10 +2662,6 @@
 
             }
 
-
-            /*
-                ЗАБРАТЬ ВЫИГРЫШ
-            */
 
             if (
                 crashState ===
@@ -3735,12 +2690,32 @@
 
 
                 rktBtn.innerText =
-                    'ВЫИГРАНО $' +
-                    win.toFixed(2);
+                    `ВЫИГРАНО $${win.toFixed(2)}`;
 
 
-                rktBtn.className =
-                    'main-button';
+                rktBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-green-600
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
 
 
                 try {
@@ -3758,11 +2733,26 @@
 
 
         /* =========================================
-           MINES
+           МИНЫ
         ========================================= */
 
         let minesGameState =
             'idle';
+
+
+        /*
+            Возможные состояния:
+
+            idle
+            playing
+            finished
+
+            ВАЖНО:
+            finished НЕ запускает новую игру.
+
+            Новый раунд начинается только
+            по нажатию "ИГРАТЬ СНОВА".
+        */
 
 
         let minesPositions =
@@ -3785,37 +2775,37 @@
             3;
 
 
-        const minesGrid =
+        const mGrid =
             document.getElementById(
                 'mines-grid'
             );
 
 
-        const minesButton =
+        const mBtn =
             document.getElementById(
                 'btn-mines-action'
             );
 
 
-        const minesMultDisplay =
+        const mMultDisp =
             document.getElementById(
                 'mines-multiplier-display'
             );
 
 
-        const minesMultValue =
+        const mMultVal =
             document.getElementById(
                 'current-mine-mult'
             );
 
 
         /* =========================================
-           MINES GRID
+           СОЗДАТЬ ЧИСТОЕ ПОЛЕ
         ========================================= */
 
         function buildMinesGrid() {
 
-            minesGrid.innerHTML =
+            mGrid.innerHTML =
                 '';
 
 
@@ -3839,7 +2829,11 @@
                     i;
 
 
-                minesGrid.appendChild(
+                cell.innerHTML =
+                    '';
+
+
+                mGrid.appendChild(
                     cell
                 );
 
@@ -3852,162 +2846,38 @@
 
 
         /* =========================================
-           MINES ACTION
+           НАЧАТЬ НОВУЮ ИГРУ
         ========================================= */
 
-        function handleMinesAction() {
+        function startNewMinesGame() {
 
+            const bet =
+                parseFloat(
+                    document.getElementById(
+                        'mines-bet'
+                    ).value
+                );
 
-            /*
-                НАЧАЛО
-            */
 
             if (
-                minesGameState ===
-                'idle'
+                bet > balance ||
+                bet <= 0 ||
+                isNaN(bet)
             ) {
 
-                const bet =
-                    parseFloat(
-                        document.getElementById(
-                            'mines-bet'
-                        ).value
-                    );
+                try {
 
-
-                if (
-                    bet <= 0 ||
-                    isNaN(bet) ||
-                    bet > balance
-                ) {
-
-                    try {
-
-                        tg.HapticFeedback
-                            .notificationOccurred(
-                                'error'
-                            );
-
-                    } catch (e) {}
-
-
-                    alert(
-                        'Недостаточно средств или неверная ставка!'
-                    );
-
-
-                    return;
-
-                }
-
-
-                buildMinesGrid();
-
-
-                balance -=
-                    bet;
-
-
-                updateBalanceDisplay();
-
-
-                totalBombs =
-                    parseInt(
-                        document.getElementById(
-                            'mines-slider'
-                        ).value
-                    );
-
-
-                currentMineBet =
-                    bet;
-
-
-                currentMineMult =
-                    1.00;
-
-
-                safeClicksCount =
-                    0;
-
-
-                minesGameState =
-                    'playing';
-
-
-                minesPositions =
-                    [];
-
-
-                while (
-                    minesPositions.length <
-                    totalBombs
-                ) {
-
-                    const random =
-                        Math.floor(
-                            Math.random() *
-                            25
+                    tg.HapticFeedback
+                        .notificationOccurred(
+                            'error'
                         );
 
-
-                    if (
-                        !minesPositions
-                            .includes(
-                                random
-                            )
-                    ) {
-
-                        minesPositions.push(
-                            random
-                        );
-
-                    }
-
-                }
+                } catch (e) {}
 
 
-                minesMultDisplay.style.display =
-                    'block';
-
-
-                minesMultValue.innerText =
-                    '1.00';
-
-
-                minesButton.innerText =
-                    'ВЫБЕРИТЕ ЯЧЕЙКУ';
-
-
-                minesButton.disabled =
-                    true;
-
-
-                minesButton.className =
-                    'main-button';
-
-
-                document
-                    .querySelectorAll(
-                        '.mine-cell'
-                    )
-                    .forEach(
-                        cell => {
-
-                            cell.onclick =
-                                () => {
-
-                                    clickMine(
-                                        parseInt(
-                                            cell.dataset.index
-                                        ),
-                                        cell
-                                    );
-
-                                };
-
-                        }
-                    );
+                alert(
+                    'Недостаточно средств или неверная ставка!'
+                );
 
 
                 return;
@@ -4016,7 +2886,203 @@
 
 
             /*
-                CASH OUT
+                Только здесь создаём
+                НОВОЕ случайное поле.
+            */
+
+            buildMinesGrid();
+
+
+            balance -=
+                bet;
+
+
+            updateBalanceDisplay();
+
+
+            totalBombs =
+                parseInt(
+                    document.getElementById(
+                        'mines-slider'
+                    ).value
+                );
+
+
+            currentMineBet =
+                bet;
+
+
+            currentMineMult =
+                1.00;
+
+
+            safeClicksCount =
+                0;
+
+
+            minesGameState =
+                'playing';
+
+
+            minesPositions =
+                [];
+
+
+            while (
+                minesPositions.length <
+                totalBombs
+            ) {
+
+                const random =
+                    Math.floor(
+                        Math.random() *
+                        25
+                    );
+
+
+                if (
+                    !minesPositions
+                        .includes(
+                            random
+                        )
+                ) {
+
+                    minesPositions.push(
+                        random
+                    );
+
+                }
+
+            }
+
+
+            mMultDisp.style.display =
+                'block';
+
+
+            mMultVal.innerText =
+                '1.00';
+
+
+            /*
+                Пока игра идёт —
+                кнопка заблокирована,
+                пока игрок не откроет
+                хотя бы одну безопасную.
+            */
+
+            mBtn.innerText =
+                'ВЫБЕРИТЕ ЯЧЕЙКУ';
+
+
+            mBtn.disabled =
+                true;
+
+
+            mBtn.className = `
+
+                btn-tucha
+
+                w-full
+
+                bg-slate-600
+
+                text-white
+
+                font-extrabold
+
+                py-4
+
+                rounded-2xl
+
+                text-xl
+
+                uppercase
+
+                tracking-wide
+
+            `;
+
+
+            /*
+                Отключаем изменение количества
+                бомб во время игры.
+            */
+
+            document.getElementById(
+                'mines-slider'
+            ).disabled =
+                true;
+
+
+            const cells =
+                document.querySelectorAll(
+                    '.mine-cell'
+                );
+
+
+            cells.forEach(
+                cell => {
+
+                    cell.onclick =
+                        () => {
+
+                            clickMine(
+                                parseInt(
+                                    cell.dataset.index
+                                ),
+                                cell
+                            );
+
+                        };
+
+                }
+            );
+
+
+            try {
+
+                tg.HapticFeedback
+                    .impactOccurred(
+                        'medium'
+                    );
+
+            } catch (e) {}
+
+        }
+
+
+        /* =========================================
+           ОСНОВНАЯ КНОПКА МИН
+        ========================================= */
+
+        function handleMinesAction() {
+
+
+            /*
+                IDLE
+
+                Значит игра ещё не началась.
+                Начинаем новый раунд.
+            */
+
+            if (
+                minesGameState ===
+                'idle'
+            ) {
+
+                startNewMinesGame();
+
+                return;
+
+            }
+
+
+            /*
+                PLAYING
+
+                Значит игрок нажал
+                "ЗАБРАТЬ".
             */
 
             if (
@@ -4046,10 +3112,41 @@
                 } catch (e) {}
 
 
+                /*
+                    НЕ запускаем новую игру.
+
+                    Поле остаётся.
+                */
+
                 endMinesGame(
-                    'ВЫИГРЫШ $' +
-                    win.toFixed(2)
+                    `ВЫИГРЫШ $${win.toFixed(2)}`,
+                    'green'
                 );
+
+
+                return;
+
+            }
+
+
+            /*
+                FINISHED
+
+                Игрок нажал
+                "ИГРАТЬ СНОВА".
+
+                Только сейчас
+                создаётся новое поле.
+            */
+
+            if (
+                minesGameState ===
+                'finished'
+            ) {
+
+                startNewMinesGame();
+
+                return;
 
             }
 
@@ -4057,12 +3154,12 @@
 
 
         /* =========================================
-           CLICK MINE
+           КЛИК ПО ЯЧЕЙКЕ
         ========================================= */
 
         function clickMine(
             index,
-            cell
+            cellEl
         ) {
 
             if (
@@ -4075,13 +3172,17 @@
             }
 
 
-            cell.onclick =
+            /*
+                Нельзя нажать повторно.
+            */
+
+            cellEl.onclick =
                 null;
 
 
-            /*
-                БОМБА
-            */
+            /* =====================================
+               БОМБА
+            ==================================== */
 
             if (
                 minesPositions.includes(
@@ -4089,30 +3190,30 @@
                 )
             ) {
 
-                cell.classList.add(
+                cellEl.classList.add(
                     'bomb'
                 );
 
 
-                cell.innerHTML = `
+                cellEl.innerHTML = `
 
                     <img
                         src="./bomb.png"
+                        class="
+                            w-9
+                            h-9
+                            object-contain
+                        "
                         alt="Bomb"
                     >
 
                 `;
 
 
-                try {
-
-                    tg.HapticFeedback
-                        .notificationOccurred(
-                            'error'
-                        );
-
-                } catch (e) {}
-
+                /*
+                    После попадания на мину
+                    показываем ВСЕ остальные мины.
+                */
 
                 document
                     .querySelectorAll(
@@ -4127,26 +3228,35 @@
 
                             if (
                                 minesPositions
-                                    .includes(i) &&
-                                i !== index
+                                    .includes(i)
                             ) {
 
-                                otherCell
-                                    .classList
-                                    .add(
-                                        'bomb'
-                                    );
+                                if (
+                                    i !== index
+                                ) {
+
+                                    otherCell
+                                        .classList
+                                        .add(
+                                            'bomb'
+                                        );
 
 
-                                otherCell.innerHTML = `
+                                    otherCell.innerHTML = `
 
-                                    <img
-                                        src="./bomb.png"
-                                        alt="Bomb"
-                                        style="opacity:.5"
-                                    >
+                                        <img
+                                            src="./bomb.png"
+                                            class="
+                                                w-9
+                                                h-9
+                                                object-contain
+                                            "
+                                            alt="Bomb"
+                                        >
 
-                                `;
+                                    `;
+
+                                }
 
                             }
 
@@ -4154,8 +3264,23 @@
                     );
 
 
+                try {
+
+                    tg.HapticFeedback
+                        .notificationOccurred(
+                            'error'
+                        );
+
+                } catch (e) {}
+
+
+                /*
+                    НЕ СБРАСЫВАЕМ ПОЛЕ.
+                */
+
                 endMinesGame(
-                    'ПРОИГРЫШ'
+                    'ПРОИГРЫШ',
+                    'red'
                 );
 
 
@@ -4164,19 +3289,24 @@
             }
 
 
-            /*
-                БЕЗОПАСНАЯ КЛЕТКА
-            */
+            /* =====================================
+               БЕЗОПАСНАЯ ЯЧЕЙКА
+            ==================================== */
 
-            cell.classList.add(
+            cellEl.classList.add(
                 'safe'
             );
 
 
-            cell.innerHTML = `
+            cellEl.innerHTML = `
 
                 <img
                     src="./star.png"
+                    class="
+                        w-9
+                        h-9
+                        object-contain
+                    "
                     alt="Safe"
                 >
 
@@ -4195,6 +3325,10 @@
 
             safeClicksCount++;
 
+
+            /*
+                Расчёт коэффициента.
+            */
 
             let probability =
                 1.0;
@@ -4225,7 +3359,7 @@
 
 
             const houseEdge =
-                .95;
+                0.95;
 
 
             currentMineMult =
@@ -4233,7 +3367,7 @@
                 probability;
 
 
-            minesMultValue.innerText =
+            mMultVal.innerText =
                 currentMineMult
                     .toFixed(2);
 
@@ -4243,18 +3377,49 @@
                 currentMineMult;
 
 
-            minesButton.disabled =
+            /*
+                Теперь можно забрать.
+            */
+
+            mBtn.disabled =
                 false;
 
 
-            minesButton.innerText =
-                'ЗАБРАТЬ $' +
-                currentWin.toFixed(2);
+            mBtn.innerText =
+                `ЗАБРАТЬ $${currentWin.toFixed(2)}`;
 
 
-            minesButton.className =
-                'main-button cashout';
+            mBtn.className = `
 
+                btn-tucha
+
+                w-full
+
+                bg-green-500
+
+                text-white
+
+                font-extrabold
+
+                py-4
+
+                rounded-2xl
+
+                text-xl
+
+                uppercase
+
+                tracking-wide
+
+            `;
+
+
+            /*
+                Открыты все безопасные клетки.
+
+                Автоматически выигрываем,
+                но НОВАЯ игра не запускается.
+            */
 
             if (
                 safeClicksCount ===
@@ -4272,8 +3437,8 @@
 
 
                 endMinesGame(
-                    'СУПЕР ВЫИГРЫШ $' +
-                    currentWin.toFixed(2)
+                    `СУПЕР ВЫИГРЫШ $${currentWin.toFixed(2)}`,
+                    'yellow'
                 );
 
             }
@@ -4282,54 +3447,202 @@
 
 
         /* =========================================
-           END MINES
+           ЗАВЕРШЕНИЕ МИН
         ========================================= */
 
         function endMinesGame(
-            message
+            message,
+            color
         ) {
 
+            /*
+                ВАЖНО:
+
+                Больше НИКАКИХ setTimeout.
+
+                Игра остаётся законченной.
+            */
+
             minesGameState =
-                'idle';
+                'finished';
 
 
-            minesButton.disabled =
+            /*
+                Отключаем все клетки.
+            */
+
+            document
+                .querySelectorAll(
+                    '.mine-cell'
+                )
+                .forEach(
+                    cell => {
+
+                        cell.onclick =
+                            null;
+
+                    }
+                );
+
+
+            /*
+                Разрешаем снова менять
+                количество бомб.
+            */
+
+            document.getElementById(
+                'mines-slider'
+            ).disabled =
                 false;
 
 
-            minesButton.innerText =
-                message;
+            /*
+                Показываем финальный
+                результат.
+            */
+
+            mBtn.disabled =
+                false;
 
 
-            minesButton.className =
-                'main-button';
+            if (
+                color ===
+                'red'
+            ) {
 
+                mBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-red-500
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
+
+            }
+
+            else if (
+                color ===
+                'green'
+            ) {
+
+                mBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-green-500
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
+
+            }
+
+            else {
+
+                mBtn.className = `
+
+                    btn-tucha
+
+                    w-full
+
+                    bg-yellow-500
+
+                    text-white
+
+                    font-extrabold
+
+                    py-4
+
+                    rounded-2xl
+
+                    text-xl
+
+                    uppercase
+
+                    tracking-wide
+
+                `;
+
+            }
+
+
+            /*
+                Через секунду показываем
+                "ИГРАТЬ СНОВА".
+
+                Поле при этом НЕ меняется.
+            */
 
             setTimeout(
                 () => {
 
                     if (
                         minesGameState ===
-                        'idle'
+                        'finished'
                     ) {
 
-                        minesMultDisplay
-                            .style
-                            .display =
-                            'none';
+                        mBtn.innerText =
+                            'ИГРАТЬ СНОВА';
 
 
-                        minesButton.innerText =
-                            'ИГРАТЬ';
+                        mBtn.className = `
 
+                            btn-tucha
 
-                        minesButton.className =
-                            'main-button';
+                            w-full
+
+                            bg-blue-500
+
+                            text-white
+
+                            font-extrabold
+
+                            py-4
+
+                            rounded-2xl
+
+                            text-xl
+
+                            uppercase
+
+                            tracking-wide
+
+                        `;
 
                     }
 
                 },
-                3000
+                900
             );
 
         }
@@ -4342,11 +3655,9 @@
         updateBalanceDisplay();
 
 
-        createInitialHistory();
-
-
-        buildMinesGrid();
-
+        /*
+            Инициализация Crash.
+        */
 
         startCrashLoop();
 
@@ -4357,4 +3668,3 @@
 </body>
 
 </html>
-```
