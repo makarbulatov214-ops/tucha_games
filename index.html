@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
 >
 
 <title>Tucha Games</title>
@@ -13,6 +13,10 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
+/* =========================================================
+   RESET & BRIGHT THEME
+========================================================= */
+
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
@@ -49,7 +53,7 @@ button {
 }
 
 /* =========================================================
-   BACKGROUND
+   BRIGHT BACKGROUND GLOWS
 ========================================================= */
 
 body::before {
@@ -316,13 +320,8 @@ main {
 }
 
 @keyframes rocketFloat {
-    from {
-        transform: translateY(4px) rotate(-3deg);
-    }
-
-    to {
-        transform: translateY(-8px) rotate(4deg);
-    }
+    from { transform: translateY(4px) rotate(-3deg); }
+    to { transform: translateY(-8px) rotate(4deg); }
 }
 
 #rocket.crashed {
@@ -408,12 +407,7 @@ input[type="number"]:focus {
 }
 
 .player.you {
-    background: linear-gradient(
-        135deg,
-        rgba(37, 99, 235, 0.12),
-        rgba(124, 58, 237, 0.06)
-    );
-
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(124, 58, 237, 0.06));
     border-color: rgba(37, 99, 235, 0.35);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
@@ -492,9 +486,7 @@ input[type="number"]:focus {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition:
-        transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-        filter 0.2s;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
 }
 
 .cell:not(:disabled):hover {
@@ -511,9 +503,7 @@ input[type="number"]:focus {
 .cell.safe {
     background: linear-gradient(145deg, #3b82f6, #1d4ed8);
     border-bottom: 5px solid #1e3a8a;
-    box-shadow:
-        0 0 20px rgba(59, 130, 246, 0.5),
-        inset 0 2px 4px rgba(255,255,255,0.4);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
 .cell.revealed-safe {
@@ -525,9 +515,7 @@ input[type="number"]:focus {
 .cell.bomb {
     background: linear-gradient(145deg, #ef4444, #b91c1c);
     border-bottom: 5px solid #7f1d1d;
-    box-shadow:
-        0 0 22px rgba(239, 68, 68, 0.5),
-        inset 0 2px 4px rgba(255,255,255,0.4);
+    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
 .star-svg {
@@ -614,10 +602,7 @@ input[type="range"] {
     border: 2px solid rgba(59, 130, 246, 0.12);
     background: linear-gradient(145deg, #ffffff, #f8fafc);
     box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
-    transition:
-        transform .18s,
-        border-color .18s,
-        box-shadow .18s;
+    transition: transform .18s, border-color .18s, box-shadow .18s;
 }
 
 .case-card.available {
@@ -684,26 +669,6 @@ input[type="range"] {
     background: #e0e7ff;
     color: #2563eb;
     font-size: 15px;
-    font-weight: 950;
-}
-
-.case-card.locked {
-    opacity: .55;
-}
-
-.case-card.locked .case-card-image {
-    filter: grayscale(1);
-}
-
-.case-coming {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    padding: 5px 9px;
-    border-radius: 8px;
-    background: #e2e8f0;
-    color: #475569;
-    font-size: 9px;
     font-weight: 950;
 }
 
@@ -784,17 +749,12 @@ input[type="range"] {
 }
 
 @keyframes caseFloat {
-    from {
-        transform: translateY(3px);
-    }
-
-    to {
-        transform: translateY(-8px);
-    }
+    from { transform: translateY(3px); }
+    to { transform: translateY(-8px); }
 }
 
 /* =========================================================
-   ROULETTE
+   CASE ROULETTE
 ========================================================= */
 
 .roulette-wrap {
@@ -875,14 +835,7 @@ input[type="range"] {
     left: 50%;
     width: 4px;
     transform: translateX(-50%);
-    background: linear-gradient(
-        180deg,
-        transparent,
-        #2563eb 12%,
-        #7c3aed 50%,
-        #2563eb 88%,
-        transparent
-    );
+    background: linear-gradient(180deg, transparent, #2563eb 12%, #7c3aed 50%, #2563eb 88%, transparent);
     box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
     pointer-events: none;
 }
@@ -939,7 +892,7 @@ input[type="range"] {
 }
 
 /* =========================================================
-   CASE RESULT
+   CASE RESULT & TIMER
 ========================================================= */
 
 .case-result {
@@ -1052,36 +1005,29 @@ nav button.active {
 }
 
 /* =========================================================
-   MOBILE
+   SMALL SCREEN
 ========================================================= */
 
 @media (max-width: 360px) {
-
     main {
         padding-left: 10px;
         padding-right: 10px;
     }
-
     .case-grid {
         gap: 10px;
     }
-
     .case-card {
         min-height: 220px;
     }
-
     .case-card-image {
         height: 115px;
     }
-
     .case-big-image {
         height: 215px;
     }
-
     .roulette-prize {
         flex-basis: 85px;
     }
-
     .prizes-grid {
         grid-template-columns: repeat(2,1fr);
     }
@@ -1091,3697 +1037,966 @@ nav button.active {
 
 <body>
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
+<!-- HEADER -->
 <header>
-
     <div class="logo">
-
-        <div class="logo-icon">
-            ☁️
-        </div>
-
+        <div class="logo-icon">☁️</div>
         <div class="logo-text">
             TUCHA
             <small>GAMES</small>
         </div>
-
     </div>
-
     <div class="balance">
-
-        <span class="balance-icon">
-            $
-        </span>
-
-        <span id="header-balance">
-            1.00
-        </span>
-
+        <span class="balance-icon">$</span>
+        <span id="header-balance">1.00</span>
     </div>
-
 </header>
 
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
+<!-- MAIN -->
 <main>
 
-<!-- =========================================================
-     CRASH
-========================================================= -->
-
+<!-- CRASH TAB -->
 <section id="tab-crash" class="tab active">
-
     <div class="history">
-
         <span>1.42x</span>
         <span>2.15x</span>
         <span>1.08x</span>
         <span>3.72x</span>
         <span>1.31x</span>
-
     </div>
-
 
     <div class="rocket-area">
-
         <div id="rocket-wrap">
-
-            <img
-                id="rocket"
-                src="./rocket.gif.gif"
-                alt="Ракета"
-                class="flying"
-            >
-
+            <img id="rocket" src="./rocket.gif.gif" alt="Ракета" class="flying">
         </div>
-
-        <div id="crash-status">
-            ОЖИДАНИЕ
-        </div>
-
+        <div id="crash-status">ОЖИДАНИЕ</div>
     </div>
-
 
     <div class="panel crash-form">
-
-        <label>
-            Сумма ставки
-        </label>
-
-        <input
-            id="crash-bet"
-            type="number"
-            min="0.01"
-            step="0.01"
-            value="0.10"
-        >
-
-        <button
-            id="crash-button"
-            class="primary"
-            onclick="handleCrashAction()"
-        >
-            СДЕЛАТЬ СТАВКУ
-        </button>
-
+        <label>Сумма ставки</label>
+        <input id="crash-bet" type="number" min="0.01" step="0.01" value="0.10">
+        <button id="crash-button" class="primary" onclick="handleCrashAction()">СДЕЛАТЬ СТАВКУ</button>
     </div>
 
-
-    <div
-        class="panel"
-        style="margin-top:16px"
-    >
-
+    <div class="panel" style="margin-top:16px">
         <div class="section-head">
-
-            <b>
-                Игроки
-            </b>
-
-            <span
-                style="
-                    color:#16a34a;
-                    font-size:11px;
-                    font-weight:950;
-                "
-            >
-                ● LIVE
-            </span>
-
+            <b>Игроки</b>
+            <span style="color:#16a34a; font-size:11px; font-weight:950;">● LIVE</span>
         </div>
-
-        <div
-            id="live-bets"
-            class="players"
-        ></div>
-
+        <div id="live-bets" class="players"></div>
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     MINES
-========================================================= -->
-
+<!-- MINES TAB -->
 <section id="tab-mines" class="tab">
-
     <div class="panel">
-
         <div class="section-head">
-
-            <b>
-                💣 МИНЫ
-            </b>
-
-            <span
-                id="mines-state-label"
-                style="
-                    color:#64748b;
-                    font-size:12px;
-                    font-weight:900;
-                "
-            >
-                Новая игра
-            </span>
-
+            <b>💣 МИНЫ</b>
+            <span id="mines-state-label" style="color:#64748b; font-size:12px; font-weight:900;">Новая игра</span>
         </div>
 
+        <div id="mines-grid" class="grid"></div>
 
-        <div
-            id="mines-grid"
-            class="grid"
-        ></div>
-
-
-        <label>
-            Сумма ставки
-        </label>
-
-        <input
-            id="mines-bet"
-            type="number"
-            min="0.01"
-            step="0.01"
-            value="0.10"
-        >
-
+        <label>Сумма ставки</label>
+        <input id="mines-bet" type="number" min="0.01" step="0.01" value="0.10">
 
         <div class="range-row">
-
-            <span>
-                Количество мин
-            </span>
-
-            <span id="mines-count">
-                3
-            </span>
-
+            <span>Количество мин</span>
+            <span id="mines-count">3</span>
         </div>
 
+        <input id="mines-slider" type="range" min="1" max="24" value="3">
 
-        <input
-            id="mines-slider"
-            type="range"
-            min="1"
-            max="24"
-            value="3"
-        >
-
-
-        <div
-            id="mines-multiplier"
-            class="multiplier"
-            style="display:none"
-        >
-
-            Коэффициент:
-
-            <span id="mine-mult">
-                1.00
-            </span>
-
-            x
-
+        <div id="mines-multiplier" class="multiplier" style="display:none">
+            Коэффициент: <span id="mine-mult">1.00</span> x
         </div>
 
+        <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
 
-        <button
-            id="mines-button"
-            class="primary"
-            onclick="handleMinesAction()"
-        >
-            СТАРТ
-        </button>
-
-
-        <div
-            style="
-                margin-top:12px;
-                color:#64748b;
-                text-align:center;
-                font-size:11px;
-                font-weight:800;
-                line-height:1.45;
-            "
-        >
-            После проигрыша поле полностью открывается:
-            мины показываются красным, безопасные клетки —
-            золотыми звёздами.
+        <div style="margin-top:12px; color:#64748b; text-align:center; font-size:11px; font-weight:800; line-height:1.45;">
+            После проигрыша поле полностью открывается: мины показываются красным, безопасные клетки — золотыми звёздами.
         </div>
-
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     CASES
-========================================================= -->
-
+<!-- CASES TAB -->
 <section id="tab-cases" class="tab">
-
-    <!-- CASE LIST -->
-
     <div id="cases-list">
-
         <div class="cases-header">
-
-            <div class="cases-title">
-                Кейсы
-            </div>
-
-            <div class="cases-subtitle">
-                Открывай кейсы и забирай призы
-            </div>
-
+            <div class="cases-title">Кейсы</div>
+            <div class="cases-subtitle">Открывай кейсы и забирай призы</div>
         </div>
-
 
         <div class="case-grid">
-
-            <!-- ЕЖЕДНЕВНЫЙ -->
-
-            <div
-                class="case-card available"
-                onclick="openCaseDetail('daily')"
-            >
-
-                <img
-                    class="case-card-image"
-                    src="./casep.png"
-                    alt="Ежедневный кейс"
-                >
-
-                <div class="case-card-name">
-                    Ежедневный
-                </div>
-
-                <div class="case-card-price">
-                    БЕСПЛАТНО
-                </div>
-
-                <div class="case-card-arrow">
-                    ›
-                </div>
-
+            <!-- Бесплатный ежедневный кейс -->
+            <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00])">
+                <img class="case-card-image" src="./case.png" alt="Ежедневный кейс">
+                <div class="case-card-name">Ежедневный кейс</div>
+                <div class="case-card-price">$0.00</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
-
-            <!-- БОНУСНЫЙ -->
-
-            <div
-                class="case-card available"
-                onclick="openCaseDetail('bonus')"
-            >
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt="Бонусный кейс"
-                >
-
-                <div class="case-card-name">
-                    Бонусный
-                </div>
-
-                <div class="case-card-price">
-                    $0.50
-                </div>
-
-                <div class="case-card-arrow">
-                    ›
-                </div>
-
+            <!-- Кейс 1: $0.20 (casecase.png) -->
+            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.08, 0.12, 0.20, 0.35, 0.60, 1.20])">
+                <img class="case-card-image" src="./casecase.png" alt="Mini Case">
+                <div class="case-card-name">Mini Case</div>
+                <div class="case-card-price">$0.20</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
-
-            <!-- ПОДАРОЧНЫЙ -->
-
-            <div
-                class="case-card available"
-                onclick="openCaseDetail('gift')"
-            >
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt="Подарочный кейс"
-                >
-
-                <div class="case-card-name">
-                    Подарочный
-                </div>
-
-                <div class="case-card-price">
-                    $1.00
-                </div>
-
-                <div class="case-card-arrow">
-                    ›
-                </div>
-
+            <!-- Кейс 2: $0.50 (casego.png) -->
+            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.20, 0.35, 0.50, 0.85, 1.50, 3.00])">
+                <img class="case-card-image" src="./casego.png" alt="Go Case">
+                <div class="case-card-name">Go Case</div>
+                <div class="case-card-price">$0.50</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
-
-            <!-- УДАЧА -->
-
-            <div
-                class="case-card available"
-                onclick="openCaseDetail('luck')"
-            >
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt="Кейс Удача"
-                >
-
-                <div class="case-card-name">
-                    Удача
-                </div>
-
-                <div class="case-card-price">
-                    $2.00
-                </div>
-
-                <div class="case-card-arrow">
-                    ›
-                </div>
-
+            <!-- Кейс 3: $1.00 (casepro.png) -->
+            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.40, 0.70, 1.00, 1.80, 3.50, 7.00])">
+                <img class="case-card-image" src="./casepro.png" alt="Pro Case">
+                <div class="case-card-name">Pro Case</div>
+                <div class="case-card-price">$1.00</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
+            <!-- Кейс 4: $1.50 (caser.png) -->
+            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.60, 1.00, 1.50, 2.70, 5.50, 11.00])">
+                <img class="case-card-image" src="./caser.png" alt="Rare Case">
+                <div class="case-card-name">Rare Case</div>
+                <div class="case-card-price">$1.50</div>
+                <div class="case-card-arrow">›</div>
+            </div>
+
+            <!-- Кейс 5: $2.00 (casevip.png) -->
+            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.80, 1.30, 2.00, 3.60, 8.00, 18.00])">
+                <img class="case-card-image" src="./casevip.png" alt="VIP Case">
+                <div class="case-card-name">VIP Case</div>
+                <div class="case-card-price">$2.00</div>
+                <div class="case-card-arrow">›</div>
+            </div>
         </div>
-
     </div>
 
+    <!-- CASE DETAIL -->
+    <div id="case-detail" class="case-detail">
+        <button class="case-back" onclick="closeCaseDetail()">← Все кейсы</button>
 
-    <!-- =====================================================
-         CASE DETAIL
-    ===================================================== -->
+        <div id="case-detail-card" class="case-detail-card ready">
+            <div id="detail-case-title" class="case-detail-title">Кейс</div>
+            <div id="detail-case-price" class="case-detail-price">$0.00</div>
 
-    <div
-        id="case-detail"
-        class="case-detail"
-    >
+            <img id="case-big-image" class="case-big-image" src="./case.png" alt="Кейс">
 
-        <button
-            class="case-back"
-            onclick="closeCaseDetail()"
-        >
-            ← Все кейсы
-        </button>
-
-
-        <div
-            id="case-detail-card"
-            class="case-detail-card ready"
-        >
-
-            <div
-                id="case-detail-title"
-                class="case-detail-title"
-            >
-                Ежедневный
+            <div id="roulette-wrap" class="roulette-wrap">
+                <div id="roulette-strip" class="roulette-strip"></div>
+                <div class="roulette-fade-left"></div>
+                <div class="roulette-fade-right"></div>
+                <div class="roulette-marker"></div>
             </div>
 
+            <div id="case-result" class="case-result">Нажми на кнопку, чтобы открыть кейс</div>
 
-            <div
-                id="case-detail-price"
-                class="case-detail-price"
-            >
-                БЕСПЛАТНО
+            <button id="case-button" class="primary gold" onclick="openCurrentCase()">ОТКРЫТЬ</button>
+
+            <div id="case-timer" class="case-timer"></div>
+
+            <div class="prizes-title">Возможные призы</div>
+
+            <div id="prizes-grid" class="prizes-grid">
+                <!-- Динамически заполняется скриптом -->
             </div>
 
-
-            <img
-                id="case-big-image"
-                class="case-big-image"
-                src="./casep.png"
-                alt="Кейс"
-            >
-
-
-            <div
-                id="roulette-wrap"
-                class="roulette-wrap"
-            >
-
-                <div
-                    id="roulette-strip"
-                    class="roulette-strip"
-                ></div>
-
-                <div
-                    class="roulette-fade-left"
-                ></div>
-
-                <div
-                    class="roulette-fade-right"
-                ></div>
-
-                <div
-                    class="roulette-marker"
-                ></div>
-
+            <div id="case-note" class="case-note">
+                Открытие кейса списывает его стоимость с баланса и мгновенно зачисляет выигрыш.
             </div>
-
-
-            <div
-                id="case-result"
-                class="case-result"
-            >
-                Нажми на кнопку, чтобы открыть кейс
-            </div>
-
-
-            <button
-                id="case-button"
-                class="primary gold"
-                onclick="openSelectedCase()"
-            >
-                ОТКРЫТЬ
-            </button>
-
-
-            <div
-                id="case-timer"
-                class="case-timer"
-            ></div>
-
-
-            <div class="prizes-title">
-                Возможные призы
-            </div>
-
-
-            <div
-                id="prizes-grid"
-                class="prizes-grid"
-            ></div>
-
-
-            <div class="case-note">
-                Шанс выпадения каждого приза определяется
-                настройками конкретного кейса. После открытия
-                выигрыш автоматически добавляется на баланс.
-            </div>
-
         </div>
-
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     PROFILE
-========================================================= -->
-
-<section
-    id="tab-profile"
-    class="tab"
->
-
+<!-- PROFILE TAB -->
+<section id="tab-profile" class="tab">
     <div class="panel profile">
+        <div id="avatar" class="avatar">👤</div>
+        <h2 id="username">Игрок</h2>
 
-        <div
-            id="avatar"
-            class="avatar"
-        >
-            👤
+        <div class="balance" style="display:inline-flex; margin:16px 0 20px;">
+            <span class="balance-icon">$</span>
+            <span id="profile-balance">1.00</span>
         </div>
 
+        <button id="bonus-button" class="primary green" onclick="claimBonus()">🎁 Получить $1.00</button>
 
-        <h2 id="username">
-            Игрок
-        </h2>
-
-
-        <div
-            class="balance"
-            style="
-                display:inline-flex;
-                margin:16px 0 20px;
-            "
-        >
-
-            <span class="balance-icon">
-                $
-            </span>
-
-            <span id="profile-balance">
-                1.00
-            </span>
-
-        </div>
-
-
-        <button
-            id="bonus-button"
-            class="primary green"
-            onclick="claimBonus()"
-        >
-            🎁 Получить $1.00
-        </button>
-
-
-        <button
-            onclick="openAdminPanel()"
-            style="
-                margin-top:18px;
-                background:none;
-                border:none;
-                color:#64748b;
-                font-size:12px;
-                font-weight:900;
-                cursor:pointer;
-            "
-        >
+        <button onclick="openAdminPanel()" style="margin-top: 18px; background: none; border: none; color: #64748b; font-size: 12px; font-weight: 900; cursor: pointer;">
             ⚙️ Админ-панель
         </button>
 
-
-        <div
-            style="
-                margin-top:14px;
-                color:#64748b;
-                font-size:11px;
-                font-weight:800;
-            "
-        >
+        <div style="margin-top:14px; color:#64748b; font-size:11px; font-weight:800;">
             Баланс синхронизирован с базой.
         </div>
-
     </div>
-
 </section>
 
 </main>
 
-
-<!-- =========================================================
-     ADMIN MODAL
-========================================================= -->
-
-<div
-    id="admin-modal"
-    style="
-        position:fixed;
-        inset:0;
-        background:rgba(30,27,75,0.85);
-        z-index:999;
-        display:none;
-        flex-direction:column;
-        padding:20px;
-        overflow-y:auto;
-    "
->
-
-    <div
-        style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:20px;
-        "
-    >
-
-        <h3
-            style="
-                margin:0;
-                font-size:20px;
-                color:#facc15;
-            "
-        >
-            👑 Панель Администратора
-        </h3>
-
-
-        <button
-            onclick="closeAdminPanel()"
-            style="
-                background:#ffffff;
-                color:#1e1b4b;
-                border:none;
-                padding:8px 14px;
-                border-radius:10px;
-                font-weight:950;
-            "
-        >
-            Закрыть ✕
-        </button>
-
+<!-- ADMIN MODAL -->
+<div id="admin-modal" style="position: fixed; inset: 0; background: rgba(30, 27, 75, 0.85); z-index: 999; display: none; flex-direction: column; padding: 20px; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; font-size: 20px; color: #facc15;">👑 Панель Администратора</h3>
+        <button onclick="closeAdminPanel()" style="background: #ffffff; color: #1e1b4b; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 950;">Закрыть ✕</button>
     </div>
-
-
-    <div
-        class="panel"
-        style="margin-bottom:15px;"
-    >
-
-        <h4
-            style="
-                margin:0 0 10px 0;
-                font-size:14px;
-                color:#64748b;
-            "
-        >
-            Список игроков из базы данных:
-        </h4>
-
-
-        <div
-            id="admin-players-list"
-            style="
-                display:grid;
-                gap:8px;
-                max-height:350px;
-                overflow-y:auto;
-            "
-        >
-
-            <p
-                style="
-                    color:#64748b;
-                    text-align:center;
-                "
-            >
-                Загрузка игроков...
-            </p>
-
+    <div class="panel" style="margin-bottom: 15px;">
+        <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #64748b;">Список игроков из базы данных:</h4>
+        <div id="admin-players-list" style="display: grid; gap: 8px; max-height: 350px; overflow-y: auto;">
+            <p style="color: #64748b; text-align: center;">Загрузка игроков...</p>
         </div>
-
     </div>
-
 </div>
 
-
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
-
+<!-- NAVIGATION -->
 <nav>
-
-    <button
-        data-tab="crash"
-        class="active"
-        onclick="switchTab('crash')"
-    >
-
-        <span class="nav-icon">
-            🚀
-        </span>
-
-        РАКЕТКА
-
+    <button data-tab="crash" class="active" onclick="switchTab('crash')">
+        <span class="nav-icon">🚀</span> РАКЕТКА
     </button>
-
-
-    <button
-        data-tab="mines"
-        onclick="switchTab('mines')"
-    >
-
-        <span class="nav-icon">
-            💣
-        </span>
-
-        МИНЫ
-
+    <button data-tab="mines" onclick="switchTab('mines')">
+        <span class="nav-icon">💣</span> МИНЫ
     </button>
-
-
-    <button
-        data-tab="cases"
-        onclick="switchTab('cases')"
-    >
-
-        <span class="nav-icon">
-            🎁
-        </span>
-
-        КЕЙСЫ
-
+    <button data-tab="cases" onclick="switchTab('cases')">
+        <span class="nav-icon">🎁</span> КЕЙСЫ
     </button>
-
-
-    <button
-        data-tab="profile"
-        onclick="switchTab('profile')"
-    >
-
-        <span class="nav-icon">
-            👤
-        </span>
-
-        ПРОФИЛЬ
-
+    <button data-tab="profile" onclick="switchTab('profile')">
+        <span class="nav-icon">👤</span> ПРОФИЛЬ
     </button>
-
 </nav>
 
-
 <script>
-
-/* =========================================================
-   TELEGRAM
-========================================================= */
-
 const tg = window.Telegram?.WebApp;
-
 try {
-
     tg?.ready();
     tg?.expand();
     tg?.setHeaderColor("#ffffff");
     tg?.setBackgroundColor("#f0f4ff");
-
 } catch(e) {}
 
-
-const telegramUser =
-    tg?.initDataUnsafe?.user || null;
-
-
-const $ = id =>
-    document.getElementById(id);
-
+const telegramUser = tg?.initDataUnsafe?.user || null;
+const $ = id => document.getElementById(id);
 
 function money(number) {
-
-    return (
-        Math.round(
-            (Number(number) + Number.EPSILON) * 100
-        ) / 100
-    ).toFixed(2);
-
+    return (Math.round((Number(number) + Number.EPSILON) * 100) / 100).toFixed(2);
 }
-
 
 function haptic(type = "light") {
-
-    try {
-        tg?.HapticFeedback?.impactOccurred(type);
-    } catch(e) {}
-
+    try { tg?.HapticFeedback?.impactOccurred(type); } catch(e) {}
 }
-
 
 function notify(type = "success") {
-
-    try {
-        tg?.HapticFeedback?.notificationOccurred(type);
-    } catch(e) {}
-
+    try { tg?.HapticFeedback?.notificationOccurred(type); } catch(e) {}
 }
 
+const ADMIN_PASSWORD = "tucha2026"; 
+const SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT"; 
 
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-const ADMIN_PASSWORD =
-    "tucha2026";
-
-
-const SCRIPT_URL =
-    "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT";
-
-
-const userId =
-    telegramUser
-        ? String(telegramUser.id)
-        : "demo_user";
-
-
-const userName =
-    telegramUser?.first_name ||
-    "Игрок";
-
+const userId = telegramUser ? String(telegramUser.id) : "demo_user";
+const userName = telegramUser?.first_name || "Игрок";
 
 let balance = 1.00;
-
 let bonusCount = 0;
 
-
-/* =========================================================
-   USER DATA
-========================================================= */
-
 function loadUserData() {
-
     if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
-
-        const storageKey =
-            "tucha-game-" + userId;
-
+        const storageKey = "tucha-game-" + userId;
         try {
-
-            let saved =
-                JSON.parse(
-                    localStorage.getItem(storageKey) || "{}"
-                );
-
-            if (
-                Number.isFinite(
-                    Number(saved.balance)
-                )
-            ) {
-
-                balance =
-                    Number(saved.balance);
-
-            }
-
-            bonusCount =
-                Number(saved.bonusCount) || 0;
-
+            let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+            if (Number.isFinite(Number(saved.balance))) balance = Number(saved.balance);
+            bonusCount = Number(saved.bonusCount) || 0;
         } catch(e) {}
-
         updateBalance();
-
         return;
     }
 
-
-    fetch(
-        SCRIPT_URL,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                action: "get",
-                userid: userId,
-                username: userName,
-                balance: 1.00,
-                bonuscount: 0
-            })
-        }
-    )
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "get", userid: userId, username: userName, balance: 1.00, bonuscount: 0})
+    })
     .then(res => res.json())
     .then(data => {
-
-        if (data.status === "success") {
-
-            balance =
-                parseFloat(data.balance);
-
-            bonusCount =
-                parseInt(data.bonuscount);
-
+        if(data.status === "success") {
+            balance = parseFloat(data.balance);
+            bonusCount = parseInt(data.bonuscount);
             updateBalance();
-
         }
-
-    })
-    .catch(err => {
-
-        updateBalance();
-
-    });
-
+    }).catch(err => { updateBalance(); });
 }
-
 
 function saveUserData() {
-
-    if (
-        SCRIPT_URL.includes("ВСТАВЬ_СЮДА")
-    ) {
-
-        const storageKey =
-            "tucha-game-" + userId;
-
-        try {
-
-            localStorage.setItem(
-                storageKey,
-                JSON.stringify({
-                    balance,
-                    bonusCount
-                })
-            );
-
-        } catch(e) {}
-
+    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+        const storageKey = "tucha-game-" + userId;
+        try { localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount })); } catch(e) {}
         return;
     }
-
-
-    fetch(
-        SCRIPT_URL,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                action: "update",
-                userid: userId,
-                username: userName,
-                balance: balance,
-                bonuscount: bonusCount
-            })
-        }
-    ).catch(err => {});
-
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "update", userid: userId, username: userName, balance: balance, bonuscount: bonusCount})
+    }).catch(err => {});
 }
-
 
 function updateBalance() {
-
-    $("header-balance").textContent =
-        money(balance);
-
-    $("profile-balance").textContent =
-        money(balance);
-
-
+    $("header-balance").textContent = money(balance);
+    $("profile-balance").textContent = money(balance);
     if ($("bonus-button")) {
-
-        $("bonus-button").style.display =
-            bonusCount >= 2
-                ? "none"
-                : "block";
-
+        $("bonus-button").style.display = bonusCount >= 2 ? "none" : "block";
     }
-
-
     saveUserData();
-
 }
-
-
-/* =========================================================
-   TELEGRAM PROFILE
-========================================================= */
 
 if (telegramUser) {
-
-    $("username").textContent =
-        telegramUser.first_name ||
-        "Игрок";
-
-
+    $("username").textContent = telegramUser.first_name || "Игрок";
     if (telegramUser.photo_url) {
-
-        const img =
-            document.createElement("img");
-
-        img.src =
-            telegramUser.photo_url;
-
+        const img = document.createElement("img");
+        img.src = telegramUser.photo_url;
         $("avatar").innerHTML = "";
-
         $("avatar").appendChild(img);
-
     }
-
 }
-
-
-/* =========================================================
-   BONUS
-========================================================= */
 
 function claimBonus() {
-
     if (bonusCount >= 2) return;
-
     balance += 1;
-
     bonusCount++;
-
     updateBalance();
-
     notify("success");
-
 }
-
-
-/* =========================================================
-   ADMIN
-========================================================= */
 
 function openAdminPanel() {
-
-    let pass =
-        prompt(
-            "Введите пароль администратора:"
-        );
-
-
+    let pass = prompt("Введите пароль администратора:");
     if (pass === ADMIN_PASSWORD) {
-
-        $("admin-modal").style.display =
-            "flex";
-
+        $("admin-modal").style.display = "flex";
         fetchAllPlayers();
-
         notify("success");
-
     } else if (pass !== null) {
-
         alert("Неверный пароль!");
-
         notify("error");
-
     }
-
 }
-
 
 function closeAdminPanel() {
-
-    $("admin-modal").style.display =
-        "none";
-
+    $("admin-modal").style.display = "none";
 }
-
 
 function fetchAllPlayers() {
-
-    const listDiv =
-        $("admin-players-list");
-
-
-    listDiv.innerHTML =
-        '<p style="color:#64748b;text-align:center;">Загрузка игроков из базы...</p>';
-
-
-    if (
-        SCRIPT_URL.includes("ВСТАВЬ_СЮДА")
-    ) {
-
-        listDiv.innerHTML =
-            '<p style="color:#f87171;text-align:center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
-
+    const listDiv = $("admin-players-list");
+    listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Загрузка игроков из базы...</p>';
+    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
         return;
     }
-
-
-    fetch(
-        SCRIPT_URL,
-        {
-            method: "POST",
-            body: JSON.stringify({
-                action: "get_all"
-            })
-        }
-    )
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "get_all"})
+    })
     .then(res => res.json())
     .then(data => {
-
-        if (data.status === "success") {
-
-            listDiv.innerHTML = "";
-
-
+        if(data.status === "success") {
+            listDiv.innerHTML = '';
             if (data.players.length === 0) {
-
-                listDiv.innerHTML =
-                    '<p style="color:#64748b;text-align:center;">Пока нет игроков в базе.</p>';
-
+                listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Пока нет игроков в базе.</p>';
                 return;
-
             }
-
-
             data.players.forEach(p => {
-
                 listDiv.innerHTML += `
-
-                    <div
-                        style="
-                            background:#f8fafc;
-                            padding:12px;
-                            border-radius:12px;
-                            display:flex;
-                            justify-content:space-between;
-                            align-items:center;
-                            border:2px solid rgba(59,130,246,0.08)
-                        "
-                    >
-
+                    <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid rgba(59,130,246,0.08)">
                         <div>
-
-                            <div
-                                style="
-                                    font-weight:950;
-                                    font-size:14px;
-                                    color:#0f172a;
-                                "
-                            >
-                                ${p.username}
-                            </div>
-
-
-                            <div
-                                style="
-                                    font-size:11px;
-                                    color:#64748b;
-                                    font-weight:800;
-                                "
-                            >
-                                ID: ${p.userid}
-                                |
-                                Бонусов:
-                                ${p.bonuscount}/2
-                            </div>
-
-
-                            <div
-                                style="
-                                    font-size:13px;
-                                    color:#16a34a;
-                                    font-weight:950;
-                                    margin-top:2px;
-                                "
-                            >
-                                $${parseFloat(p.balance).toFixed(2)}
-                            </div>
-
+                            <div style="font-weight: 950; font-size: 14px; color: #0f172a;">${p.username}</div>
+                            <div style="font-size: 11px; color: #64748b; font-weight: 800;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
+                            <div style="font-size: 13px; color: #16a34a; font-weight: 950; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
                         </div>
-
-
-                        <button
-                            onclick="adminEditBalance(
-                                '${p.userid}',
-                                '${p.username}',
-                                ${p.balance},
-                                ${p.bonuscount}
-                            )"
-                            style="
-                                background:#2563eb;
-                                color:white;
-                                border:none;
-                                padding:7px 14px;
-                                border-radius:9px;
-                                font-size:12px;
-                                font-weight:950;
-                            "
-                        >
-                            Изменить $
-                        </button>
-
+                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #2563eb; color: white; border: none; padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 950;">Изменить $</button>
                     </div>
-
                 `;
-
             });
-
         }
-
-    })
-    .catch(err => {
-
-        listDiv.innerHTML =
-            '<p style="color:#f87171;text-align:center;">Ошибка соединения с базой.</p>';
-
+    }).catch(err => {
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базой.</p>';
     });
-
 }
 
-
-function adminEditBalance(
-    targetId,
-    targetName,
-    currentBal,
-    currentBonus
-) {
-
-    let newB =
-        prompt(
-            `Введите новый баланс для игрока ${targetName}:`,
-            currentBal
-        );
-
-
-    if (
-        newB !== null &&
-        !isNaN(newB)
-    ) {
-
-        fetch(
-            SCRIPT_URL,
-            {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "update",
-                    userid: targetId,
-                    username: targetName,
-                    balance: parseFloat(newB),
-                    bonuscount: currentBonus
-                })
-            }
-        )
-        .then(() => {
-
+function adminEditBalance(targetId, targetName, currentBal, currentBonus) {
+    let newB = prompt(`Введите новый баланс для игрока ${targetName}:`, currentBal);
+    if (newB !== null && !isNaN(newB)) {
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({action: "update", userid: targetId, username: targetName, balance: parseFloat(newB), bonuscount: currentBonus})
+        }).then(() => {
             alert("Баланс обновлен!");
-
             fetchAllPlayers();
-
-
             if (targetId === userId) {
-
-                balance =
-                    parseFloat(newB);
-
+                balance = parseFloat(newB);
                 updateBalance();
-
             }
-
         });
-
     }
-
 }
-
-
-/* =========================================================
-   TABS
-========================================================= */
 
 function switchTab(name) {
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(section => {
-
-            section.classList.toggle(
-                "active",
-                section.id === "tab-" + name
-            );
-
-        });
-
-
-    document
-        .querySelectorAll("nav button")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.tab === name
-            );
-
-        });
-
-
+    document.querySelectorAll(".tab").forEach(section => {
+        section.classList.toggle("active", section.id === "tab-" + name);
+    });
+    document.querySelectorAll("nav button").forEach(button => {
+        button.classList.toggle("active", button.dataset.tab === name);
+    });
     haptic();
-
 }
 
-
-/* =========================================================
-   CRASH
-========================================================= */
-
-let crashState = "waiting";
-
-let crashBet = 0;
-
-let inCrash = false;
-
-let crashMultiplier = 1;
-
-let crashTarget = 2;
-
-let crashTimer = null;
-
-let crashTick = null;
-
-let crashRestart = null;
-
-let simulatedPlayers = [];
-
-let myCrashResult = null;
-
-const rocket =
-    $("rocket");
-
+/* CRASH LOGIC */
+let crashState = "waiting", crashBet = 0, inCrash = false, crashMultiplier = 1, crashTarget = 2;
+let crashTimer = null, crashTick = null, crashRestart = null, simulatedPlayers = [], myCrashResult = null;
+const rocket = $("rocket");
 
 function createDemoPlayers() {
-
-    const names = [
-        "Саня",
-        "CryptoKing",
-        "Masha",
-        "DarkPro",
-        "Ivan",
-        "TuchaFan",
-        "Lucky"
-    ];
-
-
-    simulatedPlayers =
-        Array.from(
-            {length: 7},
-            (_, index) => ({
-
-                id:
-                    "bot-" + index,
-
-                name:
-                    names[
-                        Math.floor(
-                            Math.random() *
-                            names.length
-                        )
-                    ],
-
-                bet:
-                    Math.round(
-                        (
-                            .10 +
-                            Math.random() * 2
-                        ) * 100
-                    ) / 100,
-
-                cashout:
-                    Math.random() < .75
-                        ? Number(
-                            (
-                                1.1 +
-                                Math.random() * 3
-                            ).toFixed(2)
-                        )
-                        : null,
-
-                status:
-                    "waiting"
-
-            })
-        );
-
+    const names = ["Саня", "CryptoKing", "Masha", "DarkPro", "Ivan", "TuchaFan", "Lucky"];
+    simulatedPlayers = Array.from({length: 7}, (_, index) => ({
+        id: "bot-" + index,
+        name: names[Math.floor(Math.random() * names.length)],
+        bet: Math.round((.10 + Math.random() * 2) * 100) / 100,
+        cashout: Math.random() < .75 ? Number((1.1 + Math.random() * 3).toFixed(2)) : null,
+        status: "waiting"
+    }));
 }
-
 
 function renderCrashPlayers() {
-
-    const container =
-        $("live-bets");
-
-
+    const container = $("live-bets");
     container.innerHTML = "";
-
-
-    const list =
-        simulatedPlayers.map(
-            player => ({
-                ...player,
-                you: false
-            })
-        );
-
-
+    const list = simulatedPlayers.map(player => ({ ...player, you: false }));
     if (crashBet > 0) {
-
         list.unshift({
-
             id: "you",
-
-            name:
-                telegramUser?.first_name ||
-                "Ты",
-
-            bet:
-                crashBet,
-
+            name: telegramUser?.first_name || "Ты",
+            bet: crashBet,
             you: true,
-
-            cashout:
-                myCrashResult?.x ||
-                null,
-
-            status:
-                myCrashResult?.status ||
-                (
-                    inCrash
-                        ? "playing"
-                        : "waiting"
-                )
-
+            cashout: myCrashResult?.x || null,
+            status: myCrashResult?.status || (inCrash ? "playing" : "waiting")
         });
-
     }
-
-
     list.forEach(player => {
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "player" +
-            (player.you ? " you" : "");
-
-
-        const left =
-            document.createElement("div");
-
-
-        const name =
-            document.createElement("div");
-
-        name.className =
-            "player-name";
-
-
-        name.textContent =
-            (player.you
-                ? "👤 "
-                : "👥 "
-            ) +
-            player.name +
-            (
-                player.you
-                    ? " (ТЫ)"
-                    : ""
-            );
-
-
-        const detail =
-            document.createElement("div");
-
-        detail.className =
-            "player-detail";
-
-
-        detail.textContent =
-            "Ставка: $" +
-            money(player.bet);
-
-
+        const row = document.createElement("div");
+        row.className = "player" + (player.you ? " you" : "");
+        const left = document.createElement("div");
+        const name = document.createElement("div");
+        name.className = "player-name";
+        name.textContent = (player.you ? "👤 " : "👥 ") + player.name + (player.you ? " (ТЫ)" : "");
+        const detail = document.createElement("div");
+        detail.className = "player-detail";
+        detail.textContent = "Ставка: $" + money(player.bet);
         left.appendChild(name);
-
         left.appendChild(detail);
 
-
-        const right =
-            document.createElement("div");
-
-
-        const x =
-            document.createElement("div");
-
-        x.className =
-            "player-x";
-
-
-        const status =
-            document.createElement("div");
-
-        status.className =
-            "player-status";
-
+        const right = document.createElement("div");
+        const x = document.createElement("div");
+        x.className = "player-x";
+        const status = document.createElement("div");
+        status.className = "player-status";
 
         if (player.status === "won") {
-
-            x.textContent =
-                Number(
-                    player.cashout
-                ).toFixed(2) + "x";
-
-            status.classList.add(
-                "status-win"
-            );
-
-            status.textContent =
-                "✓ ЗАБРАЛ";
-
-        }
-
-        else if (
-            player.status === "lost"
-        ) {
-
-            x.textContent =
-                crashTarget.toFixed(2) +
-                "x";
-
-            status.classList.add(
-                "status-loss"
-            );
-
-            status.textContent =
-                "✕ НЕ УСПЕЛ";
-
-        }
-
-        else if (
-            player.status === "playing"
-        ) {
-
-            x.textContent =
-                crashMultiplier.toFixed(2) +
-                "x";
-
-            status.classList.add(
-                "status-live"
-            );
-
-            status.textContent =
-                "В ИГРЕ";
-
-        }
-
-        else {
-
+            x.textContent = Number(player.cashout).toFixed(2) + "x";
+            status.classList.add("status-win");
+            status.textContent = "✓ ЗАБРАЛ";
+        } else if (player.status === "lost") {
+            x.textContent = crashTarget.toFixed(2) + "x";
+            status.classList.add("status-loss");
+            status.textContent = "✕ НЕ УСПЕЛ";
+        } else if (player.status === "playing") {
+            x.textContent = crashMultiplier.toFixed(2) + "x";
+            status.classList.add("status-live");
+            status.textContent = "В ИГРЕ";
+        } else {
             x.textContent = "—";
-
-            status.classList.add(
-                "status-wait"
-            );
-
-            status.textContent =
-                "ОЖИДАНИЕ";
-
+            status.classList.add("status-wait");
+            status.textContent = "ОЖИДАНИЕ";
         }
-
-
         right.appendChild(x);
-
         right.appendChild(status);
-
         row.appendChild(left);
-
         row.appendChild(right);
-
         container.appendChild(row);
-
     });
-
 }
-
 
 function startCrashRound() {
-
     clearInterval(crashTimer);
-
     clearInterval(crashTick);
-
     clearTimeout(crashRestart);
-
-
     crashState = "waiting";
-
     crashBet = 0;
-
     inCrash = false;
-
     myCrashResult = null;
-
     crashMultiplier = 1;
-
-
-    rocket.className =
-        "flying";
-
-    rocket.style.transform =
-        "";
-
-
-    $("crash-status").style.color =
-        "#1e1b4b";
-
-
-    $("crash-button").disabled =
-        false;
-
-    $("crash-button").className =
-        "primary";
-
-    $("crash-button").textContent =
-        "СДЕЛАТЬ СТАВКУ";
-
-
+    rocket.className = "flying";
+    rocket.style.transform = "";
+    $("crash-status").style.color = "#1e1b4b";
+    $("crash-button").disabled = false;
+    $("crash-button").className = "primary";
+    $("crash-button").textContent = "СДЕЛАТЬ СТАВКУ";
     createDemoPlayers();
-
-
     let seconds = 5;
-
-
-    $("crash-status").textContent =
-        "СТАРТ ЧЕРЕЗ " +
-        seconds;
-
-
+    $("crash-status").textContent = "СТАРТ ЧЕРЕЗ " + seconds;
     renderCrashPlayers();
-
-
-    crashTimer =
-        setInterval(() => {
-
-            seconds--;
-
-
-            if (seconds > 0) {
-
-                $("crash-status").textContent =
-                    "СТАРТ ЧЕРЕЗ " +
-                    seconds;
-
-            }
-
-            else {
-
-                clearInterval(
-                    crashTimer
-                );
-
-                runCrash();
-
-            }
-
-        }, 1000);
-
+    crashTimer = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+            $("crash-status").textContent = "СТАРТ ЧЕРЕЗ " + seconds;
+        } else {
+            clearInterval(crashTimer);
+            runCrash();
+        }
+    }, 1000);
 }
-
 
 function runCrash() {
-
-    crashState =
-        "flying";
-
-    crashMultiplier =
-        1;
-
-
-    crashTarget =
-        Math.random() < .08
-            ? 5 + Math.random() * 7
-            : 1.2 + Math.random() * 3.8;
-
-
-    $("crash-status").textContent =
-        "1.00x";
-
-
-    $("crash-button").disabled =
-        !inCrash;
-
-
-    simulatedPlayers.forEach(
-        player => {
-            player.status =
-                "playing";
-        }
-    );
-
-
+    crashState = "flying";
+    crashMultiplier = 1;
+    crashTarget = Math.random() < .08 ? 5 + Math.random() * 7 : 1.2 + Math.random() * 3.8;
+    $("crash-status").textContent = "1.00x";
+    $("crash-button").disabled = !inCrash;
+    simulatedPlayers.forEach(player => { player.status = "playing"; });
     renderCrashPlayers();
-
-
-    crashTick =
-        setInterval(() => {
-
-            crashMultiplier += .01;
-
-
-            $("crash-status").textContent =
-                crashMultiplier.toFixed(2) +
-                "x";
-
-
-            if (inCrash) {
-
-                $("crash-button").textContent =
-                    "ЗАБРАТЬ $" +
-                    money(
-                        crashBet *
-                        crashMultiplier
-                    );
-
+    crashTick = setInterval(() => {
+        crashMultiplier += .01;
+        $("crash-status").textContent = crashMultiplier.toFixed(2) + "x";
+        if (inCrash) {
+            $("crash-button").textContent = "ЗАБРАТЬ $" + money(crashBet * crashMultiplier);
+        }
+        simulatedPlayers.forEach(player => {
+            if (player.status === "playing" && player.cashout !== null && crashMultiplier >= player.cashout && player.cashout < crashTarget) {
+                player.status = "won";
             }
-
-
-            simulatedPlayers.forEach(
-                player => {
-
-                    if (
-                        player.status ===
-                            "playing" &&
-                        player.cashout !== null &&
-                        crashMultiplier >=
-                            player.cashout &&
-                        player.cashout <
-                            crashTarget
-                    ) {
-
-                        player.status =
-                            "won";
-
-                    }
-
-                }
-            );
-
-
-            renderCrashPlayers();
-
-
-            if (
-                crashMultiplier >=
-                crashTarget
-            ) {
-
-                crashEnd();
-
-            }
-
-        }, 60);
-
+        });
+        renderCrashPlayers();
+        if (crashMultiplier >= crashTarget) {
+            crashEnd();
+        }
+    }, 60);
 }
-
 
 function crashEnd() {
-
-    clearInterval(
-        crashTick
-    );
-
-
-    crashState =
-        "crashed";
-
-
-    rocket.className =
-        "crashed";
-
-
-    rocket.style.transform =
-        "rotate(140deg)";
-
-
-    $("crash-status").textContent =
-        "КРАШ " +
-        crashTarget.toFixed(2) +
-        "x";
-
-
-    $("crash-status").style.color =
-        "#dc2626";
-
-
+    clearInterval(crashTick);
+    crashState = "crashed";
+    rocket.className = "crashed";
+    rocket.style.transform = "rotate(140deg)";
+    $("crash-status").textContent = "КРАШ " + crashTarget.toFixed(2) + "x";
+    $("crash-status").style.color = "#dc2626";
     if (inCrash) {
-
         inCrash = false;
-
-        myCrashResult = {
-            status: "lost",
-            x: null
-        };
-
+        myCrashResult = { status: "lost", x: null };
     }
-
-
-    simulatedPlayers.forEach(
-        player => {
-
-            if (
-                player.status ===
-                "playing"
-            ) {
-
-                player.status =
-                    "lost";
-
-            }
-
-        }
-    );
-
-
+    simulatedPlayers.forEach(player => {
+        if (player.status === "playing") player.status = "lost";
+    });
     renderCrashPlayers();
-
-
-    $("crash-button").disabled =
-        true;
-
-    $("crash-button").textContent =
-        "РАУНД ЗАВЕРШЁН";
-
-
+    $("crash-button").disabled = true;
+    $("crash-button").textContent = "РАУНД ЗАВЕРШЁН";
     notify("error");
-
-
-    crashRestart =
-        setTimeout(
-            startCrashRound,
-            3000
-        );
-
+    crashRestart = setTimeout(startCrashRound, 3000);
 }
-
 
 function readBet(inputId) {
-
-    const value =
-        Number(
-            $(inputId).value
-        );
-
-
-    if (
-        !Number.isFinite(value) ||
-        value <= 0 ||
-        value > balance
-    ) {
-
-        alert(
-            "Проверь сумму ставки и баланс."
-        );
-
+    const value = Number($(inputId).value);
+    if (!Number.isFinite(value) || value <= 0 || value > balance) {
+        alert("Проверь сумму ставки и баланс.");
         return null;
-
     }
-
-
-    return Math.round(
-        value * 100
-    ) / 100;
-
+    return Math.round(value * 100) / 100;
 }
-
 
 function handleCrashAction() {
-
-    if (
-        crashState ===
-        "waiting"
-    ) {
-
-        const bet =
-            readBet("crash-bet");
-
-
-        if (bet === null)
-            return;
-
-
+    if (crashState === "waiting") {
+        const bet = readBet("crash-bet");
+        if (bet === null) return;
         balance -= bet;
-
-        crashBet =
-            bet;
-
-        inCrash =
-            true;
-
-
-        myCrashResult = {
-            status: "playing",
-            x: null
-        };
-
-
+        crashBet = bet;
+        inCrash = true;
+        myCrashResult = { status: "playing", x: null };
         updateBalance();
-
         renderCrashPlayers();
-
-
-        $("crash-button").disabled =
-            true;
-
-
-        $("crash-button").textContent =
-            "СТАВКА ПРИНЯТА";
-
-
+        $("crash-button").disabled = true;
+        $("crash-button").textContent = "СТАВКА ПРИНЯТА";
         haptic("medium");
-
         return;
-
     }
-
-
-    if (
-        crashState ===
-            "flying" &&
-        inCrash
-    ) {
-
-        const x =
-            Number(
-                crashMultiplier.toFixed(2)
-            );
-
-
-        const win =
-            Math.floor(
-                crashBet *
-                x *
-                100
-            ) / 100;
-
-
+    if (crashState === "flying" && inCrash) {
+        const x = Number(crashMultiplier.toFixed(2));
+        const win = Math.floor(crashBet * x * 100) / 100;
         balance += win;
-
-        inCrash =
-            false;
-
-
-        myCrashResult = {
-            status: "won",
-            x: x
-        };
-
-
+        inCrash = false;
+        myCrashResult = { status: "won", x: x };
         updateBalance();
-
         renderCrashPlayers();
-
-
-        $("crash-button").disabled =
-            true;
-
-
-        $("crash-button").className =
-            "primary green";
-
-
-        $("crash-button").textContent =
-            "ВЫИГРАНО $" +
-            money(win);
-
-
+        $("crash-button").disabled = true;
+        $("crash-button").className = "primary green";
+        $("crash-button").textContent = "ВЫИГРАНО $" + money(win);
         notify("success");
-
     }
-
 }
 
-
-/* =========================================================
-   MINES
-========================================================= */
-
-let minesState =
-    "idle";
-
-let minePositions =
-    [];
-
-let mineBet =
-    0;
-
-let mineMultiplier =
-    1;
-
-let safeOpened =
-    0;
-
-let bombCount =
-    3;
-
-
-const minesGrid =
-    $("mines-grid");
-
+/* MINES LOGIC */
+let minesState = "idle", minePositions = [], mineBet = 0, mineMultiplier = 1, safeOpened = 0, bombCount = 3;
+const minesGrid = $("mines-grid");
 
 function starSVG() {
-
     return `
-
-        <svg
-            class="star-svg"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-
+        <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <defs>
-
-                <linearGradient
-                    id="goldStar"
-                    x1="0"
-                    y1="0"
-                    x2=".8"
-                    y2="1"
-                >
-
-                    <stop
-                        offset="0%"
-                        stop-color="#fff4a3"
-                    />
-
-                    <stop
-                        offset="35%"
-                        stop-color="#ffdc45"
-                    />
-
-                    <stop
-                        offset="75%"
-                        stop-color="#ffad18"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#f17b00"
-                    />
-
+                <linearGradient id="goldStar" x1="0" y1="0" x2=".8" y2="1">
+                    <stop offset="0%" stop-color="#fff4a3"/>
+                    <stop offset="35%" stop-color="#ffdc45"/>
+                    <stop offset="75%" stop-color="#ffad18"/>
+                    <stop offset="100%" stop-color="#f17b00"/>
                 </linearGradient>
-
             </defs>
-
-
-            <path
-                d="
-                    M50 5
-                    L62 35
-                    L94 37
-                    L70 58
-                    L78 90
-                    L50 73
-                    L22 90
-                    L30 58
-                    L6 37
-                    L38 35
-                    Z
-                "
-                fill="url(#goldStar)"
-                stroke="#ffed91"
-                stroke-width="2.5"
-                stroke-linejoin="round"
-            />
-
+            <path d="M50 5 L62 35 L94 37 L70 58 L78 90 L50 73 L22 90 L30 58 L6 37 L38 35 Z" fill="url(#goldStar)" stroke="#ffed91" stroke-width="2.5" stroke-linejoin="round"/>
         </svg>
-
     `;
-
 }
-
 
 function buildMinesGrid() {
-
     minesGrid.innerHTML = "";
-
-
-    for (
-        let i = 0;
-        i < 25;
-        i++
-    ) {
-
-        const cell =
-            document.createElement(
-                "button"
-            );
-
-
-        cell.type =
-            "button";
-
-        cell.className =
-            "cell";
-
-        cell.disabled =
-            true;
-
-        cell.dataset.index =
-            i;
-
-
-        minesGrid.appendChild(
-            cell
-        );
-
+    for (let i = 0; i < 25; i++) {
+        const cell = document.createElement("button");
+        cell.type = "button";
+        cell.className = "cell";
+        cell.disabled = true;
+        cell.dataset.index = i;
+        minesGrid.appendChild(cell);
     }
-
 }
-
 
 function resetMines() {
-
     buildMinesGrid();
-
     minePositions = [];
-
     safeOpened = 0;
-
     mineMultiplier = 1;
-
-
-    $("mines-multiplier")
-        .style.display =
-        "none";
-
-
-    $("mine-mult").textContent =
-        "1.00";
-
+    $("mines-multiplier").style.display = "none";
+    $("mine-mult").textContent = "1.00";
 }
-
 
 function renderMine(cell) {
-
-    cell.className =
-        "cell bomb";
-
-
+    cell.className = "cell bomb";
     cell.innerHTML = "";
-
-
-    const image =
-        document.createElement(
-            "img"
-        );
-
-
-    image.className =
-        "bomb-img";
-
-
-    image.src =
-        "./bomb.png";
-
-
-    image.alt =
-        "Мина";
-
-
-    image.onerror =
-        () => {
-
-            cell.innerHTML =
-                "💣";
-
-        };
-
-
-    cell.appendChild(
-        image
-    );
-
-
-    cell.disabled =
-        true;
-
+    const image = document.createElement("img");
+    image.className = "bomb-img";
+    image.src = "./bomb.png";
+    image.alt = "Мина";
+    image.onerror = () => { cell.innerHTML = "💣"; };
+    cell.appendChild(image);
+    cell.disabled = true;
 }
 
-
-function renderSafe(
-    cell,
-    revealed = false
-) {
-
-    cell.className =
-        "cell " +
-        (
-            revealed
-                ? "revealed-safe"
-                : "safe"
-        );
-
-
-    cell.innerHTML =
-        starSVG();
-
-
-    cell.disabled =
-        true;
-
+function renderSafe(cell, revealed = false) {
+    cell.className = "cell " + (revealed ? "revealed-safe" : "safe");
+    cell.innerHTML = starSVG();
+    cell.disabled = true;
 }
-
 
 function revealAllMines() {
-
-    [
-        ...minesGrid.children
-    ].forEach(
-        (cell, index) => {
-
-            if (
-                minePositions.includes(
-                    index
-                )
-            ) {
-
-                renderMine(cell);
-
-            }
-
-            else {
-
-                renderSafe(
-                    cell,
-                    true
-                );
-
-            }
-
+    [...minesGrid.children].forEach((cell, index) => {
+        if (minePositions.includes(index)) {
+            renderMine(cell);
+        } else {
+            renderSafe(cell, true);
         }
-    );
-
+    });
 }
-
 
 function startMines() {
-
-    const bet =
-        readBet("mines-bet");
-
-
-    if (bet === null)
-        return;
-
-
-    bombCount =
-        Number(
-            $("mines-slider").value
-        );
-
-
+    const bet = readBet("mines-bet");
+    if (bet === null) return;
+    bombCount = Number($("mines-slider").value);
     balance -= bet;
-
     updateBalance();
-
-
-    mineBet =
-        bet;
-
-    safeOpened =
-        0;
-
-    mineMultiplier =
-        1;
-
-    minePositions =
-        [];
-
-
-    while (
-        minePositions.length <
-        bombCount
-    ) {
-
-        const position =
-            Math.floor(
-                Math.random() * 25
-            );
-
-
-        if (
-            !minePositions.includes(
-                position
-            )
-        ) {
-
-            minePositions.push(
-                position
-            );
-
-        }
-
+    mineBet = bet;
+    safeOpened = 0;
+    mineMultiplier = 1;
+    minePositions = [];
+    while (minePositions.length < bombCount) {
+        const position = Math.floor(Math.random() * 25);
+        if (!minePositions.includes(position)) minePositions.push(position);
     }
-
-
     buildMinesGrid();
-
-
-    minesState =
-        "playing";
-
-
-    $("mines-state-label")
-        .textContent =
-        "Игра идёт";
-
-
-    $("mines-multiplier")
-        .style.display =
-        "block";
-
-
-    $("mines-slider")
-        .disabled =
-        true;
-
-
-    [
-        ...minesGrid.children
-    ].forEach(cell => {
-
-        cell.disabled =
-            false;
-
-
-        cell.onclick =
-            () => {
-
-                clickMine(
-                    Number(
-                        cell.dataset.index
-                    ),
-                    cell
-                );
-
-            };
-
+    minesState = "playing";
+    $("mines-state-label").textContent = "Игра идёт";
+    $("mines-multiplier").style.display = "block";
+    $("mines-slider").disabled = true;
+    [...minesGrid.children].forEach(cell => {
+        cell.disabled = false;
+        cell.onclick = () => { clickMine(Number(cell.dataset.index), cell); };
     });
-
-
-    $("mines-button").disabled =
-        true;
-
-
-    $("mines-button").textContent =
-        "ОТКРОЙ КЛЕТКУ";
-
-
-    $("mines-button").className =
-        "primary";
-
-
+    $("mines-button").disabled = true;
+    $("mines-button").textContent = "ОТКРОЙ КЛЕТКУ";
+    $("mines-button").className = "primary";
     haptic("medium");
-
 }
 
-
-function clickMine(
-    index,
-    cell
-) {
-
-    if (
-        minesState !== "playing" ||
-        cell.disabled
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        minePositions.includes(
-            index
-        )
-    ) {
-
+function clickMine(index, cell) {
+    if (minesState !== "playing" || cell.disabled) return;
+    if (minePositions.includes(index)) {
         revealAllMines();
-
-
-        finishMines(
-            "ПРОИГРЫШ −$" +
-            money(mineBet),
-            "red"
-        );
-
-
+        finishMines("ПРОИГРЫШ −$" + money(mineBet), "red");
         notify("error");
-
         return;
-
     }
-
-
     renderSafe(cell);
-
-
     safeOpened++;
-
-
     let probability = 1;
-
-
-    for (
-        let i = 0;
-        i < safeOpened;
-        i++
-    ) {
-
-        probability *=
-            (
-                25 -
-                bombCount -
-                i
-            ) /
-            (
-                25 -
-                i
-            );
-
+    for (let i = 0; i < safeOpened; i++) {
+        probability *= (25 - bombCount - i) / (25 - i);
     }
-
-
-    mineMultiplier =
-        .95 / probability;
-
-
-    $("mine-mult").textContent =
-        mineMultiplier.toFixed(2);
-
-
-    $("mines-button").disabled =
-        false;
-
-
-    $("mines-button").className =
-        "primary green";
-
-
-    $("mines-button").textContent =
-        "ЗАБРАТЬ $" +
-        money(
-            mineBet *
-            mineMultiplier
-        );
-
-
+    mineMultiplier = .95 / probability;
+    $("mine-mult").textContent = mineMultiplier.toFixed(2);
+    $("mines-button").disabled = false;
+    $("mines-button").className = "primary green";
+    $("mines-button").textContent = "ЗАБРАТЬ $" + money(mineBet * mineMultiplier);
     haptic();
-
-
-    if (
-        safeOpened ===
-        25 - bombCount
-    ) {
-
-        const win =
-            Math.floor(
-                mineBet *
-                mineMultiplier *
-                100
-            ) / 100;
-
-
+    if (safeOpened === 25 - bombCount) {
+        const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
         balance += win;
-
-
         updateBalance();
-
-
         revealAllMines();
-
-
-        finishMines(
-            "ВЫИГРЫШ $" +
-            money(win),
-            "gold"
-        );
-
-
+        finishMines("ВЫИГРЫШ $" + money(win), "gold");
         notify("success");
-
     }
-
 }
 
-
-function finishMines(
-    message,
-    color
-) {
-
-    minesState =
-        "finished";
-
-
-    [
-        ...minesGrid.children
-    ].forEach(cell => {
-
-        cell.disabled =
-            true;
-
-        cell.onclick =
-            null;
-
-    });
-
-
-    $("mines-state-label")
-        .textContent =
-        message;
-
-
-    $("mines-slider")
-        .disabled =
-        false;
-
-
-    $("mines-button")
-        .disabled =
-        false;
-
-
-    $("mines-button")
-        .textContent =
-        "СТАРТ НОВЫЙ РАУНД";
-
-
-    $("mines-button")
-        .className =
-        "primary " +
-        color;
-
+function finishMines(message, color) {
+    minesState = "finished";
+    [...minesGrid.children].forEach(cell => { cell.disabled = true; cell.onclick = null; });
+    $("mines-state-label").textContent = message;
+    $("mines-slider").disabled = false;
+    $("mines-button").disabled = false;
+    $("mines-button").textContent = "СТАРТ НОВЫЙ РАУНД";
+    $("mines-button").className = "primary " + color;
 }
-
 
 function handleMinesAction() {
-
-    if (
-        minesState === "idle" ||
-        minesState === "finished"
-    ) {
-
+    if (minesState === "idle" || minesState === "finished") {
         resetMines();
-
-
-        $("mines-state-label")
-            .textContent =
-            "Новая игра";
-
-
+        $("mines-state-label").textContent = "Новая игра";
         startMines();
-
         return;
-
     }
-
-
-    if (
-        minesState !==
-        "playing"
-    ) {
-
-        return;
-
-    }
-
-
-    const win =
-        Math.floor(
-            mineBet *
-            mineMultiplier *
-            100
-        ) / 100;
-
-
+    if (minesState !== "playing") return;
+    const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
     balance += win;
-
-
     updateBalance();
-
-
     revealAllMines();
-
-
-    finishMines(
-        "ВЫИГРЫШ $" +
-        money(win),
-        "green"
-    );
-
-
+    finishMines("ВЫИГРЫШ $" + money(win), "green");
     notify("success");
-
 }
 
-
-$("mines-slider")
-    .addEventListener(
-        "input",
-        () => {
-
-            $("mines-count")
-                .textContent =
-                $("mines-slider")
-                .value;
-
-        }
-    );
-
-
-/* =========================================================
-   CASE SYSTEM
-========================================================= */
-
-const CASE_COOLDOWN =
-    24 * 60 * 60 * 1000;
-
-
-const dailyCaseStorageKey =
-    "tucha-game-" +
-    userId +
-    "-daily-case";
-
-
-let dailyCaseReadyAt =
-    0;
-
-
-let selectedCase =
-    "daily";
-
-
-let caseOpening =
-    false;
-
-
-let caseTimer =
-    null;
-
-
-try {
-
-    dailyCaseReadyAt =
-        Number(
-            localStorage.getItem(
-                dailyCaseStorageKey
-            ) || 0
-        );
-
-} catch(e) {}
-
-
-/* =========================================================
-   CASE CONFIGURATION
-========================================================= */
-
-/*
-    У каждого кейса свои призы.
-
-    weight = относительный шанс.
-
-    Чем больше weight,
-    тем чаще выпадает приз.
-*/
-
-
-const CASES = {
-
-    daily: {
-
-        name:
-            "Ежедневный",
-
-        image:
-            "./casep.png",
-
-        price:
-            0,
-
-        cooldown:
-            24 * 60 * 60 * 1000,
-
-        free:
-            true,
-
-        prizes: [
-
-            {
-                value: 0.10,
-                weight: 32
-            },
-
-            {
-                value: 0.15,
-                weight: 27
-            },
-
-            {
-                value: 0.25,
-                weight: 20
-            },
-
-            {
-                value: 0.50,
-                weight: 12
-            },
-
-            {
-                value: 1.00,
-                weight: 6
-            },
-
-            {
-                value: 2.00,
-                weight: 3
-            }
-
-        ]
-
-    },
-
-
-    bonus: {
-
-        name:
-            "Бонусный",
-
-        image:
-            "./case.png",
-
-        price:
-            0.50,
-
-        free:
-            false,
-
-        prizes: [
-
-            {
-                value: 0.30,
-                weight: 30
-            },
-
-            {
-                value: 0.50,
-                weight: 27
-            },
-
-            {
-                value: 0.75,
-                weight: 20
-            },
-
-            {
-                value: 1.00,
-                weight: 13
-            },
-
-            {
-                value: 2.00,
-                weight: 7
-            },
-
-            {
-                value: 5.00,
-                weight: 3
-            }
-
-        ]
-
-    },
-
-
-    gift: {
-
-        name:
-            "Подарочный",
-
-        image:
-            "./case.png",
-
-        price:
-            1.00,
-
-        free:
-            false,
-
-        prizes: [
-
-            {
-                value: 0.75,
-                weight: 25
-            },
-
-            {
-                value: 1.00,
-                weight: 27
-            },
-
-            {
-                value: 1.50,
-                weight: 22
-            },
-
-            {
-                value: 2.00,
-                weight: 15
-            },
-
-            {
-                value: 3.00,
-                weight: 8
-            },
-
-            {
-                value: 7.00,
-                weight: 3
-            }
-
-        ]
-
-    },
-
-
-    luck: {
-
-        name:
-            "Удача",
-
-        image:
-            "./case.png",
-
-        price:
-            2.00,
-
-        free:
-            false,
-
-        prizes: [
-
-            {
-                value: 1.50,
-                weight: 24
-            },
-
-            {
-                value: 2.00,
-                weight: 25
-            },
-
-            {
-                value: 3.00,
-                weight: 22
-            },
-
-            {
-                value: 5.00,
-                weight: 16
-            },
-
-            {
-                value: 10.00,
-                weight: 9
-            },
-
-            {
-                value: 20.00,
-                weight: 4
-            }
-
-        ]
-
-    }
-
-};
-
-
-/* =========================================================
-   CHOOSE PRIZE
-========================================================= */
-
-function chooseCasePrize(
-    caseData
-) {
-
-    const total =
-        caseData.prizes.reduce(
-            (
-                sum,
-                prize
-            ) =>
-                sum +
-                prize.weight,
-            0
-        );
-
-
-    let random =
-        Math.random() *
-        total;
-
-
-    for (
-        const prize
-        of caseData.prizes
-    ) {
-
-        random -=
-            prize.weight;
-
-
-        if (
-            random <= 0
-        ) {
-
-            return prize.value;
-
-        }
-
-    }
-
-
-    return caseData.prizes[0].value;
-
+$("mines-slider").addEventListener("input", () => {
+    $("mines-count").textContent = $("mines-slider").value;
+});
+
+/* CASES LOGIC */
+const CASE_COOLDOWN = 24 * 60 * 60 * 1000;
+let currentActiveCase = null; 
+let caseOpening = false;
+let caseTimer = null;
+
+function getCaseStorageKey(caseId) {
+    return "tucha-game-" + userId + "-case-" + caseId;
 }
 
-
-/* =========================================================
-   TIME
-========================================================= */
-
-function formatTime(
-    milliseconds
-) {
-
-    const seconds =
-        Math.max(
-            0,
-            Math.ceil(
-                milliseconds / 1000
-            )
-        );
-
-
-    const hours =
-        Math.floor(
-            seconds / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (
-                seconds % 3600
-            ) / 60
-        );
-
-
-    const sec =
-        seconds % 60;
-
-
-    return (
-        String(hours)
-            .padStart(2,"0") +
-        ":" +
-        String(minutes)
-            .padStart(2,"0") +
-        ":" +
-        String(sec)
-            .padStart(2,"0")
-    );
-
-}
-
-
-/* =========================================================
-   CASE STATE
-========================================================= */
-
-function updateCaseState() {
-
-    const button =
-        $("case-button");
-
-
-    const timer =
-        $("case-timer");
-
-
-    if (
-        !button ||
-        !timer
-    ) {
-
-        return;
-
-    }
-
-
-    const data =
-        CASES[selectedCase];
-
-
-    if (caseOpening) {
-
-        button.disabled =
-            true;
-
-
-        button.textContent =
-            "ОТКРЫВАЕМ...";
-
-
-        timer.textContent =
-            "Рулетка запускается...";
-
-
-        return;
-
-    }
-
-
-    if (
-        data.free
-    ) {
-
-        const remaining =
-            dailyCaseReadyAt -
-            Date.now();
-
-
-        if (
-            remaining > 0
-        ) {
-
-            button.disabled =
-                true;
-
-
-            button.textContent =
-                "КЕЙС УЖЕ ОТКРЫТ";
-
-
-            timer.textContent =
-                "Следующее открытие через " +
-                formatTime(
-                    remaining
-                );
-
-        }
-
-        else {
-
-            button.disabled =
-                false;
-
-
-            button.textContent =
-                "ОТКРЫТЬ БЕСПЛАТНО";
-
-
-            timer.textContent =
-                "Кейс доступен прямо сейчас";
-
-        }
-
-
-        return;
-
-    }
-
-
-    button.disabled =
-        balance < data.price;
-
-
-    button.textContent =
-        "ОТКРЫТЬ ЗА $" +
-        money(data.price);
-
-
-    timer.textContent =
-        balance >= data.price
-            ? "Кейс доступен"
-            : "Недостаточно средств";
-
-}
-
-
-/* =========================================================
-   RENDER PRIZES
-========================================================= */
-
-function renderCasePrizes(
-    caseData
-) {
-
-    const grid =
-        $("prizes-grid");
-
-
-    grid.innerHTML =
-        "";
-
-
-    caseData.prizes.forEach(
-        prize => {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "prize-small";
-
-
-            const icon =
-                document.createElement(
-                    "div"
-                );
-
-
-            icon.className =
-                "prize-small-icon";
-
-
-            icon.textContent =
-                prize.value >= 5
-                    ? "🏆"
-                    : prize.value >= 1
-                        ? "💰"
-                        : "💵";
-
-
-            const value =
-                document.createElement(
-                    "div"
-                );
-
-
-            value.className =
-                "prize-small-value";
-
-
-            value.textContent =
-                "$" +
-                money(prize.value);
-
-
-            item.appendChild(icon);
-
-            item.appendChild(value);
-
-            grid.appendChild(item);
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   OPEN CASE DETAIL
-========================================================= */
-
-function openCaseDetail(
-    caseName = "daily"
-) {
-
-    if (
-        !CASES[caseName]
-    ) {
-
-        caseName =
-            "daily";
-
-    }
-
-
-    selectedCase =
-        caseName;
-
-
-    const data =
-        CASES[selectedCase];
-
-
-    $("cases-list")
-        .style.display =
-        "none";
-
-
-    $("case-detail")
-        .classList.add(
-            "active"
-        );
-
-
-    $("case-detail-title")
-        .textContent =
-        data.name;
-
-
-    $("case-detail-price")
-        .textContent =
-        data.free
-            ? "БЕСПЛАТНО"
-            : "ЦЕНА · $" +
-              money(data.price);
-
-
-    $("case-big-image")
-        .src =
-        data.image;
-
-
-    $("case-big-image")
-        .alt =
-        data.name;
-
-
-    $("case-result")
-        .textContent =
-        "Нажми на кнопку, чтобы открыть кейс";
-
-
-    $("roulette-strip")
-        .innerHTML =
-        "";
-
-
-    renderCasePrizes(data);
-
-    updateCaseState();
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+function openCase(id, name, price, image, prizes) {
+    currentActiveCase = { id, name, price, image, prizes };
+    
+    $("cases-list").style.display = "none";
+    $("case-detail").classList.add("active");
+    
+    $("detail-case-title").textContent = name;
+    $("detail-case-price").textContent = price === 0 ? "БЕСПЛАТНО · $0.00" : "$" + price.toFixed(2);
+    $("case-big-image").src = image;
+    
+    const prizesGrid = $("prizes-grid");
+    prizesGrid.innerHTML = "";
+    prizes.forEach((pVal, idx) => {
+        const isTop = idx === prizes.length - 1;
+        prizesGrid.innerHTML += `
+            <div class="prize-small">
+                <div class="prize-small-icon">${isTop ? '🏆' : '💵'}</div>
+                <div class="prize-small-value">$${pVal.toFixed(2)}</div>
+            </div>
+        `;
     });
-
-
+    
+    updateActiveCaseState();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
-
 }
-
-
-/* =========================================================
-   CLOSE CASE
-========================================================= */
 
 function closeCaseDetail() {
-
-    if (caseOpening)
-        return;
-
-
-    $("case-detail")
-        .classList.remove(
-            "active"
-        );
-
-
-    $("cases-list")
-        .style.display =
-        "block";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
+    if (caseOpening) return;
+    $("case-detail").classList.remove("active");
+    $("cases-list").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
-
 }
 
-
-/* =========================================================
-   CREATE ROULETTE
-========================================================= */
-
-function createRoulette(
-    caseData,
-    winner
-) {
-
-    const strip =
-        $("roulette-strip");
-
-
-    strip.innerHTML =
-        "";
-
-
-    const winnerIndex =
-        24;
-
-
-    const values =
-        [];
-
-
-    for (
-        let i = 0;
-        i < 45;
-        i++
-    ) {
-
-        values.push(
-            i === winnerIndex
-                ? winner
-                : chooseCasePrize(
-                    caseData
-                )
-        );
-
+function choosePrizeFromList(prizes) {
+    const weights = prizes.map((_, i) => Math.max(1, (prizes.length - i) * 10));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let rnd = Math.random() * total;
+    for (let i = 0; i < prizes.length; i++) {
+        rnd -= weights[i];
+        if (rnd <= 0) return prizes[i];
     }
+    return prizes[0];
+}
 
-
-    values.forEach(
-        value => {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "roulette-prize";
-
-
-            const icon =
-                document.createElement(
-                    "div"
-                );
-
-
-            icon.className =
-                "prize-icon";
-
-
-            icon.textContent =
-                value >= 5
-                    ? "🏆"
-                    : value >= 1
-                        ? "💰"
-                        : "💵";
-
-
-            const amount =
-                document.createElement(
-                    "div"
-                );
-
-
-            amount.className =
-                "prize-value";
-
-
-            amount.textContent =
-                "$" +
-                Number(value)
-                    .toFixed(2);
-
-
-            item.appendChild(icon);
-
-            item.appendChild(amount);
-
-            strip.appendChild(item);
-
+function updateActiveCaseState() {
+    if (!currentActiveCase) return;
+    const button = $("case-button");
+    const timer = $("case-timer");
+    
+    if (caseOpening) {
+        button.disabled = true;
+        button.textContent = "ОТКРЫВАЕМ...";
+        timer.textContent = "Рулетка запускается...";
+        return;
+    }
+    
+    if (currentActiveCase.id === "daily") {
+        let readyAt = 0;
+        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
+        const remaining = readyAt - Date.now();
+        if (remaining > 0) {
+            button.disabled = true;
+            button.textContent = "КЕЙС УЖЕ ОТКРЫТ";
+            timer.textContent = "Следующее открытие через " + formatTime(remaining);
+        } else {
+            button.disabled = false;
+            button.textContent = "ОТКРЫТЬ БЕСПЛАТНО";
+            timer.textContent = "Кейс доступен прямо сейчас";
         }
-    );
+    } else {
+        button.disabled = false;
+        button.textContent = "ОТКРЫТЬ ЗА $" + currentActiveCase.price.toFixed(2);
+        timer.textContent = "Стоимость списывается с баланса";
+    }
+}
 
+function formatTime(milliseconds) {
+    const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const sec = seconds % 60;
+    return String(hours).padStart(2,"0") + ":" + String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+}
 
+function createRoulette(winner, prizesList) {
+    const strip = $("roulette-strip");
+    strip.innerHTML = "";
+    const winnerIndex = 24;
+    const values = [];
+    for (let i = 0; i < 45; i++) {
+        values.push(i === winnerIndex ? winner : prizesList[Math.floor(Math.random() * prizesList.length)]);
+    }
+    values.forEach(value => {
+        const item = document.createElement("div");
+        item.className = "roulette-prize";
+        item.innerHTML = `
+            <div class="prize-icon">💵</div>
+            <div class="prize-value">$${Number(value).toFixed(2)}</div>
+        `;
+        strip.appendChild(item);
+    });
     return winnerIndex;
-
 }
 
-
-/* =========================================================
-   SPIN
-========================================================= */
-
-function spinCase(
-    winnerIndex,
-    callback
-) {
-
-    const strip =
-        $("roulette-strip");
-
-
-    const wrap =
-        $("roulette-wrap");
-
-
-    const item =
-        strip.children[0];
-
-
-    if (!item) {
-
-        callback();
-
-        return;
-
-    }
-
-
-    const itemWidth =
-        item.getBoundingClientRect()
-            .width;
-
-
-    const gap =
-        9;
-
-
-    const step =
-        itemWidth +
-        gap;
-
-
-    const viewportWidth =
-        wrap.getBoundingClientRect()
-            .width;
-
-
-    const centerPosition =
-        (
-            winnerIndex *
-            step
-        ) +
-        (
-            itemWidth / 2
-        );
-
-
-    const translate =
-        centerPosition -
-        (
-            viewportWidth / 2
-        );
-
-
-    strip.style.transition =
-        "none";
-
-
-    strip.style.transform =
-        "translateX(0px)";
-
-
+function spinCase(winnerIndex, callback) {
+    const strip = $("roulette-strip");
+    const wrap = $("roulette-wrap");
+    const item = strip.children[0];
+    if (!item) { callback(); return; }
+    const itemWidth = item.getBoundingClientRect().width;
+    const gap = 9;
+    const step = itemWidth + gap;
+    const viewportWidth = wrap.getBoundingClientRect().width;
+    const centerPosition = (winnerIndex * step) + (itemWidth / 2);
+    const translate = centerPosition - (viewportWidth / 2);
+    strip.style.transition = "none";
+    strip.style.transform = "translateX(0px)";
     strip.getBoundingClientRect();
-
-
-    requestAnimationFrame(
-        () => {
-
-            strip.classList.add(
-                "spinning"
-            );
-
-
-            strip.style.transform =
-                "translateX(-" +
-                translate +
-                "px)";
-
-
-            setTimeout(
-                callback,
-                5700
-            );
-
-        }
-    );
-
+    requestAnimationFrame(() => {
+        strip.classList.add("spinning");
+        strip.style.transform = "translateX(-" + translate + "px)";
+        setTimeout(callback, 5700);
+    });
 }
 
-
-/* =========================================================
-   OPEN SELECTED CASE
-========================================================= */
-
-function openSelectedCase() {
-
-    if (caseOpening)
-        return;
-
-
-    const data =
-        CASES[selectedCase];
-
-
-    /* DAILY */
-
-    if (data.free) {
-
-        if (
-            Date.now() <
-            dailyCaseReadyAt
-        ) {
-
-            updateCaseState();
-
+function openCurrentCase() {
+    if (!currentActiveCase || caseOpening) return;
+    
+    if (currentActiveCase.id !== "daily") {
+        if (balance < currentActiveCase.price) {
+            alert("Недостаточно средств на балансе!");
+            notify("error");
             return;
-
         }
-
-    }
-
-    /* PAID CASE */
-
-    else {
-
-        if (
-            balance <
-            data.price
-        ) {
-
-            alert(
-                "Недостаточно средств."
-            );
-
-            return;
-
-        }
-
-
-        balance -=
-            data.price;
-
-
+        balance -= currentActiveCase.price;
         updateBalance();
-
-    }
-
-
-    caseOpening =
-        true;
-
-
-    updateCaseState();
-
-
-    $("case-result")
-        .textContent =
-        "Открываем кейс...";
-
-
-    const winner =
-        chooseCasePrize(
-            data
-        );
-
-
-    const winnerIndex =
-        createRoulette(
-            data,
-            winner
-        );
-
-
-    const image =
-        $("case-big-image");
-
-
-    image.style.transform =
-        "scale(1.05)";
-
-
-    image.style.opacity =
-        ".85";
-
-
-    spinCase(
-        winnerIndex,
-        () => {
-
-            balance =
-                Math.round(
-                    (
-                        balance +
-                        winner
-                    ) * 100
-                ) / 100;
-
-
-            if (data.free) {
-
-                dailyCaseReadyAt =
-                    Date.now() +
-                    CASE_COOLDOWN;
-
-
-                try {
-
-                    localStorage.setItem(
-                        dailyCaseStorageKey,
-                        String(
-                            dailyCaseReadyAt
-                        )
-                    );
-
-                } catch(e) {}
-
-            }
-
-
-            updateBalance();
-
-
-            image.style.transform =
-                "scale(1)";
-
-
-            image.style.opacity =
-                "1";
-
-
-            $("case-result")
-                .textContent =
-                "🎉 ТВОЙ ВЫИГРЫШ: $" +
-                Number(winner)
-                    .toFixed(2);
-
-
-            caseOpening =
-                false;
-
-
-            updateCaseState();
-
-
-            notify("success");
-
+    } else {
+        let readyAt = 0;
+        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
+        if (Date.now() < readyAt) {
+            updateActiveCaseState();
+            return;
         }
-    );
-
+    }
+    
+    caseOpening = true;
+    updateActiveCaseState();
+    $("case-result").textContent = "";
+    
+    const winner = choosePrizeFromList(currentActiveCase.prizes);
+    const winnerIndex = createRoulette(winner, currentActiveCase.prizes);
+    
+    const image = $("case-big-image");
+    image.style.transform = "scale(1.05)";
+    image.style.opacity = ".85";
+    
+    spinCase(winnerIndex, () => {
+        balance = Math.round((balance + winner) * 100) / 100;
+        
+        if (currentActiveCase.id === "daily") {
+            const nextTime = Date.now() + CASE_COOLDOWN;
+            try { localStorage.setItem(getCaseStorageKey("daily"), String(nextTime)); } catch(e) {}
+        }
+        
+        updateBalance();
+        
+        image.style.transform = "scale(1)";
+        image.style.opacity = "1";
+        
+        $("case-result").textContent = "🎉 ТВОЙ ВЫИГРЫШ: $" + Number(winner).toFixed(2);
+        caseOpening = false;
+        updateActiveCaseState();
+        notify("success");
+    });
 }
-
-
-/* =========================================================
-   START
-========================================================= */
-
-buildMinesGrid();
 
 loadUserData();
-
 startCrashRound();
 
-updateCaseState();
+caseTimer = setInterval(() => {
+    if ($("case-detail").classList.contains("active")) {
+        updateActiveCaseState();
+    }
+}, 1000);
 
-
-caseTimer =
-    setInterval(
-        updateCaseState,
-        1000
-    );
-
-
-const caseImage =
-    new Image();
-
-
-caseImage.src =
-    "./casep.png";
-
+const preloadImgs = ["./case.png", "./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png"];
+preloadImgs.forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
 </script>
 
 </body>
