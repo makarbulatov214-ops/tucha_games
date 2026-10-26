@@ -587,104 +587,103 @@ input[type="number"]:focus {
 }
 
 /* =========================================================
-   MINES
+   MINES (НОВЫЙ УЛУЧШЕННЫЙ ДИЗАЙН)
 ========================================================= */
 
 .grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
-    gap: 8px;
-
-    margin: 14px 0;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+    margin: 16px 0;
+    background: rgba(10, 16, 32, 0.6);
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .cell {
     position: relative;
-
     width: 100%;
     aspect-ratio: 1;
-
     border: 0;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #263852,
-            #152239
-        );
-
-    border-bottom: 4px solid #0b1322;
-
+    border-radius: 14px;
+    background: linear-gradient(145deg, #243552, #131e33);
+    border-bottom: 4px solid #080d1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     color: white;
-
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, filter 0.2s;
+}
 
-    transition:
-        transform .12s,
-        background .2s;
+.cell:not(:disabled):hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
 }
 
 .cell:not(:disabled):active {
-    transform: scale(.94);
+    transform: scale(0.92) translateY(2px);
+    border-bottom-width: 2px;
 }
 
 .cell.safe {
-    background:
-        linear-gradient(
-            145deg,
-            #1f55a7,
-            #143a78
-        );
+    background: linear-gradient(145deg, #1d4ed8, #1e40af);
+    border-bottom: 4px solid #1e3a8a;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    animation: popCell 0.25s ease-out;
 }
 
 .cell.revealed-safe {
-    background:
-        linear-gradient(
-            145deg,
-            #1a2d4b,
-            #101b30
-        );
+    background: linear-gradient(145deg, #152238, #0e1626);
+    border-bottom: 2px solid #080d1a;
+    opacity: 0.6;
 }
 
 .cell.bomb {
-    background:
-        linear-gradient(
-            145deg,
-            #ef4444,
-            #991b1b
-        );
+    background: linear-gradient(145deg, #dc2626, #991b1b);
+    border-bottom: 4px solid #7f1d1d;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+    animation: shakeCell 0.3s ease-in-out;
+}
+
+@keyframes popCell {
+    0% { transform: scale(0.8); }
+    70% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shakeCell {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-3px); }
+    40%, 80% { transform: translateX(3px); }
 }
 
 .star-svg {
-    width: 72%;
-    height: 72%;
+    width: 76%;
+    height: 76%;
+    filter: drop-shadow(0 2px 6px rgba(250, 204, 21, 0.6));
+    animation: starPulse 1.5s ease-in-out infinite alternate;
+}
 
-    filter:
-        drop-shadow(0 2px 4px rgba(0,0,0,.45));
+@keyframes starPulse {
+    from { transform: scale(0.95); }
+    to { transform: scale(1.05); }
 }
 
 .bomb-img {
-    width: 75%;
-    height: 75%;
-
+    width: 72%;
+    height: 72%;
     object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
 }
 
 .range-row {
     display: flex;
     justify-content: space-between;
-
     margin: 13px 0;
-
     color: #a5b3c9;
-
     font-size: 13px;
     font-weight: 800;
 }
@@ -695,21 +694,17 @@ input[type="number"]:focus {
 
 input[type="range"] {
     width: 100%;
-
     accent-color: #3b82f6;
-
     margin-bottom: 15px;
 }
 
 .multiplier {
     text-align: center;
-
     color: #4ade80;
-
     font-size: 18px;
     font-weight: 950;
-
     margin-bottom: 13px;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
 }
 
 /* =========================================================
@@ -2349,7 +2344,7 @@ function notify(type = "success") {
    DATABASE & LOCAL SAVE
 ========================================================= */
 
-const ADMIN_PASSWORD = "tucha2026"; // Измени на свой секретный пароль
+const ADMIN_PASSWORD = "tucha2026"; 
 const SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT"; 
 
 const userId = telegramUser ? String(telegramUser.id) : "demo_user";
@@ -2360,7 +2355,6 @@ let bonusCount = 0;
 
 function loadUserData() {
     if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
-        // Резервный localStorage если не подключена таблица
         const storageKey = "tucha-game-" + userId;
         try {
             let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
