@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tucha Games</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Подключаем мультяшный шрифт, похожий на дизайн с картинок -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #0f172a; 
+            color: white; 
+            user-select: none; 
+            font-family: 'Fredoka', sans-serif; /* Применяем новый шрифт */
+        }
+        .bg-space { 
+            background: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 80%); 
+            position: relative; 
+            overflow: hidden; 
+        }
+        .stars { 
+            position: absolute; width: 100%; height: 100%; 
+            background: transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat; 
+            opacity: 0.4; pointer-events: none; 
+        }
+        
+        /* Экран загрузки (Splash Screen) */
+        #splash-screen {
+            background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 100%);
+            transition: opacity 0.5s ease-out;
+        }
+        .tucha-text-white { color: #ffffff; text-shadow: 0 4px 10px rgba(0,0,0,0.3); line-height: 0.9; }
+        .tucha-text-yellow { color: #facc15; text-shadow: 0 4px 10px rgba(0,0,0,0.3); line-height: 0.9; }
+        
+        .tab-content { display: none; padding-bottom: 90px; }
+        .tab-content.active { display: block; }
+        
+        /* Ракетка */
+        .rocket-container { height: 220px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;}
+        .rocket { font-size: 5.5rem; transition: transform 0.1s; filter: drop-shadow(0 10px 15px rgba(56, 189, 248, 0.6)); z-index: 20;}
+        .rocket.flying { animation: fly 0.4s infinite alternate; }
+        @keyframes fly { from { transform: translateY(0px) rotate(10deg); } to { transform: translateY(-12px) rotate(15deg); } }
+        .rocket.crashed { filter: grayscale(100%) opacity(70%); transform: rotate(160deg) translateY(20px) !important; animation: none; }
+        
+        /* Мины */
+        .mine-cell { 
+            aspect-ratio: 1; background: #1e293b; border-radius: 12px; 
+            display: flex; justify-content: center; align-items: center; 
+            font-size: 2rem; font-weight: bold; cursor: pointer; transition: 0.2s; 
+            border-bottom: 4px solid #0f172a;
+        }
+        .mine-cell:active { transform: translateY(4px); border-bottom-width: 0px; margin-top: 4px;}
+        .mine-cell.safe { background: #3b82f6; border-bottom-color: #1d4ed8; }
+        .mine-cell.bomb { background: #ef4444; border-bottom-color: #b91c1c; }
+        
+        /* Кнопки в стиле Tucha Games (Объемные) */
+        .btn-tucha {
+            border-bottom: 5px solid rgba(0,0,0,0.3);
+            transition: all 0.1s;
+        }
+        .btn-tucha:active:not(:disabled) {
+            transform: translateY(5px);
+            border-bottom: 0px solid rgba(0,0,0,0.3);
+            margin-top: 5px;
+        }
+        .btn-tucha:disabled { opacity: 0.7; transform: none; border-bottom: 5px solid rgba(0,0,0,0.3); margin-top: 0; cursor: not-allowed; }
+        
+        /* Кастомный ползунок для мин */
+        input[type=range] { -webkit-appearance: none; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #facc15; cursor: pointer; margin-top: -8px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 8px; cursor: pointer; background: #334155; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-space h-screen w-screen overflow-hidden flex flex-col">
+    
+    <!-- ЗАСТАВКА (SPLASH SCREEN) -->
+    <div id="splash-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center">
+        <div class="text-5xl mb-2 animate-bounce">👑</div>
+        <h1 class="text-6xl font-extrabold tucha-text-white tracking-wide">TUCHA</h1>
+        <h1 class="text-6xl font-extrabold tucha-text-yellow tracking-wide mb-8">GAMES</h1>
+        <div class="bg-white/20 px-5 py-2 rounded-full border border-white/30 backdrop-blur-sm text-sm tracking-widest font-bold uppercase text-white shadow-lg">
+            Играй • Выигрывай • Кайфуй
+        </div>
+        <div class="absolute bottom-10 text-6xl opacity-50">☁️ ☁️ ☁️</div>
+    </div>
+
+    <div class="stars"></div>
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ (ЛОГО И БАЛАНС) -->
+    <div class="flex justify-between items-center p-4 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40 border-b border-slate-700/50">
+        <div class="flex items-center gap-2">
+            <span class="text-3xl drop-shadow-md">☁️</span>
+            <div class="leading-none flex flex-col justify-center">
+                <span class="text-white font-extrabold text-xl leading-tight tracking-wide">TUCHA</span>
+                <span class="text-yellow-400 font-extrabold text-sm leading-tight tracking-wide">GAMES</span>
+            </div>
+        </div>
+        <div class="bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-600 shadow-inner flex items-center gap-2">
+            <span class="text-blue-400 text-lg">💵</span>
+            <span id="header-balance" class="font-bold text-white text-lg">$0.00</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div id="app" class="flex-1 overflow-y-auto relative z-10 p-4">
+        
+        <!-- РАКЕТКА (КРАШ) -->
+        <div id="tab-crash" class="tab-content active">
+            <!-- История коэффициентов -->
+            <div class="flex overflow-x-auto pb-2 mb-4 whitespace-nowrap scrollbar-hide gap-2">
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-sm font-bold text-blue-400 border border-blue-900">1.38x</span>
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-sm font-bold text-purple-400 border border-purple-900">13.22x</span>
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-sm font-bold text-green-400 border border-green-900">3.02x</span>
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-sm font-bold text-pink-400 border border-pink-900">21.12x</span>
+            </div>
+
+            <!-- Игровой экран -->
+            <div class="rocket-container bg-slate-800/40 rounded-3xl mb-4 border border-slate-700 shadow-lg">
+                <div id="rocket" class="rocket">🚀</div>
+                <div id="multiplier" class="absolute text-6xl font-extrabold text-white z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" style="display:none;">1.00x</div>
+                <div id="crash-msg" class="absolute text-4xl font-extrabold text-red-500 z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" style="display:none;">КРАШ!</div>
+            </div>
+
+            <!-- Ставка -->
+            <div class="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-5 mb-4 border border-slate-700">
+                <div class="flex justify-between text-sm mb-2 text-slate-400 font-semibold">
+                    <span>Сумма ставки ($)</span>
+                </div>
+                <input type="number" id="crash-bet" value="0.10" step="0.01" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-2xl font-bold text-center mb-4 outline-none border border-slate-700 focus:border-blue-500 transition-colors">
+                
+                <div class="flex items-center justify-between bg-slate-900/50 p-4 rounded-2xl mb-5 border border-slate-700">
+                    <span class="font-bold text-slate-300">Автовывод</span>
+                    <input type="number" id="crash-auto" value="2.00" step="0.1" class="w-24 bg-slate-700 text-white p-2 rounded-xl text-center outline-none font-bold text-lg">
+                </div>
+
+                <button id="btn-crash-bet" onclick="startCrash()" class="btn-tucha w-full bg-blue-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide">Сделать ставку</button>
+            </div>
+
+            <!-- Фейковые ставки игроков -->
+            <div class="bg-slate-800/60 rounded-3xl p-4 border border-slate-700">
+                <div class="text-sm text-slate-400 mb-3 text-center font-bold uppercase tracking-wider">Текущие ставки сервера</div>
+                <div id="live-bets" class="space-y-2 max-h-40 overflow-hidden text-sm font-semibold">
+                    <!-- Заполняется JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- МИНЫ -->
+        <div id="tab-mines" class="tab-content">
+            <!-- Игровое поле -->
+            <div id="mines-grid" class="grid grid-cols-5 gap-2 mb-6 pointer-events-none opacity-50">
+                <!-- 25 ячеек -->
+            </div>
+
+            <!-- Ставка -->
+            <div class="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-5 border border-slate-700">
+                 <div class="flex justify-between text-sm mb-2 text-slate-400 font-semibold">
+                    <span>Сумма ставки ($)</span>
+                </div>
+                <input type="number" id="mines-bet" value="0.10" step="0.01" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-2xl font-bold text-center mb-6 outline-none border border-slate-700 focus:border-blue-500 transition-colors">
+                
+                <div class="mb-6 bg-slate-900/50 p-4 rounded-2xl border border-slate-700">
+                    <div class="flex justify-between text-sm text-slate-300 mb-4 font-bold">
+                        <span>Количество бомб 💣</span>
+                        <span id="mines-count-val" class="text-yellow-400 text-lg">3</span>
+                    </div>
+                    <input type="range" id="mines-slider" min="2" max="24" value="3" class="w-full" oninput="document.getElementById('mines-count-val').innerText = this.value">
+                </div>
+
+                <button id="btn-mines-bet" onclick="startMines()" class="btn-tucha w-full bg-blue-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide">Играть</button>
+            </div>
+        </div>
+
+        <!-- ПРОФИЛЬ -->
+        <div id="tab-profile" class="tab-content">
+            <div class="flex flex-col items-center pt-6">
+                <div id="tg-avatar" class="w-28 h-28 bg-slate-700 rounded-full mb-4 flex items-center justify-center text-4xl shadow-xl border-4 border-slate-600 overflow-hidden relative">
+                    👤
+                </div>
+                <h2 id="tg-name" class="text-3xl font-extrabold mb-1">Игрок</h2>
+                
+                <div class="bg-slate-800/80 px-8 py-3 rounded-2xl mt-4 mb-8 border border-slate-600 shadow-inner">
+                    <span class="text-blue-400 font-extrabold text-3xl">$<span id="profile-balance">0.00</span></span>
+                </div>
+
+                <div class="flex w-full gap-4 mb-8">
+                    <button class="btn-tucha flex-1 bg-blue-500 py-4 rounded-2xl font-extrabold text-lg uppercase tracking-wide">Пополнить</button>
+                    <button class="btn-tucha flex-1 bg-slate-600 py-4 rounded-2xl font-extrabold text-lg uppercase tracking-wide">Вывод</button>
+                </div>
+
+                <!-- Кнопка для теста -->
+                <button id="test-bonus-btn" onclick="claimTestBonus()" class="btn-tucha w-full bg-green-500 py-4 rounded-2xl font-extrabold text-lg uppercase tracking-wide animate-pulse shadow-[0_0_20px_rgba(34,197,94,0.4)]">
+                    🎁 Забрать $0.10
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- НИЖНЕЕ МЕНЮ -->
+    <div class="fixed bottom-0 w-full bg-slate-900 border-t border-slate-700 pb-safe z-50">
+        <div class="flex justify-around items-center p-2">
+            <button onclick="switchTab('crash')" class="nav-btn text-blue-400 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="crash">
+                <span class="text-3xl mb-1 drop-shadow-md">🚀</span>
+                <span class="text-[11px] font-extrabold uppercase tracking-wide">Краш</span>
+            </button>
+            <button onclick="switchTab('mines')" class="nav-btn text-slate-500 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="mines">
+                <span class="text-3xl mb-1 drop-shadow-md">💣</span>
+                <span class="text-[11px] font-extrabold uppercase tracking-wide">Мины</span>
+            </button>
+            <button onclick="switchTab('profile')" class="nav-btn text-slate-500 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="profile">
+                <span class="text-3xl mb-1 drop-shadow-md">👤</span>
+                <span class="text-[11px] font-extrabold uppercase tracking-wide">Профиль</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Убираем Splash Screen через 2.5 секунды
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 500);
+            }, 2000);
+        });
+
+        // Инициализация Telegram
+        const tg = window.Telegram.WebApp;
+        tg.expand(); 
+
+        let balance = 0.00;
+        let testBonusClaimed = false;
+
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('tg-name').innerText = tg.initDataUnsafe.user.first_name;
+            if(tg.initDataUnsafe.user.photo_url) {
+                document.getElementById('tg-avatar').innerHTML = `<img src="${tg.initDataUnsafe.user.photo_url}" class="w-full h-full object-cover">`;
+            }
+        }
+
+        function updateBalanceDisplay() {
+            const b = balance.toFixed(2);
+            document.getElementById('header-balance').innerText = `$${b}`;
+            document.getElementById('profile-balance').innerText = b;
+        }
+
+        function claimTestBonus() {
+            if (testBonusClaimed) return;
+            balance += 0.10;
+            testBonusClaimed = true;
+            document.getElementById('test-bonus-btn').style.display = 'none';
+            updateBalanceDisplay();
+            tg.HapticFeedback.notificationOccurred('success');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.remove('text-slate-500');
+                    btn.classList.add('text-blue-400');
+                } else {
+                    btn.classList.remove('text-blue-400');
+                    btn.classList.add('text-slate-500');
+                }
+            });
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        // --- ЛОГИКА РАКЕТКИ ---
+        let crashInterval;
+        function startCrash() {
+            const bet = parseFloat(document.getElementById('crash-bet').value);
+            if (bet > balance || bet <= 0 || isNaN(bet)) {
+                tg.HapticFeedback.notificationOccurred('error');
+                alert("Недостаточно средств или неверная ставка!");
+                return;
+            }
+            balance -= bet;
+            updateBalanceDisplay();
+
+            const btn = document.getElementById('btn-crash-bet');
+            const rocket = document.getElementById('rocket');
+            const mult = document.getElementById('multiplier');
+            const crashMsg = document.getElementById('crash-msg');
+            
+            btn.disabled = true;
+            btn.innerText = "В полёте...";
+            rocket.classList.remove('crashed');
+            rocket.classList.add('flying');
+            mult.style.display = 'block';
+            crashMsg.style.display = 'none';
+
+            let currentMult = 1.00;
+            const crashPoint = (Math.random() * 3 + 1).toFixed(2); 
+
+            crashInterval = setInterval(() => {
+                currentMult += 0.01;
+                mult.innerText = currentMult.toFixed(2) + 'x';
+                
+                if (currentMult >= crashPoint) {
+                    clearInterval(crashInterval);
+                    rocket.classList.remove('flying');
+                    rocket.classList.add('crashed');
+                    mult.style.display = 'none';
+                    crashMsg.style.display = 'block';
+                    crashMsg.innerText = `КРАШ ${currentMult.toFixed(2)}x`;
+                    btn.disabled = false;
+                    btn.innerText = "Сделать ставку";
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
+            }, 50);
+            
+            generateFakeBets();
+        }
+
+        function generateFakeBets() {
+            const names = ['Саня', 'CryptoKing', 'Маша99', 'DarkPro', 'Иван', 'TuchaFan'];
+            const container = document.getElementById('live-bets');
+            container.innerHTML = '';
+            for(let i=0; i<4; i++) {
+                let name = names[Math.floor(Math.random()*names.length)];
+                let amt = (Math.random() * 5 + 0.1).toFixed(2);
+                container.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                        <span class="flex items-center gap-2"><span class="text-xl">👤</span> ${name}</span>
+                        <span class="text-yellow-400 font-bold">$${amt}</span>
+                    </div>`;
+            }
+        }
+
+        // --- ЛОГИКА МИН ---
+        const minesGrid = document.getElementById('mines-grid');
+        for(let i=0; i<25; i++) {
+            let div = document.createElement('div');
+            div.className = 'mine-cell';
+            minesGrid.appendChild(div);
+        }
+
+        function startMines() {
+            const bet = parseFloat(document.getElementById('mines-bet').value);
+            if (bet > balance || bet <= 0 || isNaN(bet)) {
+                tg.HapticFeedback.notificationOccurred('error');
+                alert("Недостаточно средств!");
+                return;
+            }
+            balance -= bet;
+            updateBalanceDisplay();
+
+            const btn = document.getElementById('btn-mines-bet');
+            btn.innerText = "Забрать Выигрыш";
+            btn.classList.replace('bg-blue-500', 'bg-green-500');
+            minesGrid.classList.remove('pointer-events-none', 'opacity-50');
+
+            const cells = document.querySelectorAll('.mine-cell');
+            cells.forEach(cell => {
+                cell.className = 'mine-cell';
+                cell.innerHTML = '';
+                cell.onclick = function() {
+                    this.classList.add('safe');
+                    this.innerHTML = '💎';
+                    this.onclick = null;
+                    tg.HapticFeedback.impactOccurred('medium');
+                };
+            });
+            
+            btn.onclick = function() {
+                tg.HapticFeedback.notificationOccurred('success');
+                alert("Демо: ты забрал выигрыш!");
+                resetMines();
+            };
+        }
+
+        function resetMines() {
+            const btn = document.getElementById('btn-mines-bet');
+            btn.innerText = "Играть";
+            btn.classList.replace('bg-green-500', 'bg-blue-500');
+            btn.onclick = startMines;
+            minesGrid.classList.add('pointer-events-none', 'opacity-50');
+        }
+
+        generateFakeBets();
+        updateBalanceDisplay();
+    </script>
+</body>
+</html>
