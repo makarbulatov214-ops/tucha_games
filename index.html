@@ -1376,7 +1376,7 @@ function claimBonus() {
 }
 
 /* =========================================================
-   CRYPTO BOT PAYMENT INTEGRATION (С ПРОВЕРКОЙ ОПЛАТЫ)
+   CRYPTO BOT PAYMENT INTEGRATION (ПРАВИЛЬНЫЙ ТОКЕН)
 ========================================================= */
 const CRYPTO_PAY_TOKEN = "659838:AAwUPJDoyEKFGhzrnAJXMJWFnQmXrFfD79t"; // Твой токен приложения[cite: 7]
 let checkPaymentInterval = null;
@@ -1396,7 +1396,6 @@ async function createCryptoInvoice() {
     try {
         haptic("medium");
 
-        // Обращаемся к API Crypto Bot напрямую через CORS-прокси (для работы из браузера Telegram WebApp)
         const response = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://pay.crypt.bot/api/createInvoice'), {
             method: 'POST',
             headers: {
@@ -1421,7 +1420,6 @@ async function createCryptoInvoice() {
 
             $("deposit-status").textContent = "Счет создан! Откройте оплату...";
 
-            // Открываем оплату в Telegram
             if (window.Telegram?.WebApp) {
                 window.Telegram.WebApp.openInvoice(miniAppPayUrl, (status) => {
                     if (status === 'paid') {
@@ -1432,7 +1430,6 @@ async function createCryptoInvoice() {
                 window.open(payUrl, '_blank');
             }
 
-            // Запускаем проверку статуса оплаты (каждые 3 секунды)
             startCheckingPayment(invoiceId, amount);
 
         } else {
@@ -1452,11 +1449,10 @@ function startCheckingPayment(invoiceId, amount) {
     if (checkPaymentInterval) clearInterval(checkPaymentInterval);
     
     let attempts = 0;
-    $("deposit-status.textContent") = "Ожидание оплаты...";
+    $("deposit-status").textContent = "Ожидание оплаты...";
 
     checkPaymentInterval = setInterval(async () => {
         attempts++;
-        // Останавливаем проверку через 15 минут, если не оплатили
         if (attempts > 300) {
             clearInterval(checkPaymentInterval);
             $("deposit-btn").disabled = false;
