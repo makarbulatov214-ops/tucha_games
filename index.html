@@ -14,7 +14,7 @@
 
 <style>
 /* =========================================================
-   RESET
+   RESET & LIGHT THEME
 ========================================================= */
 
 * {
@@ -27,8 +27,8 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    background: #070b16;
-    color: #ffffff;
+    background: #f1f5f9;
+    color: #1e293b;
     font-family:
         Inter,
         -apple-system,
@@ -53,7 +53,7 @@ button {
 }
 
 /* =========================================================
-   BACKGROUND
+   BACKGROUND GLOWS
 ========================================================= */
 
 body::before {
@@ -66,7 +66,7 @@ body::before {
     transform: translateX(-50%);
     background: radial-gradient(
         circle,
-        rgba(55, 110, 255, .18),
+        rgba(59, 130, 246, .12),
         transparent 68%
     );
     pointer-events: none;
@@ -82,7 +82,7 @@ body::after {
     bottom: -200px;
     background: radial-gradient(
         circle,
-        rgba(150, 60, 255, .10),
+        rgba(147, 51, 234, .08),
         transparent 68%
     );
     pointer-events: none;
@@ -104,13 +104,11 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    padding:
-        10px
-        15px;
+    padding: 10px 15px;
 
-    background: rgba(8, 13, 27, .88);
+    background: rgba(255, 255, 255, 0.85);
 
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -124,6 +122,7 @@ header {
     font-size: 18px;
     font-weight: 900;
     letter-spacing: -.4px;
+    color: #0f172a;
 }
 
 .logo-icon {
@@ -149,14 +148,10 @@ header {
 
 .logo-text small {
     display: block;
-
     margin-top: -1px;
-
-    color: #66738f;
-
+    color: #64748b;
     font-size: 8px;
     font-weight: 800;
-
     letter-spacing: 1.5px;
 }
 
@@ -169,16 +164,18 @@ header {
 
     border-radius: 13px;
 
-    background: rgba(255,255,255,.055);
+    background: #ffffff;
 
-    border: 1px solid rgba(255,255,255,.07);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 
     font-size: 14px;
     font-weight: 900;
+    color: #0f172a;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .balance-icon {
-    color: #facc15;
+    color: #eab308;
 }
 
 /* =========================================================
@@ -188,13 +185,8 @@ header {
 main {
     width: 100%;
     max-width: 560px;
-
     margin: 0 auto;
-
-    padding:
-        14px
-        14px
-        110px;
+    padding: 14px 14px 110px;
 }
 
 .tab {
@@ -210,21 +202,11 @@ main {
 ========================================================= */
 
 .panel {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(23,33,58,.94),
-            rgba(13,21,39,.94)
-        );
-
-    border: 1px solid rgba(255,255,255,.065);
-
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 22px;
-
     padding: 16px;
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.22);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 /* =========================================================
@@ -233,32 +215,15 @@ main {
 
 .primary {
     width: 100%;
-
     border: 0;
-
     border-radius: 15px;
-
     padding: 15px 16px;
-
     color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #3b82f6,
-            #2563eb
-        );
-
-    box-shadow:
-        0 7px 22px rgba(37,99,235,.22);
-
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 7px 22px rgba(37, 99, 235, 0.25);
     font-size: 14px;
     font-weight: 900;
-
-    transition:
-        transform .12s,
-        filter .15s,
-        opacity .15s;
+    transition: transform .12s, filter .15s, opacity .15s;
 }
 
 .primary:active {
@@ -266,34 +231,22 @@ main {
 }
 
 .primary:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.05);
 }
 
 .primary.green {
-    background:
-        linear-gradient(
-            135deg,
-            #22c55e,
-            #16a34a
-        );
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 7px 22px rgba(34, 197, 94, 0.25);
 }
 
 .primary.gold {
-    background:
-        linear-gradient(
-            135deg,
-            #f59e0b,
-            #d97706
-        );
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 7px 22px rgba(245, 158, 11, 0.25);
 }
 
 .primary.red {
-    background:
-        linear-gradient(
-            135deg,
-            #ef4444,
-            #dc2626
-        );
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    box-shadow: 0 7px 22px rgba(239, 68, 68, 0.25);
 }
 
 .primary:disabled {
@@ -308,11 +261,8 @@ main {
 .history {
     display: flex;
     gap: 7px;
-
     overflow-x: auto;
-
     margin-bottom: 12px;
-
     scrollbar-width: none;
 }
 
@@ -322,96 +272,45 @@ main {
 
 .history span {
     flex: 0 0 auto;
-
     padding: 7px 11px;
-
     border-radius: 20px;
-
-    background: rgba(255,255,255,.055);
-
-    border: 1px solid rgba(255,255,255,.055);
-
-    color: #94a3bd;
-
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    color: #64748b;
     font-size: 11px;
     font-weight: 800;
 }
 
 .rocket-area {
     position: relative;
-
     height: 285px;
-
     overflow: hidden;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 24px;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(35,100,255,.28),
-            transparent 30%
-        ),
-        linear-gradient(
-            180deg,
-            #101e39,
-            #09101e
-        );
-
-    border: 1px solid rgba(96,165,250,.12);
-}
-
-.rocket-area::before {
-    content: "";
-
-    position: absolute;
-
-    width: 260px;
-    height: 260px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(59,130,246,.12),
-            transparent 68%
-        );
-
-    filter: blur(8px);
+    background: linear-gradient(180deg, #e2e8f0, #cbd5e1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 #rocket-wrap {
     position: absolute;
-
     width: 150px;
     height: 150px;
-
     left: 50%;
     top: 42%;
-
     transform: translate(-50%,-50%);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     z-index: 2;
 }
 
 #rocket {
     width: 110px;
     height: 110px;
-
     object-fit: contain;
-
-    filter:
-        drop-shadow(0 0 7px rgba(59,130,246,.85))
-        drop-shadow(0 0 22px rgba(59,130,246,.35));
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
 }
 
 #rocket.flying {
@@ -419,14 +318,8 @@ main {
 }
 
 @keyframes rocketFloat {
-
-    from {
-        transform: translateY(4px) rotate(-3deg);
-    }
-
-    to {
-        transform: translateY(-8px) rotate(4deg);
-    }
+    from { transform: translateY(4px) rotate(-3deg); }
+    to { transform: translateY(-8px) rotate(4deg); }
 }
 
 #rocket.crashed {
@@ -436,19 +329,14 @@ main {
 
 #crash-status {
     position: absolute;
-
     left: 0;
     right: 0;
-
     bottom: 60px;
-
     text-align: center;
-
     font-size: 31px;
     font-weight: 950;
-
-    text-shadow:
-        0 3px 8px rgba(0,0,0,.8);
+    color: #0f172a;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
 }
 
 .crash-form {
@@ -459,34 +347,29 @@ main {
    INPUT
 ========================================================= */
 
+label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #475569;
+}
+
 input[type="number"] {
     width: 100%;
-
     padding: 14px;
-
-    margin:
-        8px
-        0
-        13px;
-
+    margin: 8px 0 13px;
     border-radius: 13px;
-
-    border: 1px solid rgba(255,255,255,.09);
-
+    border: 1px solid rgba(0, 0, 0, 0.1);
     outline: none;
-
-    background: #080f20;
-
-    color: white;
-
+    background: #f8fafc;
+    color: #0f172a;
     text-align: center;
-
     font-size: 20px;
     font-weight: 800;
 }
 
 input[type="number"]:focus {
-    border-color: rgba(59,130,246,.65);
+    border-color: #3b82f6;
+    background: #ffffff;
 }
 
 /* =========================================================
@@ -497,8 +380,8 @@ input[type="number"]:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 12px;
+    color: #0f172a;
 }
 
 .players {
@@ -508,86 +391,65 @@ input[type="number"]:focus {
 
 .player {
     display: grid;
-
-    grid-template-columns:
-        minmax(0,1fr)
-        auto;
-
+    grid-template-columns: minmax(0,1fr) auto;
     align-items: center;
-
     gap: 10px;
-
     padding: 11px;
-
     border-radius: 13px;
-
-    background: rgba(0,0,0,.17);
-
-    border: 1px solid rgba(255,255,255,.045);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .player.you {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(37,99,235,.20),
-            rgba(37,99,235,.07)
-        );
-
-    border-color: rgba(59,130,246,.42);
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.25);
 }
 
 .player-name {
     overflow: hidden;
-
     text-overflow: ellipsis;
     white-space: nowrap;
-
     font-weight: 800;
     font-size: 13px;
+    color: #1e293b;
 }
 
 .player-detail {
     margin-top: 4px;
-
-    color: #74839f;
-
+    color: #64748b;
     font-size: 10px;
 }
 
 .player-x {
-    color: #4ade80;
-
+    color: #16a34a;
     font-weight: 950;
 }
 
 .player-status {
     margin-top: 3px;
-
     font-size: 9px;
     font-weight: 800;
-
     text-align: right;
 }
 
 .status-win {
-    color: #4ade80;
+    color: #16a34a;
 }
 
 .status-loss {
-    color: #f87171;
+    color: #dc2626;
 }
 
 .status-live {
-    color: #facc15;
+    color: #ca8a04;
 }
 
 .status-wait {
-    color: #71809b;
+    color: #64748b;
 }
 
 /* =========================================================
-   MINES (ПРЕМИУМ ДИЗАЙН)
+   MINES
 ========================================================= */
 
 .grid {
@@ -595,10 +457,10 @@ input[type="number"]:focus {
     grid-template-columns: repeat(5, 1fr);
     gap: 9px;
     margin: 16px 0;
-    background: rgba(10, 16, 32, 0.6);
+    background: #f1f5f9;
     padding: 12px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .cell {
@@ -607,19 +469,19 @@ input[type="number"]:focus {
     aspect-ratio: 1;
     border: 0;
     border-radius: 14px;
-    background: linear-gradient(145deg, #243552, #131e33);
-    border-bottom: 4px solid #080d1a;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    color: white;
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
+    border-bottom: 4px solid #94a3b8;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    color: #1e293b;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, filter 0.2s;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
 }
 
 .cell:not(:disabled):hover {
-    filter: brightness(1.15);
+    filter: brightness(1.03);
     transform: translateY(-2px);
 }
 
@@ -629,67 +491,46 @@ input[type="number"]:focus {
 }
 
 .cell.safe {
-    background: linear-gradient(145deg, #1d4ed8, #1e40af);
-    border-bottom: 4px solid #1e3a8a;
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2);
-    animation: popCell 0.25s ease-out;
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    border-bottom: 4px solid #1d4ed8;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
 }
 
 .cell.revealed-safe {
-    background: linear-gradient(145deg, #152238, #0e1626);
-    border-bottom: 2px solid #080d1a;
+    background: linear-gradient(145deg, #cbd5e1, #94a3b8);
+    border-bottom: 2px solid #64748b;
     opacity: 0.6;
 }
 
 .cell.bomb {
-    background: linear-gradient(145deg, #dc2626, #991b1b);
-    border-bottom: 4px solid #7f1d1d;
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
-    animation: shakeCell 0.3s ease-in-out;
-}
-
-@keyframes popCell {
-    0% { transform: scale(0.8); }
-    70% { transform: scale(1.08); }
-    100% { transform: scale(1); }
-}
-
-@keyframes shakeCell {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-3px); }
-    40%, 80% { transform: translateX(3px); }
+    background: linear-gradient(145deg, #ef4444, #dc2626);
+    border-bottom: 4px solid #991b1b;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
 }
 
 .star-svg {
     width: 76%;
     height: 76%;
-    filter: drop-shadow(0 2px 6px rgba(250, 204, 21, 0.6));
-    animation: starPulse 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes starPulse {
-    from { transform: scale(0.95); }
-    to { transform: scale(1.05); }
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .bomb-img {
     width: 72%;
     height: 72%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
 }
 
 .range-row {
     display: flex;
     justify-content: space-between;
     margin: 13px 0;
-    color: #a5b3c9;
+    color: #64748b;
     font-size: 13px;
     font-weight: 800;
 }
 
 .range-row span:last-child {
-    color: white;
+    color: #0f172a;
 }
 
 input[type="range"] {
@@ -700,11 +541,10 @@ input[type="range"] {
 
 .multiplier {
     text-align: center;
-    color: #4ade80;
+    color: #16a34a;
     font-size: 18px;
     font-weight: 950;
     margin-bottom: 13px;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
 }
 
 /* =========================================================
@@ -718,24 +558,19 @@ input[type="range"] {
 .cases-title {
     font-size: 25px;
     font-weight: 950;
-
     letter-spacing: -.7px;
+    color: #0f172a;
 }
 
 .cases-subtitle {
     margin-top: 5px;
-
-    color: #7786a1;
-
+    color: #64748b;
     font-size: 12px;
 }
 
 .case-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
-
+    grid-template-columns: repeat(2, minmax(0,1fr));
     gap: 12px;
 }
 
@@ -743,37 +578,19 @@ input[type="range"] {
 
 .case-card {
     position: relative;
-
     min-height: 230px;
-
     overflow: hidden;
-
     padding: 12px;
-
     border-radius: 20px;
-
-    border: 1px solid rgba(255,255,255,.07);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(28,39,68,.95),
-            rgba(13,19,35,.98)
-        );
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.22);
-
-    transition:
-        transform .18s,
-        border-color .18s;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    transition: transform .18s, border-color .18s;
 }
 
 .case-card.available {
     cursor: pointer;
-
-    border-color:
-        rgba(96,165,250,.30);
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
 .case-card.available:active {
@@ -781,115 +598,62 @@ input[type="range"] {
 }
 
 .case-card.available:hover {
-    border-color:
-        rgba(96,165,250,.55);
-}
-
-.case-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 130px;
-    height: 130px;
-
-    left: 50%;
-    top: 45px;
-
-    transform: translateX(-50%);
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(59,130,246,.18),
-            transparent 68%
-        );
-
-    pointer-events: none;
+    border-color: rgba(59, 130, 246, 0.6);
 }
 
 .case-card-image {
     position: relative;
-
     display: block;
-
     width: 100%;
     height: 125px;
-
     object-fit: contain;
-
-    filter:
-        drop-shadow(0 10px 20px rgba(0,0,0,.35));
-
-    transition:
-        transform .25s;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+    transition: transform .25s;
 }
 
 .case-card.available:hover .case-card-image {
-    transform:
-        translateY(-3px)
-        scale(1.04);
+    transform: translateY(-3px) scale(1.04);
 }
 
 .case-card-name {
     position: relative;
-
     font-size: 14px;
     font-weight: 950;
-
+    color: #0f172a;
     margin-top: 4px;
 }
 
 .case-card-price {
     position: relative;
-
     display: inline-flex;
     align-items: center;
-
     margin-top: 7px;
-
     padding: 5px 9px;
-
     border-radius: 8px;
-
-    background:
-        rgba(34,197,94,.10);
-
-    border:
-        1px solid rgba(34,197,94,.16);
-
-    color: #4ade80;
-
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #16a34a;
     font-size: 11px;
     font-weight: 950;
 }
 
 .case-card-arrow {
     position: absolute;
-
     right: 11px;
     bottom: 11px;
-
     width: 25px;
     height: 25px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     border-radius: 8px;
-
-    background: rgba(255,255,255,.06);
-
-    color: #93a4c0;
-
+    background: #f1f5f9;
+    color: #64748b;
     font-size: 13px;
 }
 
 .case-card.locked {
-    opacity: .48;
+    opacity: .5;
 }
 
 .case-card.locked .case-card-image {
@@ -898,21 +662,14 @@ input[type="range"] {
 
 .case-coming {
     position: absolute;
-
     left: 10px;
     top: 10px;
-
     padding: 4px 7px;
-
     border-radius: 7px;
-
-    background: rgba(255,255,255,.07);
-
-    color: #8291aa;
-
+    background: #f1f5f9;
+    color: #64748b;
     font-size: 8px;
     font-weight: 900;
-
     text-transform: uppercase;
 }
 
@@ -931,19 +688,12 @@ input[type="range"] {
 .case-back {
     display: flex;
     align-items: center;
-
     gap: 7px;
-
     margin-bottom: 14px;
-
     padding: 0;
-
     border: 0;
-
     background: none;
-
-    color: #8fa0bd;
-
+    color: #64748b;
     font-size: 13px;
     font-weight: 800;
 }
@@ -954,104 +704,45 @@ input[type="range"] {
 
 .case-detail-card {
     position: relative;
-
     overflow: hidden;
-
     padding: 18px;
-
     border-radius: 25px;
-
-    background:
-        radial-gradient(
-            circle at 50% 10%,
-            rgba(70,130,255,.16),
-            transparent 42%
-        ),
-        linear-gradient(
-            145deg,
-            #162441,
-            #0d1629
-        );
-
-    border: 1px solid rgba(255,255,255,.07);
-}
-
-.case-detail-card::before {
-    content: "";
-
-    position: absolute;
-
-    width: 280px;
-    height: 280px;
-
-    left: 50%;
-    top: 50px;
-
-    transform: translateX(-50%);
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(59,130,246,.14),
-            transparent 68%
-        );
-
-    pointer-events: none;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
 }
 
 .case-detail-title {
     position: relative;
-
     text-align: center;
-
     font-size: 25px;
     font-weight: 950;
-
+    color: #0f172a;
     letter-spacing: -.5px;
 }
 
 .case-detail-price {
     position: relative;
-
     width: max-content;
-
     margin: 8px auto 0;
-
     padding: 6px 11px;
-
     border-radius: 9px;
-
-    background: rgba(34,197,94,.10);
-
-    border: 1px solid rgba(34,197,94,.17);
-
-    color: #4ade80;
-
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #16a34a;
     font-size: 11px;
     font-weight: 950;
 }
 
 .case-big-image {
     position: relative;
-
     display: block;
-
     width: 100%;
-
     height: 240px;
-
     margin: 3px auto 0;
-
     object-fit: contain;
-
-    filter:
-        drop-shadow(0 16px 35px rgba(0,0,0,.4));
-
-    transition:
-        transform .25s,
-        opacity .25s;
+    filter: drop-shadow(0 12px 25px rgba(0,0,0,0.12));
+    transition: transform .25s, opacity .25s;
 }
 
 .case-detail-card.ready .case-big-image {
@@ -1059,14 +750,8 @@ input[type="range"] {
 }
 
 @keyframes caseFloat {
-
-    from {
-        transform: translateY(3px);
-    }
-
-    to {
-        transform: translateY(-7px);
-    }
+    from { transform: translateY(3px); }
+    to { transform: translateY(-7px); }
 }
 
 /* =========================================================
@@ -1075,78 +760,41 @@ input[type="range"] {
 
 .roulette-wrap {
     position: relative;
-
     overflow: hidden;
-
     height: 105px;
-
-    margin:
-        5px 0
-        13px;
-
+    margin: 5px 0 13px;
     border-radius: 17px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #080e1c,
-            #0d1628
-        );
-
-    border:
-        1px solid rgba(255,255,255,.08);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .roulette-strip {
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     width: max-content;
-
     height: 100%;
-
-    padding:
-        0 7px;
-
+    padding: 0 7px;
     transform: translateX(0);
-
     will-change: transform;
 }
 
 .roulette-strip.spinning {
-    transition:
-        transform 5.5s cubic-bezier(.08,.67,.07,1);
+    transition: transform 5.5s cubic-bezier(.08,.67,.07,1);
 }
 
 .roulette-prize {
     flex: 0 0 92px;
-
     height: 79px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 5px;
-
     border-radius: 13px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #1b2943,
-            #101a2e
-        );
-
-    border:
-        1px solid rgba(255,255,255,.07);
-
-    box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.035);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
 }
 
 .prize-icon {
@@ -1154,8 +802,7 @@ input[type="range"] {
 }
 
 .prize-value {
-    color: #facc15;
-
+    color: #ca8a04;
     font-size: 14px;
     font-weight: 950;
 }
@@ -1163,86 +810,47 @@ input[type="range"] {
 .roulette-fade-left,
 .roulette-fade-right {
     position: absolute;
-
     z-index: 3;
-
     top: 0;
     bottom: 0;
-
     width: 70px;
-
     pointer-events: none;
 }
 
 .roulette-fade-left {
     left: 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            #080e1c,
-            transparent
-        );
+    background: linear-gradient(90deg, #f8fafc, transparent);
 }
 
 .roulette-fade-right {
     right: 0;
-
-    background:
-        linear-gradient(
-            270deg,
-            #080e1c,
-            transparent
-        );
+    background: linear-gradient(270deg, #f8fafc, transparent);
 }
 
 .roulette-marker {
     position: absolute;
-
     z-index: 5;
-
     top: 0;
     bottom: 0;
-
     left: 50%;
-
     width: 3px;
-
     transform: translateX(-50%);
-
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            #60a5fa 12%,
-            #ffffff 50%,
-            #60a5fa 88%,
-            transparent
-        );
-
-    box-shadow:
-        0 0 15px rgba(96,165,250,.8);
-
+    background: linear-gradient(180deg, transparent, #3b82f6 12%, #0f172a 50%, #3b82f6 88%, transparent);
+    box-shadow: 0 0 10px rgba(59,130,246,0.4);
     pointer-events: none;
 }
 
 .roulette-marker::before {
     content: "";
-
     position: absolute;
-
     top: -1px;
     left: 50%;
-
     transform: translateX(-50%);
-
     width: 0;
     height: 0;
-
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-
-    border-top: 9px solid #60a5fa;
+    border-top: 9px solid #3b82f6;
 }
 
 /* =========================================================
@@ -1252,30 +860,23 @@ input[type="range"] {
 .prizes-title {
     margin-top: 20px;
     margin-bottom: 10px;
-
     font-size: 14px;
     font-weight: 950;
+    color: #0f172a;
 }
 
 .prizes-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns: repeat(3,1fr);
     gap: 7px;
 }
 
 .prize-small {
     padding: 11px 5px;
-
     text-align: center;
-
     border-radius: 12px;
-
-    background: rgba(255,255,255,.035);
-
-    border: 1px solid rgba(255,255,255,.055);
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .prize-small-icon {
@@ -1284,51 +885,36 @@ input[type="range"] {
 
 .prize-small-value {
     margin-top: 4px;
-
-    color: #facc15;
-
+    color: #ca8a04;
     font-size: 11px;
     font-weight: 950;
 }
 
 /* =========================================================
-   CASE RESULT
+   CASE RESULT & TIMER
 ========================================================= */
 
 .case-result {
     min-height: 24px;
-
-    margin:
-        7px 0
-        12px;
-
+    margin: 7px 0 12px;
     text-align: center;
-
-    color: #4ade80;
-
+    color: #16a34a;
     font-size: 15px;
     font-weight: 950;
 }
 
 .case-timer {
     min-height: 18px;
-
     margin-top: 9px;
-
-    color: #71809c;
-
+    color: #64748b;
     text-align: center;
-
     font-size: 11px;
 }
 
 .case-note {
     margin-top: 12px;
-
-    color: #687792;
-
+    color: #64748b;
     text-align: center;
-
     font-size: 10px;
     line-height: 1.45;
 }
@@ -1339,45 +925,33 @@ input[type="range"] {
 
 .profile {
     text-align: center;
-
     padding-top: 28px;
 }
 
 .avatar {
     width: 84px;
     height: 84px;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     margin: 0 auto 13px;
-
     border-radius: 50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #263b65,
-            #17243e
-        );
-
+    background: #e2e8f0;
     font-size: 42px;
-
     overflow: hidden;
+    border: 2px solid rgba(0,0,0,0.06);
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
 
 .profile h2 {
     margin: 0;
-
     font-size: 21px;
+    color: #0f172a;
 }
 
 /* =========================================================
@@ -1386,59 +960,39 @@ input[type="range"] {
 
 nav {
     position: fixed;
-
     z-index: 100;
-
     left: 0;
     right: 0;
     bottom: 0;
-
     display: flex;
-
-    padding:
-        8px 5px
-        calc(8px + env(safe-area-inset-bottom));
-
-    background:
-        rgba(8,13,26,.94);
-
-    border-top:
-        1px solid rgba(255,255,255,.07);
-
+    padding: 8px 5px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.9);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
 }
 
 nav button {
     flex: 1;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     gap: 4px;
-
     border: 0;
-
     background: none;
-
-    color: #63728e;
-
+    color: #64748b;
     font-size: 9px;
     font-weight: 900;
 }
 
 nav button.active {
-    color: #60a5fa;
+    color: #3b82f6;
 }
 
 .nav-icon {
     height: 25px;
-
     font-size: 21px;
-
-    filter: grayscale(.2);
 }
 
 /* =========================================================
@@ -1446,35 +1000,27 @@ nav button.active {
 ========================================================= */
 
 @media (max-width: 360px) {
-
     main {
         padding-left: 10px;
         padding-right: 10px;
     }
-
     .case-grid {
         gap: 9px;
     }
-
     .case-card {
         min-height: 210px;
     }
-
     .case-card-image {
         height: 110px;
     }
-
     .case-big-image {
         height: 205px;
     }
-
     .roulette-prize {
         flex-basis: 82px;
     }
-
     .prizes-grid {
-        grid-template-columns:
-            repeat(2,1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 }
 </style>
@@ -1482,867 +1028,264 @@ nav button.active {
 
 <body>
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
-
+<!-- HEADER -->
 <header>
-
     <div class="logo">
-
-        <div class="logo-icon">
-            ☁️
-        </div>
-
+        <div class="logo-icon">☁️</div>
         <div class="logo-text">
             TUCHA
             <small>GAMES</small>
         </div>
-
     </div>
-
     <div class="balance">
-
-        <span class="balance-icon">
-            $
-        </span>
-
-        <span id="header-balance">
-            1.00
-        </span>
-
+        <span class="balance-icon">$</span>
+        <span id="header-balance">1.00</span>
     </div>
-
 </header>
 
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
+<!-- MAIN -->
 <main>
 
-
-<!-- =========================================================
-     CRASH
-========================================================= -->
-
-<section
-    id="tab-crash"
-    class="tab active"
->
-
+<!-- CRASH TAB -->
+<section id="tab-crash" class="tab active">
     <div class="history">
-
         <span>1.42x</span>
         <span>2.15x</span>
         <span>1.08x</span>
         <span>3.72x</span>
         <span>1.31x</span>
-
     </div>
-
 
     <div class="rocket-area">
-
         <div id="rocket-wrap">
-
-            <img
-                id="rocket"
-                src="./rocket.gif.gif"
-                alt="Ракета"
-                class="flying"
-            >
-
+            <img id="rocket" src="./rocket.gif.gif" alt="Ракета" class="flying">
         </div>
-
-
-        <div id="crash-status">
-            ОЖИДАНИЕ
-        </div>
-
+        <div id="crash-status">ОЖИДАНИЕ</div>
     </div>
-
 
     <div class="panel crash-form">
-
-        <label>
-            Сумма ставки
-        </label>
-
-        <input
-            id="crash-bet"
-            type="number"
-            min="0.01"
-            step="0.01"
-            value="0.10"
-        >
-
-        <button
-            id="crash-button"
-            class="primary"
-            onclick="handleCrashAction()"
-        >
-            СДЕЛАТЬ СТАВКУ
-        </button>
-
+        <label>Сумма ставки</label>
+        <input id="crash-bet" type="number" min="0.01" step="0.01" value="0.10">
+        <button id="crash-button" class="primary" onclick="handleCrashAction()">СДЕЛАТЬ СТАВКУ</button>
     </div>
 
-
-    <div
-        class="panel"
-        style="margin-top:14px"
-    >
-
+    <div class="panel" style="margin-top:14px">
         <div class="section-head">
-
-            <b>
-                Игроки
-            </b>
-
-            <span
-                style="
-                    color:#4ade80;
-                    font-size:10px;
-                    font-weight:900;
-                "
-            >
-                ● LIVE
-            </span>
-
+            <b>Игроки</b>
+            <span style="color:#16a34a; font-size:10px; font-weight:900;">● LIVE</span>
         </div>
-
-
-        <div
-            id="live-bets"
-            class="players"
-        ></div>
-
+        <div id="live-bets" class="players"></div>
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     MINES
-========================================================= -->
-
-<section
-    id="tab-mines"
-    class="tab"
->
-
+<!-- MINES TAB -->
+<section id="tab-mines" class="tab">
     <div class="panel">
-
         <div class="section-head">
-
-            <b>
-                💣 МИНЫ
-            </b>
-
-            <span
-                id="mines-state-label"
-                style="
-                    color:#71809c;
-                    font-size:11px;
-                "
-            >
-                Новая игра
-            </span>
-
+            <b>💣 МИНЫ</b>
+            <span id="mines-state-label" style="color:#64748b; font-size:11px;">Новая игра</span>
         </div>
 
+        <div id="mines-grid" class="grid"></div>
 
-        <div
-            id="mines-grid"
-            class="grid"
-        ></div>
-
-
-        <label>
-            Сумма ставки
-        </label>
-
-        <input
-            id="mines-bet"
-            type="number"
-            min="0.01"
-            step="0.01"
-            value="0.10"
-        >
-
+        <label>Сумма ставки</label>
+        <input id="mines-bet" type="number" min="0.01" step="0.01" value="0.10">
 
         <div class="range-row">
-
-            <span>
-                Количество мин
-            </span>
-
-            <span id="mines-count">
-                3
-            </span>
-
+            <span>Количество мин</span>
+            <span id="mines-count">3</span>
         </div>
 
+        <input id="mines-slider" type="range" min="1" max="24" value="3">
 
-        <input
-            id="mines-slider"
-            type="range"
-            min="1"
-            max="24"
-            value="3"
-        >
-
-
-        <div
-            id="mines-multiplier"
-            class="multiplier"
-            style="display:none"
-        >
-
-            Коэффициент:
-
-            <span id="mine-mult">
-                1.00
-            </span>
-
-            x
-
+        <div id="mines-multiplier" class="multiplier" style="display:none">
+            Коэффициент: <span id="mine-mult">1.00</span> x
         </div>
 
+        <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
 
-        <button
-            id="mines-button"
-            class="primary"
-            onclick="handleMinesAction()"
-        >
-            СТАРТ
-        </button>
-
-
-        <div
-            style="
-                margin-top:11px;
-                color:#687792;
-                text-align:center;
-                font-size:10px;
-                line-height:1.45;
-            "
-        >
-            После проигрыша поле полностью открывается:
-            мины показываются красным, безопасные клетки —
-            золотыми звёздами.
+        <div style="margin-top:11px; color:#64748b; text-align:center; font-size:10px; line-height:1.45;">
+            После проигрыша поле полностью открывается: мины показываются красным, безопасные клетки — золотыми звёздами.
         </div>
-
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     CASES
-========================================================= -->
-
-<section
-    id="tab-cases"
-    class="tab"
->
-
-
-    <!-- CASE LIST -->
-
-    <div
-        id="cases-list"
-    >
-
+<!-- CASES TAB -->
+<section id="tab-cases" class="tab">
+    <div id="cases-list">
         <div class="cases-header">
-
-            <div class="cases-title">
-                Кейсы
-            </div>
-
-            <div class="cases-subtitle">
-                Открывай кейсы и забирай призы
-            </div>
-
+            <div class="cases-title">Кейсы</div>
+            <div class="cases-subtitle">Открывай кейсы и забирай призы</div>
         </div>
-
 
         <div class="case-grid">
-
-
-            <!-- AVAILABLE CASE -->
-
-            <div
-                class="case-card available"
-                onclick="openCaseDetail()"
-            >
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt="Бесплатный кейс"
-                    onerror="
-                        this.style.opacity='.25';
-                    "
-                >
-
-
-                <div class="case-card-name">
-                    Ежедневный кейс
-                </div>
-
-
-                <div class="case-card-price">
-                    $0.00
-                </div>
-
-
-                <div class="case-card-arrow">
-                    ›
-                </div>
-
+            <div class="case-card available" onclick="openCaseDetail()">
+                <img class="case-card-image" src="./case.png" alt="Бесплатный кейс">
+                <div class="case-card-name">Ежедневный кейс</div>
+                <div class="case-card-price">$0.00</div>
+                <div class="case-card-arrow">›</div>
             </div>
-
-
-            <!-- FUTURE CASES -->
 
             <div class="case-card locked">
-
-                <div class="case-coming">
-                    Скоро
-                </div>
-
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt=""
-                >
-
-
-                <div class="case-card-name">
-                    Premium
-                </div>
-
-
-                <div class="case-card-price">
-                    Скоро
-                </div>
-
+                <div class="case-coming">Скоро</div>
+                <img class="case-card-image" src="./case.png" alt="">
+                <div class="case-card-name">Premium</div>
+                <div class="case-card-price">Скоро</div>
             </div>
-
 
             <div class="case-card locked">
-
-                <div class="case-coming">
-                    Скоро
-                </div>
-
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt=""
-                >
-
-
-                <div class="case-card-name">
-                    Rare
-                </div>
-
-
-                <div class="case-card-price">
-                    Скоро
-                </div>
-
+                <div class="case-coming">Скоро</div>
+                <img class="case-card-image" src="./case.png" alt="">
+                <div class="case-card-name">Rare</div>
+                <div class="case-card-price">Скоро</div>
             </div>
-
 
             <div class="case-card locked">
-
-                <div class="case-coming">
-                    Скоро
-                </div>
-
-
-                <img
-                    class="case-card-image"
-                    src="./case.png"
-                    alt=""
-                >
-
-
-                <div class="case-card-name">
-                    Mega
-                </div>
-
-
-                <div class="case-card-price">
-                    Скоро
-                </div>
-
+                <div class="case-coming">Скоро</div>
+                <img class="case-card-image" src="./case.png" alt="">
+                <div class="case-card-name">Mega</div>
+                <div class="case-card-price">Скоро</div>
             </div>
-
-
         </div>
-
     </div>
-
 
     <!-- CASE DETAIL -->
+    <div id="case-detail" class="case-detail">
+        <button class="case-back" onclick="closeCaseDetail()">← Все кейсы</button>
 
-    <div
-        id="case-detail"
-        class="case-detail"
-    >
+        <div id="case-detail-card" class="case-detail-card ready">
+            <div class="case-detail-title">Ежедневный кейс</div>
+            <div class="case-detail-price">БЕСПЛАТНО · $0.00</div>
 
-        <button
-            class="case-back"
-            onclick="closeCaseDetail()"
-        >
-            ← Все кейсы
-        </button>
+            <img id="case-big-image" class="case-big-image" src="./case.png" alt="Кейс">
 
-
-        <div
-            id="case-detail-card"
-            class="case-detail-card ready"
-        >
-
-            <div class="case-detail-title">
-                Ежедневный кейс
+            <div id="roulette-wrap" class="roulette-wrap">
+                <div id="roulette-strip" class="roulette-strip"></div>
+                <div class="roulette-fade-left"></div>
+                <div class="roulette-fade-right"></div>
+                <div class="roulette-marker"></div>
             </div>
 
+            <div id="case-result" class="case-result">Нажми на кнопку, чтобы открыть кейс</div>
 
-            <div class="case-detail-price">
-                БЕСПЛАТНО · $0.00
-            </div>
+            <button id="case-button" class="primary gold" onclick="openDailyCase()">ОТКРЫТЬ БЕСПЛАТНО</button>
 
+            <div id="case-timer" class="case-timer"></div>
 
-            <img
-                id="case-big-image"
-                class="case-big-image"
-                src="./case.png"
-                alt="Кейс"
-            >
-
-
-            <!-- ROULETTE -->
-
-            <div
-                id="roulette-wrap"
-                class="roulette-wrap"
-            >
-
-                <div
-                    id="roulette-strip"
-                    class="roulette-strip"
-                ></div>
-
-
-                <div
-                    class="roulette-fade-left"
-                ></div>
-
-
-                <div
-                    class="roulette-fade-right"
-                ></div>
-
-
-                <div
-                    class="roulette-marker"
-                ></div>
-
-            </div>
-
-
-            <div
-                id="case-result"
-                class="case-result"
-            >
-                Нажми на кнопку, чтобы открыть кейс
-            </div>
-
-
-            <button
-                id="case-button"
-                class="primary gold"
-                onclick="openDailyCase()"
-            >
-                ОТКРЫТЬ БЕСПЛАТНО
-            </button>
-
-
-            <div
-                id="case-timer"
-                class="case-timer"
-            ></div>
-
-
-            <!-- POSSIBLE PRIZES -->
-
-            <div class="prizes-title">
-                Возможные призы
-            </div>
-
+            <div class="prizes-title">Возможные призы</div>
 
             <div class="prizes-grid">
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        💵
-                    </div>
-
-                    <div class="prize-small-value">
-                        $0.02
-                    </div>
-
+                    <div class="prize-small-icon">💵</div>
+                    <div class="prize-small-value">$0.02</div>
                 </div>
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        💵
-                    </div>
-
-                    <div class="prize-small-value">
-                        $0.05
-                    </div>
-
+                    <div class="prize-small-icon">💵</div>
+                    <div class="prize-small-value">$0.05</div>
                 </div>
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        💵
-                    </div>
-
-                    <div class="prize-small-value">
-                        $0.10
-                    </div>
-
+                    <div class="prize-small-icon">💵</div>
+                    <div class="prize-small-value">$0.10</div>
                 </div>
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        💵
-                    </div>
-
-                    <div class="prize-small-value">
-                        $0.20
-                    </div>
-
+                    <div class="prize-small-icon">💵</div>
+                    <div class="prize-small-value">$0.20</div>
                 </div>
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        💵
-                    </div>
-
-                    <div class="prize-small-value">
-                        $0.50
-                    </div>
-
+                    <div class="prize-small-icon">💵</div>
+                    <div class="prize-small-value">$0.50</div>
                 </div>
-
-
                 <div class="prize-small">
-
-                    <div class="prize-small-icon">
-                        🏆
-                    </div>
-
-                    <div class="prize-small-value">
-                        $1.00
-                    </div>
-
+                    <div class="prize-small-icon">🏆</div>
+                    <div class="prize-small-value">$1.00</div>
                 </div>
-
-
             </div>
-
 
             <div class="case-note">
-
-                Бесплатное открытие доступно один раз в 24 часа.
-                После открытия выигрыш автоматически добавляется
-                на баланс.
-
+                Бесплатное открытие доступно один раз в 24 часа. После открытия выигрыш автоматически добавляется на баланс.
             </div>
-
         </div>
-
     </div>
-
 </section>
 
-
-<!-- =========================================================
-     PROFILE
-========================================================= -->
-
-<section
-    id="tab-profile"
-    class="tab"
->
-
+<!-- PROFILE TAB -->
+<section id="tab-profile" class="tab">
     <div class="panel profile">
+        <div id="avatar" class="avatar">👤</div>
+        <h2 id="username">Игрок</h2>
 
-        <div
-            id="avatar"
-            class="avatar"
-        >
-            👤
+        <div class="balance" style="display:inline-flex; margin:14px 0 18px;">
+            <span class="balance-icon">$</span>
+            <span id="profile-balance">1.00</span>
         </div>
 
+        <button id="bonus-button" class="primary green" onclick="claimBonus()">🎁 Получить $1.00</button>
 
-        <h2 id="username">
-            Игрок
-        </h2>
-
-
-        <div
-            class="balance"
-            style="
-                display:inline-flex;
-                margin:14px 0 18px;
-            "
-        >
-
-            <span class="balance-icon">
-                $
-            </span>
-
-            <span id="profile-balance">
-                1.00
-            </span>
-
-        </div>
-
-
-        <button
-            id="bonus-button"
-            class="primary green"
-            onclick="claimBonus()"
-        >
-            🎁 Получить $1.00
-        </button>
-
-
-        <!-- СЕКРЕТНАЯ КНОПКА АДМИН-ПАНЕЛИ -->
-        <button
-            onclick="openAdminPanel()"
-            style="
-                margin-top: 15px;
-                background: none;
-                border: none;
-                color: #64748b;
-                font-size: 11px;
-                font-weight: 700;
-                cursor: pointer;
-            "
-        >
+        <button onclick="openAdminPanel()" style="margin-top: 15px; background: none; border: none; color: #64748b; font-size: 11px; font-weight: 700; cursor: pointer;">
             ⚙️ Админ-панель
         </button>
 
-
-        <div
-            style="
-                margin-top:13px;
-                color:#687792;
-                font-size:10px;
-            "
-        >
+        <div style="margin-top:13px; color:#64748b; font-size:10px;">
             Баланс синхронизирован с базой.
         </div>
-
     </div>
-
 </section>
-
 
 </main>
 
-
-<!-- =========================================================
-     ADMIN MODAL
-========================================================= -->
-
-<div
-    id="admin-modal"
-    style="
-        position: fixed;
-        inset: 0;
-        background: rgba(7, 11, 22, 0.95);
-        z-index: 999;
-        display: none;
-        flex-direction: column;
-        padding: 20px;
-        overflow-y: auto;
-    "
->
+<!-- ADMIN MODAL -->
+<div id="admin-modal" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 999; display: none; flex-direction: column; padding: 20px; overflow-y: auto;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3 style="margin: 0; font-size: 20px; color: #facc15;">👑 Панель Администратора</h3>
-        <button onclick="closeAdminPanel()" style="background: #1e293b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold;">Закрыть ✕</button>
+        <button onclick="closeAdminPanel()" style="background: #e2e8f0; color: #0f172a; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold;">Закрыть ✕</button>
     </div>
-
     <div class="panel" style="margin-bottom: 15px;">
-        <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #94a3b8;">Список игроков из базы данных:</h4>
+        <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #64748b;">Список игроков из базы данных:</h4>
         <div id="admin-players-list" style="display: grid; gap: 8px; max-height: 350px; overflow-y: auto;">
             <p style="color: #64748b; text-align: center;">Загрузка игроков...</p>
         </div>
     </div>
 </div>
 
-
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
-
+<!-- NAVIGATION -->
 <nav>
-
-
-    <button
-        data-tab="crash"
-        class="active"
-        onclick="switchTab('crash')"
-    >
-
-        <span class="nav-icon">
-            🚀
-        </span>
-
-        РАКЕТКА
-
+    <button data-tab="crash" class="active" onclick="switchTab('crash')">
+        <span class="nav-icon">🚀</span> РАКЕТКА
     </button>
-
-
-    <button
-        data-tab="mines"
-        onclick="switchTab('mines')"
-    >
-
-        <span class="nav-icon">
-            💣
-        </span>
-
-        МИНЫ
-
+    <button data-tab="mines" onclick="switchTab('mines')">
+        <span class="nav-icon">💣</span> МИНЫ
     </button>
-
-
-    <button
-        data-tab="cases"
-        onclick="switchTab('cases')"
-    >
-
-        <span class="nav-icon">
-            🎁
-        </span>
-
-        КЕЙСЫ
-
+    <button data-tab="cases" onclick="switchTab('cases')">
+        <span class="nav-icon">🎁</span> КЕЙСЫ
     </button>
-
-
-    <button
-        data-tab="profile"
-        onclick="switchTab('profile')"
-    >
-
-        <span class="nav-icon">
-            👤
-        </span>
-
-        ПРОФИЛЬ
-
+    <button data-tab="profile" onclick="switchTab('profile')">
+        <span class="nav-icon">👤</span> ПРОФИЛЬ
     </button>
-
-
 </nav>
 
-
 <script>
-
-/* =========================================================
-   TELEGRAM
-========================================================= */
-
 const tg = window.Telegram?.WebApp;
-
 try {
-
     tg?.ready();
     tg?.expand();
-
-    tg?.setHeaderColor("#080d1b");
-    tg?.setBackgroundColor("#070b16");
-
+    tg?.setHeaderColor("#ffffff");
+    tg?.setBackgroundColor("#f1f5f9");
 } catch(e) {}
 
-
-/* =========================================================
-   USER
-========================================================= */
-
-const telegramUser =
-    tg?.initDataUnsafe?.user || null;
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const $ = id =>
-    document.getElementById(id);
-
+const telegramUser = tg?.initDataUnsafe?.user || null;
+const $ = id => document.getElementById(id);
 
 function money(number) {
-
-    return (
-        Math.round(
-            (Number(number) + Number.EPSILON) * 100
-        ) / 100
-    ).toFixed(2);
-
+    return (Math.round((Number(number) + Number.EPSILON) * 100) / 100).toFixed(2);
 }
-
 
 function haptic(type = "light") {
-
-    try {
-
-        tg?.HapticFeedback?.impactOccurred(type);
-
-    } catch(e) {}
-
+    try { tg?.HapticFeedback?.impactOccurred(type); } catch(e) {}
 }
-
 
 function notify(type = "success") {
-
-    try {
-
-        tg?.HapticFeedback?.notificationOccurred(type);
-
-    } catch(e) {}
-
+    try { tg?.HapticFeedback?.notificationOccurred(type); } catch(e) {}
 }
-
-
-/* =========================================================
-   DATABASE & LOCAL SAVE
-========================================================= */
 
 const ADMIN_PASSWORD = "tucha2026"; 
 const SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT"; 
@@ -2376,104 +1319,47 @@ function loadUserData() {
             bonusCount = parseInt(data.bonuscount);
             updateBalance();
         }
-    }).catch(err => {
-        updateBalance();
-    });
+    }).catch(err => { updateBalance(); });
 }
 
 function saveUserData() {
     if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
         const storageKey = "tucha-game-" + userId;
-        try {
-            localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount }));
-        } catch(e) {}
+        try { localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount })); } catch(e) {}
         return;
     }
-
     fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify({action: "update", userid: userId, username: userName, balance: balance, bonuscount: bonusCount})
     }).catch(err => {});
 }
 
-
 function updateBalance() {
-
-    $("header-balance").textContent =
-        money(balance);
-
-
-    $("profile-balance").textContent =
-        money(balance);
-
-
-    if (
-        $("bonus-button")
-    ) {
-
-        $("bonus-button").style.display =
-            bonusCount >= 2
-                ? "none"
-                : "block";
-
+    $("header-balance").textContent = money(balance);
+    $("profile-balance").textContent = money(balance);
+    if ($("bonus-button")) {
+        $("bonus-button").style.display = bonusCount >= 2 ? "none" : "block";
     }
-
-
     saveUserData();
-
 }
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
 
 if (telegramUser) {
-
-    $("username").textContent =
-        telegramUser.first_name ||
-        "Игрок";
-
-
+    $("username").textContent = telegramUser.first_name || "Игрок";
     if (telegramUser.photo_url) {
-
-        const img =
-            document.createElement("img");
-
-        img.src =
-            telegramUser.photo_url;
-
+        const img = document.createElement("img");
+        img.src = telegramUser.photo_url;
         $("avatar").innerHTML = "";
-
         $("avatar").appendChild(img);
-
     }
-
 }
-
 
 function claimBonus() {
-
-    if (bonusCount >= 2) {
-        return;
-    }
-
-
+    if (bonusCount >= 2) return;
     balance += 1;
-
     bonusCount++;
-
-
     updateBalance();
-
     notify("success");
-
 }
-
-
-/* =========================================================
-   ADMIN PANEL LOGIC
-========================================================= */
 
 function openAdminPanel() {
     let pass = prompt("Введите пароль администратора:");
@@ -2494,12 +1380,10 @@ function closeAdminPanel() {
 function fetchAllPlayers() {
     const listDiv = $("admin-players-list");
     listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Загрузка игроков из базы...</p>';
-    
     if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
         listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
         return;
     }
-
     fetch(SCRIPT_URL, {
         method: "POST",
         body: JSON.stringify({action: "get_all"})
@@ -2514,11 +1398,11 @@ function fetchAllPlayers() {
             }
             data.players.forEach(p => {
                 listDiv.innerHTML += `
-                    <div style="background: rgba(255,255,255,.04); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0,0,0,0.04)">
                         <div>
-                            <div style="font-weight: bold; font-size: 14px;">${p.username}</div>
+                            <div style="font-weight: bold; font-size: 14px; color: #0f172a;">${p.username}</div>
                             <div style="font-size: 11px; color: #64748b;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
-                            <div style="font-size: 13px; color: #4ade80; font-weight: bold; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
+                            <div style="font-size: 13px; color: #16a34a; font-weight: bold; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
                         </div>
                         <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;">Изменить $</button>
                     </div>
@@ -2547,2072 +1431,519 @@ function adminEditBalance(targetId, targetName, currentBal, currentBonus) {
     }
 }
 
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
 function switchTab(name) {
-
-    document
-        .querySelectorAll(".tab")
-        .forEach(section => {
-
-            section.classList.toggle(
-                "active",
-                section.id === "tab-" + name
-            );
-
-        });
-
-
-    document
-        .querySelectorAll("nav button")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.tab === name
-            );
-
-        });
-
-
+    document.querySelectorAll(".tab").forEach(section => {
+        section.classList.toggle("active", section.id === "tab-" + name);
+    });
+    document.querySelectorAll("nav button").forEach(button => {
+        button.classList.toggle("active", button.dataset.tab === name);
+    });
     haptic();
-
 }
 
-
-/* =========================================================
-   CRASH
-========================================================= */
-
-let crashState = "waiting";
-
-let crashBet = 0;
-
-let inCrash = false;
-
-let crashMultiplier = 1;
-
-let crashTarget = 2;
-
-let crashTimer = null;
-
-let crashTick = null;
-
-let crashRestart = null;
-
-let simulatedPlayers = [];
-
-let myCrashResult = null;
-
-
-const rocket =
-    $("rocket");
-
+/* CRASH LOGIC */
+let crashState = "waiting", crashBet = 0, inCrash = false, crashMultiplier = 1, crashTarget = 2;
+let crashTimer = null, crashTick = null, crashRestart = null, simulatedPlayers = [], myCrashResult = null;
+const rocket = $("rocket");
 
 function createDemoPlayers() {
-
-    const names = [
-        "Саня",
-        "CryptoKing",
-        "Masha",
-        "DarkPro",
-        "Ivan",
-        "TuchaFan",
-        "Lucky"
-    ];
-
-
-    simulatedPlayers =
-        Array.from(
-            {length: 7},
-            (_, index) => {
-
-                return {
-
-                    id:
-                        "bot-" + index,
-
-                    name:
-                        names[
-                            Math.floor(
-                                Math.random() *
-                                names.length
-                            )
-                        ],
-
-                    bet:
-                        Math.round(
-                            (
-                                .10 +
-                                Math.random() * 2
-                            ) * 100
-                        ) / 100,
-
-                    cashout:
-                        Math.random() < .75
-                            ? Number(
-                                (
-                                    1.1 +
-                                    Math.random() * 3
-                                ).toFixed(2)
-                            )
-                            : null,
-
-                    status:
-                        "waiting"
-
-                };
-
-            }
-        );
-
+    const names = ["Саня", "CryptoKing", "Masha", "DarkPro", "Ivan", "TuchaFan", "Lucky"];
+    simulatedPlayers = Array.from({length: 7}, (_, index) => ({
+        id: "bot-" + index,
+        name: names[Math.floor(Math.random() * names.length)],
+        bet: Math.round((.10 + Math.random() * 2) * 100) / 100,
+        cashout: Math.random() < .75 ? Number((1.1 + Math.random() * 3).toFixed(2)) : null,
+        status: "waiting"
+    }));
 }
 
-
 function renderCrashPlayers() {
-
-    const container =
-        $("live-bets");
-
+    const container = $("live-bets");
     container.innerHTML = "";
-
-
-    const list =
-        simulatedPlayers.map(
-            player => ({
-                ...player,
-                you: false
-            })
-        );
-
-
+    const list = simulatedPlayers.map(player => ({ ...player, you: false }));
     if (crashBet > 0) {
-
         list.unshift({
-
             id: "you",
-
-            name:
-                telegramUser?.first_name ||
-                "Ты",
-
-            bet:
-                crashBet,
-
+            name: telegramUser?.first_name || "Ты",
+            bet: crashBet,
             you: true,
-
-            cashout:
-                myCrashResult?.x || null,
-
-            status:
-                myCrashResult?.status ||
-                (
-                    inCrash
-                        ? "playing"
-                        : "waiting"
-                )
-
+            cashout: myCrashResult?.x || null,
+            status: myCrashResult?.status || (inCrash ? "playing" : "waiting")
         });
-
     }
-
-
     list.forEach(player => {
-
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "player" +
-            (
-                player.you
-                    ? " you"
-                    : ""
-            );
-
-
-        const left =
-            document.createElement("div");
-
-
-        const name =
-            document.createElement("div");
-
-        name.className =
-            "player-name";
-
-
-        name.textContent =
-            (
-                player.you
-                    ? "👤 "
-                    : "👥 "
-            ) +
-            player.name +
-            (
-                player.you
-                    ? " (ТЫ)"
-                    : ""
-            );
-
-
-        const detail =
-            document.createElement("div");
-
-        detail.className =
-            "player-detail";
-
-
-        detail.textContent =
-            "Ставка: $" +
-            money(player.bet);
-
-
+        const row = document.createElement("div");
+        row.className = "player" + (player.you ? " you" : "");
+        const left = document.createElement("div");
+        const name = document.createElement("div");
+        name.className = "player-name";
+        name.textContent = (player.you ? "👤 " : "👥 ") + player.name + (player.you ? " (ТЫ)" : "");
+        const detail = document.createElement("div");
+        detail.className = "player-detail";
+        detail.textContent = "Ставка: $" + money(player.bet);
         left.appendChild(name);
         left.appendChild(detail);
 
-
-        const right =
-            document.createElement("div");
-
-
-        const x =
-            document.createElement("div");
-
-        x.className =
-            "player-x";
-
-
-        const status =
-            document.createElement("div");
-
-        status.className =
-            "player-status";
-
+        const right = document.createElement("div");
+        const x = document.createElement("div");
+        x.className = "player-x";
+        const status = document.createElement("div");
+        status.className = "player-status";
 
         if (player.status === "won") {
-
-            x.textContent =
-                Number(
-                    player.cashout
-                ).toFixed(2) + "x";
-
-
-            status.classList.add(
-                "status-win"
-            );
-
-
-            status.textContent =
-                "✓ ЗАБРАЛ";
-
+            x.textContent = Number(player.cashout).toFixed(2) + "x";
+            status.classList.add("status-win");
+            status.textContent = "✓ ЗАБРАЛ";
+        } else if (player.status === "lost") {
+            x.textContent = crashTarget.toFixed(2) + "x";
+            status.classList.add("status-loss");
+            status.textContent = "✕ НЕ УСПЕЛ";
+        } else if (player.status === "playing") {
+            x.textContent = crashMultiplier.toFixed(2) + "x";
+            status.classList.add("status-live");
+            status.textContent = "В ИГРЕ";
+        } else {
+            x.textContent = "—";
+            status.classList.add("status-wait");
+            status.textContent = "ОЖИДАНИЕ";
         }
-
-        else if (
-            player.status === "lost"
-        ) {
-
-            x.textContent =
-                crashTarget.toFixed(2) +
-                "x";
-
-
-            status.classList.add(
-                "status-loss"
-            );
-
-
-            status.textContent =
-                "✕ НЕ УСПЕЛ";
-
-        }
-
-        else if (
-            player.status === "playing"
-        ) {
-
-            x.textContent =
-                crashMultiplier.toFixed(2) +
-                "x";
-
-
-            status.classList.add(
-                "status-live"
-            );
-
-
-            status.textContent =
-                "В ИГРЕ";
-
-        }
-
-        else {
-
-            x.textContent =
-                "—";
-
-
-            status.classList.add(
-                "status-wait"
-            );
-
-
-            status.textContent =
-                "ОЖИДАНИЕ";
-
-        }
-
-
         right.appendChild(x);
         right.appendChild(status);
-
-
         row.appendChild(left);
         row.appendChild(right);
-
-
         container.appendChild(row);
-
     });
-
 }
 
-
 function startCrashRound() {
-
     clearInterval(crashTimer);
     clearInterval(crashTick);
     clearTimeout(crashRestart);
-
-
-    crashState =
-        "waiting";
-
-
-    crashBet =
-        0;
-
-
-    inCrash =
-        false;
-
-
-    myCrashResult =
-        null;
-
-
-    crashMultiplier =
-        1;
-
-
-    rocket.className =
-        "flying";
-
-
-    rocket.style.transform =
-        "";
-
-
-    $("crash-status").style.color =
-        "white";
-
-
-    $("crash-button").disabled =
-        false;
-
-
-    $("crash-button").className =
-        "primary";
-
-
-    $("crash-button").textContent =
-        "СДЕЛАТЬ СТАВКУ";
-
-
+    crashState = "waiting";
+    crashBet = 0;
+    inCrash = false;
+    myCrashResult = null;
+    crashMultiplier = 1;
+    rocket.className = "flying";
+    rocket.style.transform = "";
+    $("crash-status").style.color = "#0f172a";
+    $("crash-button").disabled = false;
+    $("crash-button").className = "primary";
+    $("crash-button").textContent = "СДЕЛАТЬ СТАВКУ";
     createDemoPlayers();
-
-
     let seconds = 5;
-
-
-    $("crash-status").textContent =
-        "СТАРТ ЧЕРЕЗ " +
-        seconds;
-
-
+    $("crash-status").textContent = "СТАРТ ЧЕРЕЗ " + seconds;
     renderCrashPlayers();
-
-
-    crashTimer =
-        setInterval(() => {
-
-            seconds--;
-
-
-            if (seconds > 0) {
-
-                $("crash-status").textContent =
-                    "СТАРТ ЧЕРЕЗ " +
-                    seconds;
-
-            }
-
-            else {
-
-                clearInterval(crashTimer);
-
-                runCrash();
-
-            }
-
-        }, 1000);
-
+    crashTimer = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+            $("crash-status").textContent = "СТАРТ ЧЕРЕЗ " + seconds;
+        } else {
+            clearInterval(crashTimer);
+            runCrash();
+        }
+    }, 1000);
 }
-
 
 function runCrash() {
-
-    crashState =
-        "flying";
-
-
-    crashMultiplier =
-        1;
-
-
-    crashTarget =
-        Math.random() < .08
-
-            ? 5 + Math.random() * 7
-
-            : 1.2 + Math.random() * 3.8;
-
-
-    $("crash-status").textContent =
-        "1.00x";
-
-
-    $("crash-button").disabled =
-        !inCrash;
-
-
-    simulatedPlayers.forEach(
-        player => {
-
-            player.status =
-                "playing";
-
-        }
-    );
-
-
+    crashState = "flying";
+    crashMultiplier = 1;
+    crashTarget = Math.random() < .08 ? 5 + Math.random() * 7 : 1.2 + Math.random() * 3.8;
+    $("crash-status").textContent = "1.00x";
+    $("crash-button").disabled = !inCrash;
+    simulatedPlayers.forEach(player => { player.status = "playing"; });
     renderCrashPlayers();
-
-
-    crashTick =
-        setInterval(() => {
-
-            crashMultiplier += .01;
-
-
-            $("crash-status").textContent =
-                crashMultiplier.toFixed(2) +
-                "x";
-
-
-            if (inCrash) {
-
-                $("crash-button").textContent =
-                    "ЗАБРАТЬ $" +
-                    money(
-                        crashBet *
-                        crashMultiplier
-                    );
-
+    crashTick = setInterval(() => {
+        crashMultiplier += .01;
+        $("crash-status").textContent = crashMultiplier.toFixed(2) + "x";
+        if (inCrash) {
+            $("crash-button").textContent = "ЗАБРАТЬ $" + money(crashBet * crashMultiplier);
+        }
+        simulatedPlayers.forEach(player => {
+            if (player.status === "playing" && player.cashout !== null && crashMultiplier >= player.cashout && player.cashout < crashTarget) {
+                player.status = "won";
             }
-
-
-            simulatedPlayers.forEach(
-                player => {
-
-                    if (
-                        player.status ===
-                            "playing" &&
-
-                        player.cashout !== null &&
-
-                        crashMultiplier >=
-                            player.cashout &&
-
-                        player.cashout <
-                            crashTarget
-                    ) {
-
-                        player.status =
-                            "won";
-
-                    }
-
-                }
-            );
-
-
-            renderCrashPlayers();
-
-
-            if (
-                crashMultiplier >=
-                crashTarget
-            ) {
-
-                crashEnd();
-
-            }
-
-        }, 60);
-
+        });
+        renderCrashPlayers();
+        if (crashMultiplier >= crashTarget) {
+            crashEnd();
+        }
+    }, 60);
 }
-
 
 function crashEnd() {
-
     clearInterval(crashTick);
-
-
-    crashState =
-        "crashed";
-
-
-    rocket.className =
-        "crashed";
-
-
-    rocket.style.transform =
-        "rotate(140deg)";
-
-
-    $("crash-status").textContent =
-        "КРАШ " +
-        crashTarget.toFixed(2) +
-        "x";
-
-
-    $("crash-status").style.color =
-        "#f87171";
-
-
+    crashState = "crashed";
+    rocket.className = "crashed";
+    rocket.style.transform = "rotate(140deg)";
+    $("crash-status").textContent = "КРАШ " + crashTarget.toFixed(2) + "x";
+    $("crash-status").style.color = "#dc2626";
     if (inCrash) {
-
-        inCrash =
-            false;
-
-
-        myCrashResult = {
-
-            status:
-                "lost",
-
-            x:
-                null
-
-        };
-
+        inCrash = false;
+        myCrashResult = { status: "lost", x: null };
     }
-
-
-    simulatedPlayers.forEach(
-        player => {
-
-            if (
-                player.status ===
-                "playing"
-            ) {
-
-                player.status =
-                    "lost";
-
-            }
-
-        }
-    );
-
-
+    simulatedPlayers.forEach(player => {
+        if (player.status === "playing") player.status = "lost";
+    });
     renderCrashPlayers();
-
-
-    $("crash-button").disabled =
-        true;
-
-
-    $("crash-button").textContent =
-        "РАУНД ЗАВЕРШЁН";
-
-
+    $("crash-button").disabled = true;
+    $("crash-button").textContent = "РАУНД ЗАВЕРШЁН";
     notify("error");
-
-
-    crashRestart =
-        setTimeout(
-            startCrashRound,
-            3000
-        );
-
+    crashRestart = setTimeout(startCrashRound, 3000);
 }
-
 
 function readBet(inputId) {
-
-    const value =
-        Number(
-            $(inputId).value
-        );
-
-
-    if (
-        !Number.isFinite(value) ||
-        value <= 0 ||
-        value > balance
-    ) {
-
-        alert(
-            "Проверь сумму ставки и баланс."
-        );
-
+    const value = Number($(inputId).value);
+    if (!Number.isFinite(value) || value <= 0 || value > balance) {
+        alert("Проверь сумму ставки и баланс.");
         return null;
-
     }
-
-
-    return Math.round(
-        value * 100
-    ) / 100;
-
+    return Math.round(value * 100) / 100;
 }
-
 
 function handleCrashAction() {
-
-    if (
-        crashState ===
-        "waiting"
-    ) {
-
-        const bet =
-            readBet("crash-bet");
-
-
-        if (bet === null) {
-            return;
-        }
-
-
+    if (crashState === "waiting") {
+        const bet = readBet("crash-bet");
+        if (bet === null) return;
         balance -= bet;
-
-
-        crashBet =
-            bet;
-
-
-        inCrash =
-            true;
-
-
-        myCrashResult = {
-
-            status:
-                "playing",
-
-            x:
-                null
-
-        };
-
-
+        crashBet = bet;
+        inCrash = true;
+        myCrashResult = { status: "playing", x: null };
         updateBalance();
-
-
         renderCrashPlayers();
-
-
-        $("crash-button").disabled =
-            true;
-
-
-        $("crash-button").textContent =
-            "СТАВКА ПРИНЯТА";
-
-
+        $("crash-button").disabled = true;
+        $("crash-button").textContent = "СТАВКА ПРИНЯТА";
         haptic("medium");
-
-
         return;
-
     }
-
-
-    if (
-        crashState ===
-            "flying" &&
-        inCrash
-    ) {
-
-        const x =
-            Number(
-                crashMultiplier.toFixed(2)
-            );
-
-
-        const win =
-            Math.floor(
-                crashBet *
-                x *
-                100
-            ) / 100;
-
-
+    if (crashState === "flying" && inCrash) {
+        const x = Number(crashMultiplier.toFixed(2));
+        const win = Math.floor(crashBet * x * 100) / 100;
         balance += win;
-
-
-        inCrash =
-            false;
-
-
-        myCrashResult = {
-
-            status:
-                "won",
-
-            x:
-                x
-
-        };
-
-
+        inCrash = false;
+        myCrashResult = { status: "won", x: x };
         updateBalance();
-
-
         renderCrashPlayers();
-
-
-        $("crash-button").disabled =
-            true;
-
-
-        $("crash-button").className =
-            "primary green";
-
-
-        $("crash-button").textContent =
-            "ВЫИГРАНО $" +
-            money(win);
-
-
+        $("crash-button").disabled = true;
+        $("crash-button").className = "primary green";
+        $("crash-button").textContent = "ВЫИГРАНО $" + money(win);
         notify("success");
-
     }
-
 }
 
-
-/* =========================================================
-   MINES
-========================================================= */
-
-let minesState =
-    "idle";
-
-let minePositions =
-    [];
-
-let mineBet =
-    0;
-
-let mineMultiplier =
-    1;
-
-let safeOpened =
-    0;
-
-let bombCount =
-    3;
-
-
-const minesGrid =
-    $("mines-grid");
-
+/* MINES LOGIC */
+let minesState = "idle", minePositions = [], mineBet = 0, mineMultiplier = 1, safeOpened = 0, bombCount = 3;
+const minesGrid = $("mines-grid");
 
 function starSVG() {
-
     return `
-        <svg
-            class="star-svg"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-
+        <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <defs>
-
-                <linearGradient
-                    id="goldStar"
-                    x1="0"
-                    y1="0"
-                    x2=".8"
-                    y2="1"
-                >
-
-                    <stop
-                        offset="0%"
-                        stop-color="#fff4a3"
-                    />
-
-                    <stop
-                        offset="35%"
-                        stop-color="#ffdc45"
-                    />
-
-                    <stop
-                        offset="75%"
-                        stop-color="#ffad18"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#f17b00"
-                    />
-
+                <linearGradient id="goldStar" x1="0" y1="0" x2=".8" y2="1">
+                    <stop offset="0%" stop-color="#fff4a3"/>
+                    <stop offset="35%" stop-color="#ffdc45"/>
+                    <stop offset="75%" stop-color="#ffad18"/>
+                    <stop offset="100%" stop-color="#f17b00"/>
                 </linearGradient>
-
             </defs>
-
-
-            <path
-                d="
-                    M50 5
-                    L62 35
-                    L94 37
-                    L70 58
-                    L78 90
-                    L50 73
-                    L22 90
-                    L30 58
-                    L6 37
-                    L38 35
-                    Z
-                "
-                fill="url(#goldStar)"
-                stroke="#ffed91"
-                stroke-width="2.5"
-                stroke-linejoin="round"
-            />
-
+            <path d="M50 5 L62 35 L94 37 L70 58 L78 90 L50 73 L22 90 L30 58 L6 37 L38 35 Z" fill="url(#goldStar)" stroke="#ffed91" stroke-width="2.5" stroke-linejoin="round"/>
         </svg>
     `;
-
 }
-
 
 function buildMinesGrid() {
-
     minesGrid.innerHTML = "";
-
-
-    for (
-        let i = 0;
-        i < 25;
-        i++
-    ) {
-
-        const cell =
-            document.createElement("button");
-
-
-        cell.type =
-            "button";
-
-
-        cell.className =
-            "cell";
-
-
-        cell.disabled =
-            true;
-
-
-        cell.dataset.index =
-            i;
-
-
-        minesGrid.appendChild(
-            cell
-        );
-
+    for (let i = 0; i < 25; i++) {
+        const cell = document.createElement("button");
+        cell.type = "button";
+        cell.className = "cell";
+        cell.disabled = true;
+        cell.dataset.index = i;
+        minesGrid.appendChild(cell);
     }
-
 }
-
 
 function resetMines() {
-
     buildMinesGrid();
-
-
-    minePositions =
-        [];
-
-
-    safeOpened =
-        0;
-
-
-    mineMultiplier =
-        1;
-
-
-    $("mines-multiplier")
-        .style.display =
-        "none";
-
-
-    $("mine-mult")
-        .textContent =
-        "1.00";
-
+    minePositions = [];
+    safeOpened = 0;
+    mineMultiplier = 1;
+    $("mines-multiplier").style.display = "none";
+    $("mine-mult").textContent = "1.00";
 }
-
 
 function renderMine(cell) {
-
-    cell.className =
-        "cell bomb";
-
-
-    cell.innerHTML =
-        "";
-
-
-    const image =
-        document.createElement("img");
-
-
-    image.className =
-        "bomb-img";
-
-
-    image.src =
-        "./bomb.png";
-
-
-    image.alt =
-        "Мина";
-
-
-    image.onerror =
-        () => {
-
-            cell.innerHTML =
-                "💣";
-
-        };
-
-
-    cell.appendChild(
-        image
-    );
-
-
-    cell.disabled =
-        true;
-
+    cell.className = "cell bomb";
+    cell.innerHTML = "";
+    const image = document.createElement("img");
+    image.className = "bomb-img";
+    image.src = "./bomb.png";
+    image.alt = "Мина";
+    image.onerror = () => { cell.innerHTML = "💣"; };
+    cell.appendChild(image);
+    cell.disabled = true;
 }
-
 
 function renderSafe(cell, revealed = false) {
-
-    cell.className =
-        "cell " +
-        (
-            revealed
-                ? "revealed-safe"
-                : "safe"
-        );
-
-
-    cell.innerHTML =
-        starSVG();
-
-
-    cell.disabled =
-        true;
-
+    cell.className = "cell " + (revealed ? "revealed-safe" : "safe");
+    cell.innerHTML = starSVG();
+    cell.disabled = true;
 }
-
 
 function revealAllMines() {
-
-    [
-        ...minesGrid.children
-    ].forEach(
-        (cell, index) => {
-
-            if (
-                minePositions.includes(
-                    index
-                )
-            ) {
-
-                renderMine(cell);
-
-            }
-
-            else {
-
-                renderSafe(
-                    cell,
-                    true
-                );
-
-            }
-
+    [...minesGrid.children].forEach((cell, index) => {
+        if (minePositions.includes(index)) {
+            renderMine(cell);
+        } else {
+            renderSafe(cell, true);
         }
-    );
-
+    });
 }
-
 
 function startMines() {
-
-    const bet =
-        readBet("mines-bet");
-
-
-    if (bet === null) {
-        return;
-    }
-
-
-    bombCount =
-        Number(
-            $("mines-slider").value
-        );
-
-
+    const bet = readBet("mines-bet");
+    if (bet === null) return;
+    bombCount = Number($("mines-slider").value);
     balance -= bet;
-
-
     updateBalance();
-
-
-    mineBet =
-        bet;
-
-
-    safeOpened =
-        0;
-
-
-    mineMultiplier =
-        1;
-
-
-    minePositions =
-        [];
-
-
-    while (
-        minePositions.length <
-        bombCount
-    ) {
-
-        const position =
-            Math.floor(
-                Math.random() * 25
-            );
-
-
-        if (
-            !minePositions.includes(
-                position
-            )
-        ) {
-
-            minePositions.push(
-                position
-            );
-
-        }
-
+    mineBet = bet;
+    safeOpened = 0;
+    mineMultiplier = 1;
+    minePositions = [];
+    while (minePositions.length < bombCount) {
+        const position = Math.floor(Math.random() * 25);
+        if (!minePositions.includes(position)) minePositions.push(position);
     }
-
-
     buildMinesGrid();
-
-
-    minesState =
-        "playing";
-
-
-    $("mines-state-label").textContent =
-        "Игра идёт";
-
-
-    $("mines-multiplier")
-        .style.display =
-        "block";
-
-
-    $("mines-slider").disabled =
-        true;
-
-
-    [
-        ...minesGrid.children
-    ].forEach(
-        cell => {
-
-            cell.disabled =
-                false;
-
-
-            cell.onclick =
-                () => {
-
-                    clickMine(
-                        Number(
-                            cell.dataset.index
-                        ),
-                        cell
-                    );
-
-                };
-
-        }
-    );
-
-
-    $("mines-button").disabled =
-        true;
-
-
-    $("mines-button").textContent =
-        "ОТКРОЙ КЛЕТКУ";
-
-
-    $("mines-button").className =
-        "primary";
-
-
+    minesState = "playing";
+    $("mines-state-label").textContent = "Игра идёт";
+    $("mines-multiplier").style.display = "block";
+    $("mines-slider").disabled = true;
+    [...minesGrid.children].forEach(cell => {
+        cell.disabled = false;
+        cell.onclick = () => { clickMine(Number(cell.dataset.index), cell); };
+    });
+    $("mines-button").disabled = true;
+    $("mines-button").textContent = "ОТКРОЙ КЛЕТКУ";
+    $("mines-button").className = "primary";
     haptic("medium");
-
 }
 
-
-function clickMine(
-    index,
-    cell
-) {
-
-    if (
-        minesState !==
-            "playing" ||
-        cell.disabled
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        minePositions.includes(
-            index
-        )
-    ) {
-
+function clickMine(index, cell) {
+    if (minesState !== "playing" || cell.disabled) return;
+    if (minePositions.includes(index)) {
         revealAllMines();
-
-
-        finishMines(
-            "ПРОИГРЫШ −$" +
-            money(mineBet),
-            "red"
-        );
-
-
+        finishMines("ПРОИГРЫШ −$" + money(mineBet), "red");
         notify("error");
-
-
         return;
-
     }
-
-
     renderSafe(cell);
-
-
     safeOpened++;
-
-
-    let probability =
-        1;
-
-
-    for (
-        let i = 0;
-        i < safeOpened;
-        i++
-    ) {
-
-        probability *=
-            (
-                25 -
-                bombCount -
-                i
-            ) /
-            (
-                25 -
-                i
-            );
-
+    let probability = 1;
+    for (let i = 0; i < safeOpened; i++) {
+        probability *= (25 - bombCount - i) / (25 - i);
     }
-
-
-    mineMultiplier =
-        .95 /
-        probability;
-
-
-    $("mine-mult").textContent =
-        mineMultiplier.toFixed(2);
-
-
-    $("mines-button").disabled =
-        false;
-
-
-    $("mines-button").className =
-        "primary green";
-
-
-    $("mines-button").textContent =
-        "ЗАБРАТЬ $" +
-        money(
-            mineBet *
-            mineMultiplier
-        );
-
-
+    mineMultiplier = .95 / probability;
+    $("mine-mult").textContent = mineMultiplier.toFixed(2);
+    $("mines-button").disabled = false;
+    $("mines-button").className = "primary green";
+    $("mines-button").textContent = "ЗАБРАТЬ $" + money(mineBet * mineMultiplier);
     haptic();
-
-
-    if (
-        safeOpened ===
-        25 - bombCount
-    ) {
-
-        const win =
-            Math.floor(
-                mineBet *
-                mineMultiplier *
-                100
-            ) / 100;
-
-
+    if (safeOpened === 25 - bombCount) {
+        const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
         balance += win;
-
-
         updateBalance();
-
-
         revealAllMines();
-
-
-        finishMines(
-            "ВЫИГРЫШ $" +
-            money(win),
-            "gold"
-        );
-
-
+        finishMines("ВЫИГРЫШ $" + money(win), "gold");
         notify("success");
-
     }
-
 }
 
-
-function finishMines(
-    message,
-    color
-) {
-
-    minesState =
-        "finished";
-
-
-    [
-        ...minesGrid.children
-    ].forEach(
-        cell => {
-
-            cell.disabled =
-                true;
-
-
-            cell.onclick =
-                null;
-
-        }
-    );
-
-
-    $("mines-state-label")
-        .textContent =
-        message;
-
-
-    $("mines-slider")
-        .disabled =
-        false;
-
-
-    $("mines-button")
-        .disabled =
-        false;
-
-
-    $("mines-button")
-        .textContent =
-        "СТАРТ НОВЫЙ РАУНД";
-
-
-    $("mines-button").className =
-        "primary " +
-        color;
-
+function finishMines(message, color) {
+    minesState = "finished";
+    [...minesGrid.children].forEach(cell => { cell.disabled = true; cell.onclick = null; });
+    $("mines-state-label").textContent = message;
+    $("mines-slider").disabled = false;
+    $("mines-button").disabled = false;
+    $("mines-button").textContent = "СТАРТ НОВЫЙ РАУНД";
+    $("mines-button").className = "primary " + color;
 }
-
 
 function handleMinesAction() {
-
-    if (
-        minesState ===
-            "idle" ||
-        minesState ===
-            "finished"
-    ) {
-
+    if (minesState === "idle" || minesState === "finished") {
         resetMines();
-
-
-        $("mines-state-label")
-            .textContent =
-            "Новая игра";
-
-
+        $("mines-state-label").textContent = "Новая игра";
         startMines();
-
-
         return;
-
     }
-
-
-    if (
-        minesState !==
-        "playing"
-    ) {
-
-        return;
-
-    }
-
-
-    const win =
-        Math.floor(
-            mineBet *
-            mineMultiplier *
-            100
-        ) / 100;
-
-
+    if (minesState !== "playing") return;
+    const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
     balance += win;
-
-
     updateBalance();
-
-
     revealAllMines();
-
-
-    finishMines(
-        "ВЫИГРЫШ $" +
-        money(win),
-        "green"
-    );
-
-
+    finishMines("ВЫИГРЫШ $" + money(win), "green");
     notify("success");
-
 }
 
+$("mines-slider").addEventListener("input", () => {
+    $("mines-count").textContent = $("mines-slider").value;
+});
 
-$("mines-slider")
-    .addEventListener(
-        "input",
-        () => {
-
-            $("mines-count")
-                .textContent =
-                $("mines-slider").value;
-
-        }
-    );
-
-
-/* =========================================================
-   CASES
-========================================================= */
-
-const CASE_COOLDOWN =
-    24 * 60 * 60 * 1000;
-
-
-const caseStorageKey =
-    "tucha-game-" + userId + "-daily-case";
-
-
-let caseReadyAt =
-    0;
-
-
-let caseOpening =
-    false;
-
-
-let caseTimer =
-    null;
-
+/* CASES LOGIC */
+const CASE_COOLDOWN = 24 * 60 * 60 * 1000;
+const caseStorageKey = "tucha-game-" + userId + "-daily-case";
+let caseReadyAt = 0, caseOpening = false, caseTimer = null;
 
 try {
-
-    caseReadyAt =
-        Number(
-            localStorage.getItem(
-                caseStorageKey
-            ) || 0
-        );
-
+    caseReadyAt = Number(localStorage.getItem(caseStorageKey) || 0);
 } catch(e) {}
 
-
-/* =========================================================
-   PRIZES
-========================================================= */
-
 const casePrizes = [
-
-    {
-        value: .02,
-        weight: 34
-    },
-
-    {
-        value: .05,
-        weight: 30
-    },
-
-    {
-        value: .10,
-        weight: 20
-    },
-
-    {
-        value: .20,
-        weight: 10
-    },
-
-    {
-        value: .50,
-        weight: 5
-    },
-
-    {
-        value: 1,
-        weight: 1
-    }
-
+    { value: .02, weight: 34 },
+    { value: .05, weight: 30 },
+    { value: .10, weight: 20 },
+    { value: .20, weight: 10 },
+    { value: .50, weight: 5 },
+    { value: 1, weight: 1 }
 ];
 
-
 function chooseCasePrize() {
-
-    const total =
-        casePrizes.reduce(
-            (sum, prize) =>
-                sum + prize.weight,
-            0
-        );
-
-
-    let random =
-        Math.random() *
-        total;
-
-
-    for (
-        const prize
-        of casePrizes
-    ) {
-
-        random -=
-            prize.weight;
-
-
-        if (
-            random <= 0
-        ) {
-
-            return prize.value;
-
-        }
-
+    const total = casePrizes.reduce((sum, prize) => sum + prize.weight, 0);
+    let random = Math.random() * total;
+    for (const prize of casePrizes) {
+        random -= prize.weight;
+        if (random <= 0) return prize.value;
     }
-
-
     return .02;
-
 }
 
-
-/* =========================================================
-   CASE TIMER
-========================================================= */
-
-function formatTime(
-    milliseconds
-) {
-
-    const seconds =
-        Math.max(
-            0,
-            Math.ceil(
-                milliseconds /
-                1000
-            )
-        );
-
-
-    const hours =
-        Math.floor(
-            seconds / 3600
-        );
-
-
-    const minutes =
-        Math.floor(
-            (seconds % 3600) /
-            60
-        );
-
-
-    const sec =
-        seconds % 60;
-
-
-    return (
-        String(hours).padStart(2,"0") +
-        ":" +
-        String(minutes).padStart(2,"0") +
-        ":" +
-        String(sec).padStart(2,"0")
-    );
-
+function formatTime(milliseconds) {
+    const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const sec = seconds % 60;
+    return String(hours).padStart(2,"0") + ":" + String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
 }
-
 
 function updateCaseState() {
-
-    const button =
-        $("case-button");
-
-
-    const timer =
-        $("case-timer");
-
-
-    if (
-        !button ||
-        !timer
-    ) {
-
-        return;
-
-    }
-
-
+    const button = $("case-button");
+    const timer = $("case-timer");
+    if (!button || !timer) return;
     if (caseOpening) {
-
-        button.disabled =
-            true;
-
-
-        button.textContent =
-            "ОТКРЫВАЕМ...";
-
-
-        timer.textContent =
-            "Рулетка запускается...";
-
-
+        button.disabled = true;
+        button.textContent = "ОТКРЫВАЕМ...";
+        timer.textContent = "Рулетка запускается...";
         return;
-
     }
-
-
-    const remaining =
-        caseReadyAt -
-        Date.now();
-
-
-    if (
-        remaining > 0
-    ) {
-
-        button.disabled =
-            true;
-
-
-        button.textContent =
-            "КЕЙС УЖЕ ОТКРЫТ";
-
-
-        timer.textContent =
-            "Следующее открытие через " +
-            formatTime(
-                remaining
-            );
-
+    const remaining = caseReadyAt - Date.now();
+    if (remaining > 0) {
+        button.disabled = true;
+        button.textContent = "КЕЙС УЖЕ ОТКРЫТ";
+        timer.textContent = "Следующее открытие через " + formatTime(remaining);
+    } else {
+        button.disabled = false;
+        button.textContent = "ОТКРЫТЬ БЕСПЛАТНО";
+        timer.textContent = "Кейс доступен прямо сейчас";
     }
-
-    else {
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            "ОТКРЫТЬ БЕСПЛАТНО";
-
-
-        timer.textContent =
-            "Кейс доступен прямо сейчас";
-
-    }
-
 }
 
-
-/* =========================================================
-   CASE ROULETTE
-========================================================= */
-
-function createRoulette(
-    winner
-) {
-
-    const strip =
-        $("roulette-strip");
-
-
-    strip.innerHTML =
-        "";
-
-
-    const winnerIndex =
-        24;
-
-
-    const values =
-        [];
-
-
-    for (
-        let i = 0;
-        i < 45;
-        i++
-    ) {
-
-        values.push(
-            i === winnerIndex
-                ? winner
-                : chooseCasePrize()
-        );
-
+function createRoulette(winner) {
+    const strip = $("roulette-strip");
+    strip.innerHTML = "";
+    const winnerIndex = 24;
+    const values = [];
+    for (let i = 0; i < 45; i++) {
+        values.push(i === winnerIndex ? winner : chooseCasePrize());
     }
-
-
-    values.forEach(
-        value => {
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "roulette-prize";
-
-
-            const icon =
-                document.createElement(
-                    "div"
-                );
-
-
-            icon.className =
-                "prize-icon";
-
-
-            icon.textContent =
-                "💵";
-
-
-            const amount =
-                document.createElement(
-                    "div"
-                );
-
-
-            amount.className =
-                "prize-value";
-
-
-            amount.textContent =
-                "$" +
-                Number(value).toFixed(2);
-
-
-            item.appendChild(icon);
-            item.appendChild(amount);
-
-
-            strip.appendChild(item);
-
-        }
-    );
-
-
+    values.forEach(value => {
+        const item = document.createElement("div");
+        item.className = "roulette-prize";
+        const icon = document.createElement("div");
+        icon.className = "prize-icon";
+        icon.textContent = "💵";
+        const amount = document.createElement("div");
+        amount.className = "prize-value";
+        amount.textContent = "$" + Number(value).toFixed(2);
+        item.appendChild(icon);
+        item.appendChild(amount);
+        strip.appendChild(item);
+    });
     return winnerIndex;
-
 }
 
-
-function spinCase(
-    winnerIndex,
-    callback
-) {
-
-    const strip =
-        $("roulette-strip");
-
-
-    const wrap =
-        $("roulette-wrap");
-
-
-    const item =
-        strip.children[0];
-
-
-    if (!item) {
-
-        callback();
-
-        return;
-
-    }
-
-
-    const itemWidth =
-        item.getBoundingClientRect().width;
-
-
-    const gap =
-        8;
-
-
-    const step =
-        itemWidth + gap;
-
-
-    const viewportWidth =
-        wrap.getBoundingClientRect().width;
-
-
-    const centerPosition =
-        (
-            winnerIndex *
-            step
-        ) +
-        (itemWidth / 2);
-
-
-    const translate =
-        centerPosition -
-        (viewportWidth / 2);
-
-
-    strip.style.transition =
-        "none";
-
-
-    strip.style.transform =
-        "translateX(0px)";
-
-
+function spinCase(winnerIndex, callback) {
+    const strip = $("roulette-strip");
+    const wrap = $("roulette-wrap");
+    const item = strip.children[0];
+    if (!item) { callback(); return; }
+    const itemWidth = item.getBoundingClientRect().width;
+    const gap = 8;
+    const step = itemWidth + gap;
+    const viewportWidth = wrap.getBoundingClientRect().width;
+    const centerPosition = (winnerIndex * step) + (itemWidth / 2);
+    const translate = centerPosition - (viewportWidth / 2);
+    strip.style.transition = "none";
+    strip.style.transform = "translateX(0px)";
     strip.getBoundingClientRect();
-
-
-    requestAnimationFrame(
-        () => {
-
-            strip.classList.add(
-                "spinning"
-            );
-
-
-            strip.style.transform =
-                "translateX(-" +
-                translate +
-                "px)";
-
-
-            setTimeout(
-                callback,
-                5700
-            );
-
-        }
-    );
-
+    requestAnimationFrame(() => {
+        strip.classList.add("spinning");
+        strip.style.transform = "translateX(-" + translate + "px)";
+        setTimeout(callback, 5700);
+    });
 }
-
-
-/* =========================================================
-   OPEN CASE DETAIL
-========================================================= */
 
 function openCaseDetail() {
-
-    $("cases-list")
-        .style.display =
-        "none";
-
-
-    $("case-detail")
-        .classList.add(
-            "active"
-        );
-
-
+    $("cases-list").style.display = "none";
+    $("case-detail").classList.add("active");
     updateCaseState();
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
+    window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
-
 }
-
-
-/* =========================================================
-   CLOSE CASE DETAIL
-========================================================= */
 
 function closeCaseDetail() {
-
-    if (caseOpening) {
-        return;
-    }
-
-
-    $("case-detail")
-        .classList.remove(
-            "active"
-        );
-
-
-    $("cases-list")
-        .style.display =
-        "block";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
+    if (caseOpening) return;
+    $("case-detail").classList.remove("active");
+    $("cases-list").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
-
 }
-
-
-/* =========================================================
-   OPEN DAILY CASE
-========================================================= */
 
 function openDailyCase() {
-
-    if (caseOpening) {
-        return;
-    }
-
-
-    if (
-        Date.now() <
-        caseReadyAt
-    ) {
-
-        updateCaseState();
-
-        return;
-
-    }
-
-
-    caseOpening =
-        true;
-
-
+    if (caseOpening) return;
+    if (Date.now() < caseReadyAt) { updateCaseState(); return; }
+    caseOpening = true;
     updateCaseState();
-
-
-    $("case-result")
-        .textContent =
-        "";
-
-
-    const winner =
-        chooseCasePrize();
-
-
-    const winnerIndex =
-        createRoulette(
-            winner
-        );
-
-
-    const image =
-        $("case-big-image");
-
-
-    image.style.transform =
-        "scale(1.05)";
-
-
-    image.style.opacity =
-        ".85";
-
-
-    spinCase(
-        winnerIndex,
-        () => {
-
-            balance =
-                Math.round(
-                    (
-                        balance +
-                        winner
-                    ) * 100
-                ) / 100;
-
-
-            caseReadyAt =
-                Date.now() +
-                CASE_COOLDOWN;
-
-
-            try {
-
-                localStorage.setItem(
-                    caseStorageKey,
-                    String(
-                        caseReadyAt
-                    )
-                );
-
-            } catch(e) {}
-
-
-            updateBalance();
-
-
-            image.style.transform =
-                "scale(1)";
-
-
-            image.style.opacity =
-                "1";
-
-
-            $("case-result")
-                .textContent =
-                "🎉 ТВОЙ ВЫИГРЫШ: $" +
-                Number(winner).toFixed(2);
-
-
-            caseOpening =
-                false;
-
-
-            updateCaseState();
-
-
-            notify("success");
-
-        }
-    );
-
+    $("case-result").textContent = "";
+    const winner = chooseCasePrize();
+    const winnerIndex = createRoulette(winner);
+    const image = $("case-big-image");
+    image.style.transform = "scale(1.05)";
+    image.style.opacity = ".85";
+    spinCase(winnerIndex, () => {
+        balance = Math.round((balance + winner) * 100) / 100;
+        caseReadyAt = Date.now() + CASE_COOLDOWN;
+        try {
+            localStorage.setItem(caseStorageKey, String(caseReadyAt));
+        } catch(e) {}
+        updateBalance();
+        image.style.transform = "scale(1)";
+        image.style.opacity = "1";
+        $("case-result").textContent = "🎉 ТВОЙ ВЫИГРЫШ: $" + Number(winner).toFixed(2);
+        caseOpening = false;
+        updateCaseState();
+        notify("success");
+    });
 }
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
 
 buildMinesGrid();
 loadUserData();
 startCrashRound();
 updateCaseState();
 
+caseTimer = setInterval(updateCaseState, 1000);
 
-caseTimer =
-    setInterval(
-        updateCaseState,
-        1000
-    );
-
-
-/* =========================================================
-   PRELOAD CASE IMAGE
-========================================================= */
-
-const caseImage =
-    new Image();
-
-caseImage.src =
-    "./case.png";
-
-
+const caseImage = new Image();
+caseImage.src = "./case.png";
 </script>
 
 </body>
