@@ -1128,7 +1128,7 @@ nav button.active {
         </div>
 
         <div class="case-grid">
-            <!-- Бесплатный ежедневный кейс -->
+            <!-- Ежедневный кейс -->
             <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00], [50, 30, 12, 5, 2, 1])">
                 <img class="case-card-image" src="./case.png" alt="Ежедневный кейс">
                 <div class="case-card-name">Ежедневный кейс</div>
@@ -1203,9 +1203,7 @@ nav button.active {
 
             <div class="prizes-title">Возможные призы</div>
 
-            <div id="prizes-grid" class="prizes-grid">
-                <!-- Динамически заполняется скриптом -->
-            </div>
+            <div id="prizes-grid" class="prizes-grid"></div>
 
             <div id="case-note" class="case-note">
                 Открытие кейса списывает его стоимость с баланса и мгновенно зачисляет выигрыш.
@@ -1226,6 +1224,15 @@ nav button.active {
         </div>
 
         <button id="bonus-button" class="primary green" onclick="claimBonus()">🎁 Получить $1.00</button>
+
+        <!-- БЛОК ПОПОЛНЕНИЯ ЧЕРЕЗ CRYPTO BOT -->
+        <div style="margin-top: 20px; text-align: left; background: #f8fafc; padding: 14px; border-radius: 16px; border: 2px solid rgba(59,130,246,0.1)">
+            <label style="display:block; margin-bottom: 6px; font-weight:950; color:#1e1b4b;">💳 Пополнить баланс ($)</label>
+            <div style="display: flex; gap: 8px;">
+                <input id="deposit-amount" type="number" min="1" step="1" value="5" style="margin:0; font-size: 16px; padding: 12px;">
+                <button class="primary green" onclick="createCryptoInvoice()" style="width: auto; padding: 0 16px; font-size: 13px;">ПОПОЛНИТЬ</button>
+            </div>
+        </div>
 
         <button onclick="openAdminPanel()" style="margin-top: 18px; background: none; border: none; color: #64748b; font-size: 12px; font-weight: 900; cursor: pointer;">
             ⚙️ Админ-панель
@@ -1365,6 +1372,73 @@ function claimBonus() {
     bonusCount++;
     updateBalance();
     notify("success");
+}
+
+/* =========================================================
+   CRYPTO BOT PAYMENT INTEGRATION
+========================================================= */
+async function createCryptoInvoice() {
+    const amount = parseFloat($("deposit-amount").value);
+    if (isNaN(amount) || amount < 1) {
+        alert("Минимальная сумма пополнения: $1");
+        return;
+    }
+
+    // 
+    const CRYPTO_PAY_TOKEN = "657356:AACtmBHlvsBeMmcvDSJqSW54TVIu4mFUGfF"; 
+    
+    // Если используешь тестового бота @TestnetCryptoBot, поменяй URL на:
+    // 'https://testnet-pay.crypt.bot/api/createInvoice'
+    const API_URL = 'https://pay.crypt.bot/api/createInvoice';
+
+    if (CRYPTO_PAY_TOKEN.includes("657356:AACtmBHlvsBeMmcvDSJqSW54TVIu4mFUGfF")) {
+        alert("П657356:AACtmBHlvsBeMmcvDSJqSW54TVIu4mFUGfF");
+        return;
+    }
+
+    try {
+        haptic("medium");
+        alert("Создание счета на оплату...");
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Crypto-Pay-API-Token': CRYPTO_PAY_TOKEN,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                asset: 'USDT',
+                amount: amount.toString(),
+                description: `Пополнение баланса Tucha Games для ${userName} (ID: ${userId})`,
+                paid_btn_name: 'openBot',
+                paid_btn_url: 'https://t.me/tucha_games_bot' // Ссылка на твоего бота
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.ok && data.result) {
+            const payUrl = data.result.pay_url;
+            
+            if (window.Telegram?.WebApp) {
+                window.Telegram.WebApp.openInvoice(data.result.mini_app_pay_url || payUrl, (status) => {
+                    if (status === 'paid') {
+                        balance += amount;
+                        updateBalance();
+                        alert("Оплата прошла успешно! Баланс пополнен на $" + amount.toFixed(2));
+                        notify("success");
+                    }
+                });
+            } else {
+                window.open(payUrl, '_blank');
+            }
+        } else {
+            alert("Ошибка создания счета: " + (data.error?.message || "Неизвестно"));
+        }
+    } catch (error) {
+        console.error("CryptoBot Error:", error);
+        alert("Не удалось связаться с платежным шлюзом.");
+    }
 }
 
 function openAdminPanel() {
@@ -1920,7 +1994,6 @@ function spinCase(winnerIndex, callback) {
     const step = itemWidth + gap;
     const viewportWidth = wrap.getBoundingClientRect().width;
     
-    // Добавляем плавное смещение внутри карточки для реалистичной остановки рулетки
     const randomOffset = (Math.random() - 0.5) * (itemWidth * 0.5);
     const centerPosition = (winnerIndex * step) + (itemWidth / 2) + randomOffset;
     const translate = centerPosition - (viewportWidth / 2);
@@ -2003,4 +2076,4 @@ preloadImgs.forEach(src => {
 </script>
 
 </body>
-</html>
+</html>А
