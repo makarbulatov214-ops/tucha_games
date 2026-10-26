@@ -457,7 +457,7 @@ input[type="number"]:focus {
 }
 
 /* =========================================================
-   MINES (БРИЛЛИАНТОВЫЙ ДИЗАЙН)
+   MINES
 ========================================================= */
 
 .grid {
@@ -670,27 +670,6 @@ input[type="range"] {
     color: #2563eb;
     font-size: 15px;
     font-weight: 950;
-}
-
-.case-card.locked {
-    opacity: .55;
-}
-
-.case-card.locked .case-card-image {
-    filter: grayscale(1);
-}
-
-.case-coming {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    padding: 5px 9px;
-    border-radius: 8px;
-    background: #e2e8f0;
-    color: #475569;
-    font-size: 9px;
-    font-weight: 950;
-    text-transform: uppercase;
 }
 
 /* =========================================================
@@ -1149,32 +1128,52 @@ nav button.active {
         </div>
 
         <div class="case-grid">
-            <div class="case-card available" onclick="openCaseDetail()">
-                <img class="case-card-image" src="./case.png" alt="Бесплатный кейс">
+            <!-- Бесплатный ежедневный кейс -->
+            <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00])">
+                <img class="case-card-image" src="./case.png" alt="Ежедневный кейс">
                 <div class="case-card-name">Ежедневный кейс</div>
                 <div class="case-card-price">$0.00</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card locked">
-                <div class="case-coming">Скоро</div>
-                <img class="case-card-image" src="./case.png" alt="">
-                <div class="case-card-name">Premium</div>
-                <div class="case-card-price">Скоро</div>
+            <!-- Кейс 1: $0.20 (casecase.png) -->
+            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.05, 0.10, 0.25, 0.50, 1.00, 2.00])">
+                <img class="case-card-image" src="./casecase.png" alt="Mini Case">
+                <div class="case-card-name">Mini Case</div>
+                <div class="case-card-price">$0.20</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card locked">
-                <div class="case-coming">Скоро</div>
-                <img class="case-card-image" src="./case.png" alt="">
-                <div class="case-card-name">Rare</div>
-                <div class="case-card-price">Скоро</div>
+            <!-- Кейс 2: $0.50 (casego.png) -->
+            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.10, 0.25, 0.50, 1.00, 2.50, 5.00])">
+                <img class="case-card-image" src="./casego.png" alt="Go Case">
+                <div class="case-card-name">Go Case</div>
+                <div class="case-card-price">$0.50</div>
+                <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card locked">
-                <div class="case-coming">Скоро</div>
-                <img class="case-card-image" src="./case.png" alt="">
-                <div class="case-card-name">Mega</div>
-                <div class="case-card-price">Скоро</div>
+            <!-- Кейс 3: $1.00 (casepro.png) -->
+            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.20, 0.50, 1.00, 2.00, 5.00, 10.00])">
+                <img class="case-card-image" src="./casepro.png" alt="Pro Case">
+                <div class="case-card-name">Pro Case</div>
+                <div class="case-card-price">$1.00</div>
+                <div class="case-card-arrow">›</div>
+            </div>
+
+            <!-- Кейс 4: $1.50 (caser.png) -->
+            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.30, 0.75, 1.50, 3.00, 7.50, 15.00])">
+                <img class="case-card-image" src="./caser.png" alt="Rare Case">
+                <div class="case-card-name">Rare Case</div>
+                <div class="case-card-price">$1.50</div>
+                <div class="case-card-arrow">›</div>
+            </div>
+
+            <!-- Кейс 5: $2.00 (casevip.png) -->
+            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.50, 1.00, 2.00, 5.00, 12.00, 25.00])">
+                <img class="case-card-image" src="./casevip.png" alt="VIP Case">
+                <div class="case-card-name">VIP Case</div>
+                <div class="case-card-price">$2.00</div>
+                <div class="case-card-arrow">›</div>
             </div>
         </div>
     </div>
@@ -1184,8 +1183,8 @@ nav button.active {
         <button class="case-back" onclick="closeCaseDetail()">← Все кейсы</button>
 
         <div id="case-detail-card" class="case-detail-card ready">
-            <div class="case-detail-title">Ежедневный кейс</div>
-            <div class="case-detail-price">БЕСПЛАТНО · $0.00</div>
+            <div id="detail-case-title" class="case-detail-title">Кейс</div>
+            <div id="detail-case-price" class="case-detail-price">$0.00</div>
 
             <img id="case-big-image" class="case-big-image" src="./case.png" alt="Кейс">
 
@@ -1198,41 +1197,18 @@ nav button.active {
 
             <div id="case-result" class="case-result">Нажми на кнопку, чтобы открыть кейс</div>
 
-            <button id="case-button" class="primary gold" onclick="openDailyCase()">ОТКРЫТЬ БЕСПЛАТНО</button>
+            <button id="case-button" class="primary gold" onclick="openCurrentCase()">ОТКРЫТЬ</button>
 
             <div id="case-timer" class="case-timer"></div>
 
             <div class="prizes-title">Возможные призы</div>
 
-            <div class="prizes-grid">
-                <div class="prize-small">
-                    <div class="prize-small-icon">💵</div>
-                    <div class="prize-small-value">$0.02</div>
-                </div>
-                <div class="prize-small">
-                    <div class="prize-small-icon">💵</div>
-                    <div class="prize-small-value">$0.05</div>
-                </div>
-                <div class="prize-small">
-                    <div class="prize-small-icon">💵</div>
-                    <div class="prize-small-value">$0.10</div>
-                </div>
-                <div class="prize-small">
-                    <div class="prize-small-icon">💵</div>
-                    <div class="prize-small-value">$0.20</div>
-                </div>
-                <div class="prize-small">
-                    <div class="prize-small-icon">💵</div>
-                    <div class="prize-small-value">$0.50</div>
-                </div>
-                <div class="prize-small">
-                    <div class="prize-small-icon">🏆</div>
-                    <div class="prize-small-value">$1.00</div>
-                </div>
+            <div id="prizes-grid" class="prizes-grid">
+                <!-- Динамически заполняется скриптом -->
             </div>
 
-            <div class="case-note">
-                Бесплатное открытие доступно один раз в 24 часа. После открытия выигрыш автоматически добавляется на баланс.
+            <div id="case-note" class="case-note">
+                Открытие кейса списывает его стоимость с баланса и мгновенно зачисляет выигрыш.
             </div>
         </div>
     </div>
@@ -1821,30 +1797,92 @@ $("mines-slider").addEventListener("input", () => {
 
 /* CASES LOGIC */
 const CASE_COOLDOWN = 24 * 60 * 60 * 1000;
-const caseStorageKey = "tucha-game-" + userId + "-daily-case";
-let caseReadyAt = 0, caseOpening = false, caseTimer = null;
+let currentActiveCase = null; // { id, name, price, image, prizes }
+let caseOpening = false;
+let caseTimer = null;
 
-try {
-    caseReadyAt = Number(localStorage.getItem(caseStorageKey) || 0);
-} catch(e) {}
+function getCaseStorageKey(caseId) {
+    return "tucha-game-" + userId + "-case-" + caseId;
+}
 
-const casePrizes = [
-    { value: .02, weight: 34 },
-    { value: .05, weight: 30 },
-    { value: .10, weight: 20 },
-    { value: .20, weight: 10 },
-    { value: .50, weight: 5 },
-    { value: 1, weight: 1 }
-];
+function openCase(id, name, price, image, prizes) {
+    currentActiveCase = { id, name, price, image, prizes };
+    
+    $("cases-list").style.display = "none";
+    $("case-detail").classList.add("active");
+    
+    $("detail-case-title").textContent = name;
+    $("detail-case-price").textContent = price === 0 ? "БЕСПЛАТНО · $0.00" : "$" + price.toFixed(2);
+    $("case-big-image").src = image;
+    
+    // Заполняем сетку возможных призов
+    const prizesGrid = $("prizes-grid");
+    prizesGrid.innerHTML = "";
+    prizes.forEach((pVal, idx) => {
+        const isTop = idx === prizes.length - 1;
+        prizesGrid.innerHTML += `
+            <div class="prize-small">
+                <div class="prize-small-icon">${isTop ? '🏆' : '💵'}</div>
+                <div class="prize-small-value">$${pVal.toFixed(2)}</div>
+            </div>
+        `;
+    });
+    
+    updateActiveCaseState();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    haptic();
+}
 
-function chooseCasePrize() {
-    const total = casePrizes.reduce((sum, prize) => sum + prize.weight, 0);
-    let random = Math.random() * total;
-    for (const prize of casePrizes) {
-        random -= prize.weight;
-        if (random <= 0) return prize.value;
+function closeCaseDetail() {
+    if (caseOpening) return;
+    $("case-detail").classList.remove("active");
+    $("cases-list").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    haptic();
+}
+
+function choosePrizeFromList(prizes) {
+    // Простой алгоритм весов (последние призы реже)
+    const weights = prizes.map((_, i) => Math.max(1, (prizes.length - i) * 10));
+    const total = weights.reduce((a, b) => a + b, 0);
+    let rnd = Math.random() * total;
+    for (let i = 0; i < prizes.length; i++) {
+        rnd -= weights[i];
+        if (rnd <= 0) return prizes[i];
     }
-    return .02;
+    return prizes[0];
+}
+
+function updateActiveCaseState() {
+    if (!currentActiveCase) return;
+    const button = $("case-button");
+    const timer = $("case-timer");
+    
+    if (caseOpening) {
+        button.disabled = true;
+        button.textContent = "ОТКРЫВАЕМ...";
+        timer.textContent = "Рулетка запускается...";
+        return;
+    }
+    
+    if (currentActiveCase.id === "daily") {
+        let readyAt = 0;
+        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
+        const remaining = readyAt - Date.now();
+        if (remaining > 0) {
+            button.disabled = true;
+            button.textContent = "КЕЙС УЖЕ ОТКРЫТ";
+            timer.textContent = "Следующее открытие через " + formatTime(remaining);
+        } else {
+            button.disabled = false;
+            button.textContent = "ОТКРЫТЬ БЕСПЛАТНО";
+            timer.textContent = "Кейс доступен прямо сейчас";
+        }
+    } else {
+        button.disabled = false;
+        button.textContent = "ОТКРЫТЬ ЗА $" + currentActiveCase.price.toFixed(2);
+        timer.textContent = "Стоимость списывается с баланса";
+    }
 }
 
 function formatTime(milliseconds) {
@@ -1855,47 +1893,21 @@ function formatTime(milliseconds) {
     return String(hours).padStart(2,"0") + ":" + String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
 }
 
-function updateCaseState() {
-    const button = $("case-button");
-    const timer = $("case-timer");
-    if (!button || !timer) return;
-    if (caseOpening) {
-        button.disabled = true;
-        button.textContent = "ОТКРЫВАЕМ...";
-        timer.textContent = "Рулетка запускается...";
-        return;
-    }
-    const remaining = caseReadyAt - Date.now();
-    if (remaining > 0) {
-        button.disabled = true;
-        button.textContent = "КЕЙС УЖЕ ОТКРЫТ";
-        timer.textContent = "Следующее открытие через " + formatTime(remaining);
-    } else {
-        button.disabled = false;
-        button.textContent = "ОТКРЫТЬ БЕСПЛАТНО";
-        timer.textContent = "Кейс доступен прямо сейчас";
-    }
-}
-
-function createRoulette(winner) {
+function createRoulette(winner, prizesList) {
     const strip = $("roulette-strip");
     strip.innerHTML = "";
     const winnerIndex = 24;
     const values = [];
     for (let i = 0; i < 45; i++) {
-        values.push(i === winnerIndex ? winner : chooseCasePrize());
+        values.push(i === winnerIndex ? winner : prizesList[Math.floor(Math.random() * prizesList.length)]);
     }
     values.forEach(value => {
         const item = document.createElement("div");
         item.className = "roulette-prize";
-        const icon = document.createElement("div");
-        icon.className = "prize-icon";
-        icon.textContent = "💵";
-        const amount = document.createElement("div");
-        amount.className = "prize-value";
-        amount.textContent = "$" + Number(value).toFixed(2);
-        item.appendChild(icon);
-        item.appendChild(amount);
+        item.innerHTML = `
+            <div class="prize-icon">💵</div>
+            <div class="prize-value">$${Number(value).toFixed(2)}</div>
+        `;
         strip.appendChild(item);
     });
     return winnerIndex;
@@ -1922,58 +1934,73 @@ function spinCase(winnerIndex, callback) {
     });
 }
 
-function openCaseDetail() {
-    $("cases-list").style.display = "none";
-    $("case-detail").classList.add("active");
-    updateCaseState();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    haptic();
-}
-
-function closeCaseDetail() {
-    if (caseOpening) return;
-    $("case-detail").classList.remove("active");
-    $("cases-list").style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    haptic();
-}
-
-function openDailyCase() {
-    if (caseOpening) return;
-    if (Date.now() < caseReadyAt) { updateCaseState(); return; }
+function openCurrentCase() {
+    if (!currentActiveCase || caseOpening) return;
+    
+    // Если платный кейс — проверяем баланс
+    if (currentActiveCase.id !== "daily") {
+        if (balance < currentActiveCase.price) {
+            alert("Недостаточно средств на балансе!");
+            notify("error");
+            return;
+        }
+        balance -= currentActiveCase.price;
+        updateBalance();
+    } else {
+        // Ежедневный проверка таймера
+        let readyAt = 0;
+        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
+        if (Date.now() < readyAt) {
+            updateActiveCaseState();
+            return;
+        }
+    }
+    
     caseOpening = true;
-    updateCaseState();
+    updateActiveCaseState();
     $("case-result").textContent = "";
-    const winner = chooseCasePrize();
-    const winnerIndex = createRoulette(winner);
+    
+    const winner = choosePrizeFromList(currentActiveCase.prizes);
+    const winnerIndex = createRoulette(winner, currentActiveCase.prizes);
+    
     const image = $("case-big-image");
     image.style.transform = "scale(1.05)";
     image.style.opacity = ".85";
+    
     spinCase(winnerIndex, () => {
         balance = Math.round((balance + winner) * 100) / 100;
-        caseReadyAt = Date.now() + CASE_COOLDOWN;
-        try {
-            localStorage.setItem(caseStorageKey, String(caseReadyAt));
-        } catch(e) {}
+        
+        if (currentActiveCase.id === "daily") {
+            const nextTime = Date.now() + CASE_COOLDOWN;
+            try { localStorage.setItem(getCaseStorageKey("daily"), String(nextTime)); } catch(e) {}
+        }
+        
         updateBalance();
+        
         image.style.transform = "scale(1)";
         image.style.opacity = "1";
+        
         $("case-result").textContent = "🎉 ТВОЙ ВЫИГРЫШ: $" + Number(winner).toFixed(2);
         caseOpening = false;
-        updateCaseState();
+        updateActiveCaseState();
         notify("success");
     });
 }
 
-buildMinesGrid();
 loadUserData();
 startCrashRound();
-updateCaseState();
 
-caseTimer = setInterval(updateCaseState, 1000);
+caseTimer = setInterval(() => {
+    if ($("case-detail").classList.contains("active")) {
+        updateActiveCaseState();
+    }
+}, 1000);
 
-const caseImage = new Image();
-caseImage.src = "./case.png";
+const preloadImgs = ["./case.png", "./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png"];
+preloadImgs.forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
 </script>
 
 </body>
