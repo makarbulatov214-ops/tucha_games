@@ -60,9 +60,15 @@
         
         <!-- РАКЕТКА (КРАШ) -->
         <div id="tab-crash" class="tab-content active">
+            <!-- История коэффициентов -->
+            <div id="crash-history" class="flex overflow-x-auto pb-2 mb-3 whitespace-nowrap scrollbar-hide gap-2">
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-xs font-bold text-blue-400 border border-blue-900">1.45x</span>
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-xs font-bold text-purple-400 border border-purple-900">2.80x</span>
+                <span class="bg-slate-800/50 px-3 py-1 rounded-full text-xs font-bold text-green-400 border border-green-900">1.12x</span>
+            </div>
+
             <!-- Игровой экран -->
             <div class="rocket-container bg-slate-800/40 rounded-3xl mb-4 border border-slate-700 shadow-lg">
-                <!-- Умная загрузка ракетки: если нет файла, покажет эмодзи -->
                 <div id="rocket" class="rocket-img flex items-center justify-center text-7xl" style="display:none;">
                     <img src="rocket.gif" class="w-full h-full object-contain" onerror="this.outerHTML='🚀'">
                 </div>
@@ -83,9 +89,9 @@
             
             <!-- Текущие ставки -->
             <div class="bg-slate-800/60 rounded-3xl p-4 border border-slate-700">
-                <div class="text-sm text-slate-400 mb-3 text-center font-bold uppercase tracking-wider">Текущие ставки сервера</div>
+                <div class="text-sm text-slate-400 mb-3 text-center font-bold uppercase tracking-wider">Текущие ставки раунда</div>
                 <div id="live-bets" class="space-y-2 max-h-40 overflow-hidden text-sm font-semibold">
-                    <!-- Ставки генерируются тут -->
+                    <!-- Заполняется динамически -->
                 </div>
             </div>
         </div>
@@ -93,7 +99,7 @@
         <!-- МИНЫ -->
         <div id="tab-mines" class="tab-content">
             <div id="mines-grid" class="grid grid-cols-5 gap-2 mb-6">
-                <!-- Ячейки генерируются скриптом -->
+                <!-- 25 ячеек -->
             </div>
 
             <div class="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-5 border border-slate-700">
@@ -107,7 +113,7 @@
                         <span>Количество бомб 💣</span>
                         <span id="mines-count-val" class="text-yellow-400 text-lg">3</span>
                     </div>
-                    <input type="range" id="mines-slider" min="2" max="24" value="3" class="w-full" oninput="document.getElementById('mines-count-val').innerText = this.value;">
+                    <input type="range" id="mines-slider" min="1" max="24" value="3" class="w-full" oninput="document.getElementById('mines-count-val').innerText = this.value;">
                 </div>
 
                 <div id="mines-multiplier-display" class="text-center text-green-400 font-bold text-xl mb-4" style="display:none;">
@@ -161,30 +167,40 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); 
         
-        // --- СОХРАНЕНИЕ ДАННЫХ В ПАМЯТЬ ТЕЛЕФОНА ---
-        let balance = parseFloat(localStorage.getItem('tucha_balance')) || 0.00;
-        let testBonusClaimed = localStorage.getItem('tucha_bonus_claimed') === 'true';
-
-        function saveStats() {
-            localStorage.setItem('tucha_balance', balance.toFixed(2));
-            localStorage.setItem('tucha_bonus_claimed', testBonusClaimed);
-        }
-
-        // --- ДАННЫЕ ПРОФИЛЯ TELEGRAM ---
+        // --- ИДЕНТИФИКАЦИЯ И СОХРАНЕНИЕ ДАННЫХ ПО TELEGRAM ID ---
+        let userId = "default_user";
         let userName = "Игрок";
         let userAvatarHTML = "👤";
 
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            userId = String(tg.initDataUnsafe.user.id);
             userName = tg.initDataUnsafe.user.first_name;
             if(tg.initDataUnsafe.user.photo_url) {
                 userAvatarHTML = `<img src="${tg.initDataUnsafe.user.photo_url}" class="w-full h-full object-cover">`;
             }
         }
+
+        // Ключи для хранилища с привязкой к ID
+        const storageKeys = {
+            balance: `tucha_balance_${userId}`,
+            bonus: `tucha_bonus_${userId}`
+        };
+
+        let balance = parseFloat(localStorage.getItem(storageKeys.balance));
+        if (isNaN(balance)) {
+            balance = 5.00; // Стартовый демонстрационный баланс для нового игрока
+        }
+
+        let testBonusClaimed = localStorage.getItem(storageKeys.bonus) === 'true';
+
+        function saveStats() {
+            localStorage.setItem(storageKeys.balance, balance.toFixed(2));
+            localStorage.setItem(storageKeys.bonus, testBonusClaimed);
+        }
         
         document.getElementById('tg-name').innerText = userName;
         document.getElementById('tg-avatar').innerHTML = userAvatarHTML;
 
-        // Прячем кнопку бонуса, если уже забирал
         if (testBonusClaimed) {
             document.getElementById('test-bonus-btn').style.display = 'none';
         }
@@ -221,6 +237,7 @@
         let currentCrashMult = 1.00;
         let userCrashBet = 0;
         let userInCrash = false;
+        let targetCrashPoint = 1.00;
         
         const rktImg = document.getElementById('rocket');
         const rktTimer = document.getElementById('crash-timer');
@@ -228,12 +245,12 @@
         const rktMsg = document.getElementById('crash-msg');
         const rktBtn = document.getElementById('btn-crash-action');
         const liveBetsContainer = document.getElementById('live-bets');
+        const crashHistoryContainer = document.getElementById('crash-history');
 
         function generateFakeBets(includeUser = false, userAmount = 0) {
             const names = ['Саня', 'CryptoKing', 'Маша99', 'DarkPro', 'Иван', 'TuchaFan'];
             liveBetsContainer.innerHTML = '';
             
-            // Если юзер поставил ставку, добавляем его в список!
             if(includeUser) {
                 liveBetsContainer.innerHTML += `
                     <div class="flex justify-between items-center p-3 bg-blue-900/50 rounded-xl border border-blue-500/50">
@@ -242,7 +259,7 @@
                     </div>`;
             }
 
-            for(let i=0; i<3; i++) {
+            for(let i=0; i<2; i++) {
                 let name = names[Math.floor(Math.random()*names.length)];
                 let amt = (Math.random() * 5 + 0.1).toFixed(2);
                 liveBetsContainer.innerHTML += `
@@ -253,13 +270,23 @@
             }
         }
 
+        function addCrashHistory(mult) {
+            const span = document.createElement('span');
+            span.className = "bg-slate-800/50 px-3 py-1 rounded-full text-xs font-bold text-blue-400 border border-blue-900";
+            span.innerText = mult.toFixed(2) + 'x';
+            crashHistoryContainer.prepend(span);
+            if(crashHistoryContainer.children.length > 6) {
+                crashHistoryContainer.lastChild.remove();
+            }
+        }
+
         function startCrashLoop() {
             crashState = 'waiting';
             rktImg.style.display = 'none';
             rktMult.style.display = 'none';
             rktMsg.style.display = 'none';
             rktTimer.style.display = 'block';
-            generateFakeBets(false);
+            generateFakeBets(userInCrash, userCrashBet);
             
             let timer = 5;
             rktTimer.innerText = `СТАРТ ЧЕРЕЗ ${timer}`;
@@ -282,7 +309,8 @@
             rktMult.style.display = 'block';
             currentCrashMult = 1.00;
             
-            const targetCrash = (Math.random() * 5 + 1).toFixed(2); 
+            // Генерация точки краша (от 1.10x до 6.00x)
+            targetCrashPoint = (Math.random() * 4.9 + 1.10).toFixed(2); 
             
             if(userInCrash) {
                 rktBtn.innerText = `ЗАБРАТЬ $${(userCrashBet * currentCrashMult).toFixed(2)}`;
@@ -293,14 +321,14 @@
             }
 
             const flyInterval = setInterval(() => {
-                currentCrashMult += 0.01;
+                currentCrashMult += 0.02;
                 rktMult.innerText = currentCrashMult.toFixed(2) + 'x';
                 
                 if(userInCrash) {
                     rktBtn.innerText = `ЗАБРАТЬ $${(userCrashBet * currentCrashMult).toFixed(2)}`;
                 }
 
-                if (currentCrashMult >= targetCrash) {
+                if (currentCrashMult >= targetCrashPoint) {
                     clearInterval(flyInterval);
                     doCrash();
                 }
@@ -312,7 +340,8 @@
             rktImg.className = 'rocket-img flex items-center justify-center text-7xl crashed';
             rktMult.style.display = 'none';
             rktMsg.style.display = 'block';
-            rktMsg.innerText = `КРАШ ${currentCrashMult.toFixed(2)}x`;
+            rktMsg.innerText = `КРАШ ${parseFloat(targetCrashPoint).toFixed(2)}x`;
+            addCrashHistory(parseFloat(targetCrashPoint));
             tg.HapticFeedback.notificationOccurred('error');
             
             if(userInCrash) {
@@ -332,27 +361,26 @@
                 const bet = parseFloat(document.getElementById('crash-bet').value);
                 if (bet > balance || bet <= 0 || isNaN(bet)) {
                     tg.HapticFeedback.notificationOccurred('error');
-                    alert("Недостаточно средств!"); return;
+                    alert("Недостаточно средств или неверная ставка!"); return;
                 }
                 balance -= bet;
                 userCrashBet = bet;
                 userInCrash = true;
                 updateBalanceDisplay();
                 
-                // Обновляем список ставок, чтобы показать пользователя
                 generateFakeBets(true, bet);
                 
                 rktBtn.disabled = true;
                 rktBtn.innerText = "СТАВКА ПРИНЯТА";
-                rktBtn.classList.replace('bg-blue-500', 'bg-slate-600');
+                rktBtn.className = "btn-tucha w-full bg-slate-600 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
                 tg.HapticFeedback.impactOccurred('medium');
             } else if (crashState === 'flying' && userInCrash) {
-                // КЭШАУТ - Забираем выигрыш
                 const win = userCrashBet * currentCrashMult;
                 balance += win;
                 userInCrash = false;
                 userCrashBet = 0;
-                updateBalanceDisplay(); // Баланс сохраняется тут
+                updateBalanceDisplay();
+                
                 rktBtn.disabled = true;
                 rktBtn.innerText = `ВЫИГРЫШ $${win.toFixed(2)}`;
                 rktBtn.className = "btn-tucha w-full bg-slate-600 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
@@ -374,7 +402,7 @@
         const mMultVal = document.getElementById('current-mine-mult');
 
         function buildMinesGrid() {
-            mGrid.innerHTML = ''; // Полностью очищаем сетку перед новой игрой
+            mGrid.innerHTML = ''; 
             for(let i=0; i<25; i++) {
                 let div = document.createElement('div');
                 div.className = 'mine-cell';
@@ -391,17 +419,16 @@
             }
         }
 
-        buildMinesGrid(); // Строим сетку при запуске
+        buildMinesGrid(); 
 
         function handleMinesAction() {
             if(minesGameState === 'idle') {
                 const bet = parseFloat(document.getElementById('mines-bet').value);
                 if (bet > balance || bet <= 0 || isNaN(bet)) {
                     tg.HapticFeedback.notificationOccurred('error');
-                    alert("Недостаточно средств!"); return;
+                    alert("Недостаточно средств или неверная ставка!"); return;
                 }
                 
-                // НАЧАЛО НОВОЙ ИГРЫ: Очищаем всё с прошлого раунда
                 buildMinesGrid(); 
                 
                 balance -= bet;
@@ -413,7 +440,7 @@
                 safeClicksCount = 0;
                 minesGameState = 'playing';
                 
-                // Рандомно генерируем новые мины
+                // Генерация мин без наложений
                 minesPositions = [];
                 while(minesPositions.length < totalBombs) {
                     let r = Math.floor(Math.random() * 25);
@@ -446,12 +473,12 @@
             cellEl.onclick = null; 
             
             if(minesPositions.includes(index)) {
-                // Попал на мину! Проигрыш
+                // Попал на мину
                 cellEl.classList.add('bomb');
                 cellEl.querySelector('.bomb-img').style.display = 'flex';
                 tg.HapticFeedback.notificationOccurred('error');
                 
-                // Показываем где были остальные мины
+                // Раскрываем все мины на поле
                 document.querySelectorAll('.mine-cell').forEach((c, i) => {
                     c.onclick = null;
                     if(minesPositions.includes(i) && i !== index) {
@@ -468,8 +495,14 @@
                 
                 safeClicksCount++;
                 
-                const remainingSafe = 25 - totalBombs - (safeClicksCount - 1);
-                currentMineMult = currentMineMult * (1 + (totalBombs * 0.02) + (safeClicksCount * 0.01));
+                // Корректный математический расчет коэффициента мин по формуле вероятностей
+                let prob = 1.0;
+                for(let i = 0; i < safeClicksCount; i++) {
+                    prob *= (25 - totalBombs - i) / (25 - i);
+                }
+                const houseEdge = 0.95; // коэффициент казино
+                currentMineMult = (houseEdge / prob);
+                
                 mMultVal.innerText = currentMineMult.toFixed(2);
                 
                 const currentWin = currentMineBet * currentMineMult;
@@ -491,7 +524,6 @@
             mBtn.disabled = false;
             mBtn.className = `btn-tucha w-full ${colorClass} text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide`;
             
-            // Через 3 секунды возвращаем кнопку в статус "ИГРАТЬ"
             setTimeout(() => {
                 if(minesGameState === 'idle') {
                     mMultDisp.style.display = 'none';
@@ -501,7 +533,7 @@
             }, 3000);
         }
 
-        // Запуск
+        // Инициализация при старте
         updateBalanceDisplay();
         startCrashLoop(); 
     </script>
