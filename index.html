@@ -14,7 +14,7 @@
 
 <style>
 /* =========================================================
-   RESET & LIGHT THEME
+   RESET & BRIGHT THEME
 ========================================================= */
 
 * {
@@ -27,8 +27,8 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    background: #f1f5f9;
-    color: #1e293b;
+    background: #f0f4ff;
+    color: #0f172a;
     font-family:
         Inter,
         -apple-system,
@@ -53,21 +53,21 @@ button {
 }
 
 /* =========================================================
-   BACKGROUND GLOWS
+   BRIGHT BACKGROUND GLOWS
 ========================================================= */
 
 body::before {
     content: "";
     position: fixed;
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     left: 50%;
     top: -250px;
     transform: translateX(-50%);
     background: radial-gradient(
         circle,
-        rgba(59, 130, 246, .12),
-        transparent 68%
+        rgba(37, 99, 235, 0.22),
+        transparent 70%
     );
     pointer-events: none;
     z-index: -2;
@@ -76,14 +76,14 @@ body::before {
 body::after {
     content: "";
     position: fixed;
-    width: 400px;
-    height: 400px;
-    right: -250px;
+    width: 500px;
+    height: 500px;
+    right: -200px;
     bottom: -200px;
     background: radial-gradient(
         circle,
-        rgba(147, 51, 234, .08),
-        transparent 68%
+        rgba(168, 85, 247, 0.18),
+        transparent 70%
     );
     pointer-events: none;
     z-index: -2;
@@ -104,11 +104,11 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    padding: 10px 15px;
+    padding: 10px 16px;
 
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9);
 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 2px solid rgba(59, 130, 246, 0.1);
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -117,17 +117,17 @@ header {
 .logo {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
 
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: -.4px;
-    color: #0f172a;
+    font-size: 19px;
+    font-weight: 950;
+    letter-spacing: -.5px;
+    color: #1e1b4b;
 }
 
 .logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
 
     display: flex;
     align-items: center;
@@ -135,23 +135,21 @@ header {
 
     border-radius: 12px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #3b82f6,
-            #635bff
-        );
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
 
-    box-shadow:
-        0 5px 20px rgba(59,130,246,.28);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
 }
 
 .logo-text small {
     display: block;
     margin-top: -1px;
-    color: #64748b;
-    font-size: 8px;
-    font-weight: 800;
+    color: #7c3aed;
+    font-size: 9px;
+    font-weight: 900;
     letter-spacing: 1.5px;
 }
 
@@ -160,22 +158,23 @@ header {
     align-items: center;
     gap: 6px;
 
-    padding: 9px 12px;
+    padding: 9px 14px;
 
-    border-radius: 13px;
+    border-radius: 14px;
 
-    background: #ffffff;
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
 
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(234, 179, 8, 0.3);
 
-    font-size: 14px;
-    font-weight: 900;
+    font-size: 15px;
+    font-weight: 950;
     color: #0f172a;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 12px rgba(234, 179, 8, 0.15);
 }
 
 .balance-icon {
     color: #eab308;
+    filter: drop-shadow(0 2px 4px rgba(234, 179, 8, 0.4));
 }
 
 /* =========================================================
@@ -186,7 +185,7 @@ main {
     width: 100%;
     max-width: 560px;
     margin: 0 auto;
-    padding: 14px 14px 110px;
+    padding: 16px 14px 110px;
 }
 
 .tab {
@@ -203,10 +202,10 @@ main {
 
 .panel {
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 22px;
-    padding: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 2px solid rgba(59, 130, 246, 0.08);
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.08);
 }
 
 /* =========================================================
@@ -216,13 +215,13 @@ main {
 .primary {
     width: 100%;
     border: 0;
-    border-radius: 15px;
-    padding: 15px 16px;
+    border-radius: 16px;
+    padding: 16px;
     color: white;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    box-shadow: 0 7px 22px rgba(37, 99, 235, 0.25);
-    font-size: 14px;
-    font-weight: 900;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+    font-size: 15px;
+    font-weight: 950;
     transition: transform .12s, filter .15s, opacity .15s;
 }
 
@@ -231,27 +230,28 @@ main {
 }
 
 .primary:hover {
-    filter: brightness(1.05);
+    filter: brightness(1.08);
 }
 
 .primary.green {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    box-shadow: 0 7px 22px rgba(34, 197, 94, 0.25);
+    background: linear-gradient(135deg, #16a34a, #059669);
+    box-shadow: 0 8px 25px rgba(22, 163, 74, 0.35);
 }
 
 .primary.gold {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    box-shadow: 0 7px 22px rgba(245, 158, 11, 0.25);
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
 }
 
 .primary.red {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    box-shadow: 0 7px 22px rgba(239, 68, 68, 0.25);
+    background: linear-gradient(135deg, #dc2626, #e11d48);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.35);
 }
 
 .primary:disabled {
     opacity: .55;
     cursor: default;
+    box-shadow: none;
 }
 
 /* =========================================================
@@ -260,9 +260,9 @@ main {
 
 .history {
     display: flex;
-    gap: 7px;
+    gap: 8px;
     overflow-x: auto;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     scrollbar-width: none;
 }
 
@@ -272,25 +272,27 @@ main {
 
 .history span {
     flex: 0 0 auto;
-    padding: 7px 11px;
+    padding: 8px 12px;
     border-radius: 20px;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    color: #64748b;
-    font-size: 11px;
-    font-weight: 800;
+    border: 2px solid rgba(59, 130, 246, 0.12);
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.06);
 }
 
 .rocket-area {
     position: relative;
-    height: 285px;
+    height: 290px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 24px;
-    background: linear-gradient(180deg, #e2e8f0, #cbd5e1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 26px;
+    background: linear-gradient(135deg, #dbeafe, #ede9fe);
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.1);
 }
 
 #rocket-wrap {
@@ -307,10 +309,10 @@ main {
 }
 
 #rocket {
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+    filter: drop-shadow(0 8px 20px rgba(37, 99, 235, 0.3));
 }
 
 #rocket.flying {
@@ -333,14 +335,14 @@ main {
     right: 0;
     bottom: 60px;
     text-align: center;
-    font-size: 31px;
+    font-size: 34px;
     font-weight: 950;
-    color: #0f172a;
-    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
+    color: #1e1b4b;
+    text-shadow: 0 3px 8px rgba(255,255,255,0.9);
 }
 
 .crash-form {
-    margin-top: 14px;
+    margin-top: 16px;
 }
 
 /* =========================================================
@@ -348,28 +350,30 @@ main {
 ========================================================= */
 
 label {
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 900;
     color: #475569;
 }
 
 input[type="number"] {
     width: 100%;
-    padding: 14px;
-    margin: 8px 0 13px;
-    border-radius: 13px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 8px 0 14px;
+    border-radius: 15px;
+    border: 2px solid rgba(59, 130, 246, 0.2);
     outline: none;
     background: #f8fafc;
     color: #0f172a;
     text-align: center;
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
 }
 
 input[type="number"]:focus {
-    border-color: #3b82f6;
+    border-color: #2563eb;
     background: #ffffff;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
 }
 
 /* =========================================================
@@ -381,12 +385,14 @@ input[type="number"]:focus {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
-    color: #0f172a;
+    color: #1e1b4b;
+    font-size: 15px;
+    font-weight: 950;
 }
 
 .players {
     display: grid;
-    gap: 8px;
+    gap: 9px;
 }
 
 .player {
@@ -394,30 +400,32 @@ input[type="number"]:focus {
     grid-template-columns: minmax(0,1fr) auto;
     align-items: center;
     gap: 10px;
-    padding: 11px;
-    border-radius: 13px;
+    padding: 12px;
+    border-radius: 14px;
     background: #f8fafc;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 2px solid rgba(59, 130, 246, 0.08);
 }
 
 .player.you {
-    background: rgba(59, 130, 246, 0.08);
-    border-color: rgba(59, 130, 246, 0.25);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(124, 58, 237, 0.06));
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .player-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-weight: 800;
+    font-weight: 900;
     font-size: 13px;
-    color: #1e293b;
+    color: #0f172a;
 }
 
 .player-detail {
     margin-top: 4px;
     color: #64748b;
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 800;
 }
 
 .player-x {
@@ -427,8 +435,8 @@ input[type="number"]:focus {
 
 .player-status {
     margin-top: 3px;
-    font-size: 9px;
-    font-weight: 800;
+    font-size: 10px;
+    font-weight: 900;
     text-align: right;
 }
 
@@ -441,7 +449,7 @@ input[type="number"]:focus {
 }
 
 .status-live {
-    color: #ca8a04;
+    color: #d97706;
 }
 
 .status-wait {
@@ -449,18 +457,19 @@ input[type="number"]:focus {
 }
 
 /* =========================================================
-   MINES
+   MINES (БРИЛЛИАНТОВЫЙ ДИЗАЙН)
 ========================================================= */
 
 .grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 9px;
+    gap: 10px;
     margin: 16px 0;
-    background: #f1f5f9;
-    padding: 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, #e0e7ff, #ede9fe);
+    padding: 14px;
+    border-radius: 22px;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    box-shadow: inset 0 2px 10px rgba(59, 130, 246, 0.1);
 }
 
 .cell {
@@ -468,83 +477,90 @@ input[type="number"]:focus {
     width: 100%;
     aspect-ratio: 1;
     border: 0;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #e2e8f0, #cbd5e1);
-    border-bottom: 4px solid #94a3b8;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-    color: #1e293b;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #e2e8f0);
+    border-bottom: 5px solid #cbd5e1;
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.12);
+    color: #0f172a;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
 }
 
 .cell:not(:disabled):hover {
-    filter: brightness(1.03);
-    transform: translateY(-2px);
+    filter: brightness(1.06);
+    transform: translateY(-3px);
+    border-bottom-width: 6px;
 }
 
 .cell:not(:disabled):active {
-    transform: scale(0.92) translateY(2px);
+    transform: scale(0.92) translateY(3px);
     border-bottom-width: 2px;
 }
 
 .cell.safe {
-    background: linear-gradient(145deg, #3b82f6, #2563eb);
-    border-bottom: 4px solid #1d4ed8;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+    border-bottom: 5px solid #1e3a8a;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
 .cell.revealed-safe {
     background: linear-gradient(145deg, #cbd5e1, #94a3b8);
-    border-bottom: 2px solid #64748b;
+    border-bottom: 3px solid #64748b;
     opacity: 0.6;
 }
 
 .cell.bomb {
-    background: linear-gradient(145deg, #ef4444, #dc2626);
-    border-bottom: 4px solid #991b1b;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    background: linear-gradient(145deg, #ef4444, #b91c1c);
+    border-bottom: 5px solid #7f1d1d;
+    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
 .star-svg {
-    width: 76%;
-    height: 76%;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    width: 78%;
+    height: 78%;
+    filter: drop-shadow(0 3px 8px rgba(234, 179, 8, 0.6));
 }
 
 .bomb-img {
-    width: 72%;
-    height: 72%;
+    width: 74%;
+    height: 74%;
     object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
 }
 
 .range-row {
     display: flex;
     justify-content: space-between;
-    margin: 13px 0;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 800;
+    margin: 14px 0;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 900;
 }
 
 .range-row span:last-child {
-    color: #0f172a;
+    color: #2563eb;
+    font-size: 16px;
 }
 
 input[type="range"] {
     width: 100%;
-    accent-color: #3b82f6;
-    margin-bottom: 15px;
+    accent-color: #2563eb;
+    margin-bottom: 16px;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
 }
 
 .multiplier {
     text-align: center;
     color: #16a34a;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 950;
-    margin-bottom: 13px;
+    margin-bottom: 14px;
+    text-shadow: 0 2px 10px rgba(22, 163, 74, 0.2);
 }
 
 /* =========================================================
@@ -552,45 +568,47 @@ input[type="range"] {
 ========================================================= */
 
 .cases-header {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .cases-title {
-    font-size: 25px;
+    font-size: 27px;
     font-weight: 950;
-    letter-spacing: -.7px;
-    color: #0f172a;
+    letter-spacing: -.8px;
+    color: #1e1b4b;
 }
 
 .cases-subtitle {
     margin-top: 5px;
     color: #64748b;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 800;
 }
 
 .case-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 12px;
+    gap: 14px;
 }
 
 /* CASE CARD */
 
 .case-card {
     position: relative;
-    min-height: 230px;
+    min-height: 240px;
     overflow: hidden;
-    padding: 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    background: #ffffff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
-    transition: transform .18s, border-color .18s;
+    padding: 14px;
+    border-radius: 22px;
+    border: 2px solid rgba(59, 130, 246, 0.12);
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08);
+    transition: transform .18s, border-color .18s, box-shadow .18s;
 }
 
 .case-card.available {
     cursor: pointer;
-    border-color: rgba(59, 130, 246, 0.3);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15);
 }
 
 .case-card.available:active {
@@ -598,62 +616,64 @@ input[type="range"] {
 }
 
 .case-card.available:hover {
-    border-color: rgba(59, 130, 246, 0.6);
+    border-color: #2563eb;
+    box-shadow: 0 15px 35px rgba(37, 99, 235, 0.25);
 }
 
 .case-card-image {
     position: relative;
     display: block;
     width: 100%;
-    height: 125px;
+    height: 130px;
     object-fit: contain;
-    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 10px 20px rgba(37, 99, 235, 0.2));
     transition: transform .25s;
 }
 
 .case-card.available:hover .case-card-image {
-    transform: translateY(-3px) scale(1.04);
+    transform: translateY(-4px) scale(1.06);
 }
 
 .case-card-name {
     position: relative;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 950;
     color: #0f172a;
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 .case-card-price {
     position: relative;
     display: inline-flex;
     align-items: center;
-    margin-top: 7px;
-    padding: 5px 9px;
-    border-radius: 8px;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(22, 163, 74, 0.12);
+    border: 1.5px solid rgba(22, 163, 74, 0.3);
     color: #16a34a;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 950;
 }
 
 .case-card-arrow {
     position: absolute;
-    right: 11px;
-    bottom: 11px;
-    width: 25px;
-    height: 25px;
+    right: 12px;
+    bottom: 12px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    background: #f1f5f9;
-    color: #64748b;
-    font-size: 13px;
+    border-radius: 10px;
+    background: #e0e7ff;
+    color: #2563eb;
+    font-size: 15px;
+    font-weight: 950;
 }
 
 .case-card.locked {
-    opacity: .5;
+    opacity: .55;
 }
 
 .case-card.locked .case-card-image {
@@ -662,14 +682,14 @@ input[type="range"] {
 
 .case-coming {
     position: absolute;
-    left: 10px;
-    top: 10px;
-    padding: 4px 7px;
-    border-radius: 7px;
-    background: #f1f5f9;
-    color: #64748b;
-    font-size: 8px;
-    font-weight: 900;
+    left: 12px;
+    top: 12px;
+    padding: 5px 9px;
+    border-radius: 8px;
+    background: #e2e8f0;
+    color: #475569;
+    font-size: 9px;
+    font-weight: 950;
     text-transform: uppercase;
 }
 
@@ -688,49 +708,49 @@ input[type="range"] {
 .case-back {
     display: flex;
     align-items: center;
-    gap: 7px;
-    margin-bottom: 14px;
+    gap: 8px;
+    margin-bottom: 16px;
     padding: 0;
     border: 0;
     background: none;
-    color: #64748b;
-    font-size: 13px;
-    font-weight: 800;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 900;
 }
 
 .case-back:active {
-    transform: translateX(-2px);
+    transform: translateX(-3px);
 }
 
 .case-detail-card {
     position: relative;
     overflow: hidden;
-    padding: 18px;
-    border-radius: 25px;
+    padding: 20px;
+    border-radius: 26px;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border: 2px solid rgba(59, 130, 246, 0.12);
+    box-shadow: 0 15px 40px rgba(37, 99, 235, 0.1);
 }
 
 .case-detail-title {
     position: relative;
     text-align: center;
-    font-size: 25px;
+    font-size: 27px;
     font-weight: 950;
-    color: #0f172a;
-    letter-spacing: -.5px;
+    color: #1e1b4b;
+    letter-spacing: -.6px;
 }
 
 .case-detail-price {
     position: relative;
     width: max-content;
-    margin: 8px auto 0;
-    padding: 6px 11px;
-    border-radius: 9px;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    margin: 10px auto 0;
+    padding: 7px 14px;
+    border-radius: 10px;
+    background: rgba(22, 163, 74, 0.12);
+    border: 1.5px solid rgba(22, 163, 74, 0.3);
     color: #16a34a;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 950;
 }
 
@@ -738,10 +758,10 @@ input[type="range"] {
     position: relative;
     display: block;
     width: 100%;
-    height: 240px;
-    margin: 3px auto 0;
+    height: 250px;
+    margin: 5px auto 0;
     object-fit: contain;
-    filter: drop-shadow(0 12px 25px rgba(0,0,0,0.12));
+    filter: drop-shadow(0 15px 35px rgba(37, 99, 235, 0.25));
     transition: transform .25s, opacity .25s;
 }
 
@@ -751,7 +771,7 @@ input[type="range"] {
 
 @keyframes caseFloat {
     from { transform: translateY(3px); }
-    to { transform: translateY(-7px); }
+    to { transform: translateY(-8px); }
 }
 
 /* =========================================================
@@ -761,20 +781,21 @@ input[type="range"] {
 .roulette-wrap {
     position: relative;
     overflow: hidden;
-    height: 105px;
-    margin: 5px 0 13px;
-    border-radius: 17px;
-    background: #f8fafc;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    height: 110px;
+    margin: 8px 0 14px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #e0e7ff, #ede9fe);
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    box-shadow: inset 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
 .roulette-strip {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     width: max-content;
     height: 100%;
-    padding: 0 7px;
+    padding: 0 8px;
     transform: translateX(0);
     will-change: transform;
 }
@@ -784,26 +805,26 @@ input[type="range"] {
 }
 
 .roulette-prize {
-    flex: 0 0 92px;
-    height: 79px;
+    flex: 0 0 95px;
+    height: 82px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    border-radius: 13px;
+    border-radius: 14px;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    border: 2px solid rgba(59, 130, 246, 0.15);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .prize-icon {
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .prize-value {
-    color: #ca8a04;
-    font-size: 14px;
+    color: #d97706;
+    font-size: 15px;
     font-weight: 950;
 }
 
@@ -813,18 +834,18 @@ input[type="range"] {
     z-index: 3;
     top: 0;
     bottom: 0;
-    width: 70px;
+    width: 75px;
     pointer-events: none;
 }
 
 .roulette-fade-left {
     left: 0;
-    background: linear-gradient(90deg, #f8fafc, transparent);
+    background: linear-gradient(90deg, #e0e7ff, transparent);
 }
 
 .roulette-fade-right {
     right: 0;
-    background: linear-gradient(270deg, #f8fafc, transparent);
+    background: linear-gradient(270deg, #ede9fe, transparent);
 }
 
 .roulette-marker {
@@ -833,10 +854,10 @@ input[type="range"] {
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 3px;
+    width: 4px;
     transform: translateX(-50%);
-    background: linear-gradient(180deg, transparent, #3b82f6 12%, #0f172a 50%, #3b82f6 88%, transparent);
-    box-shadow: 0 0 10px rgba(59,130,246,0.4);
+    background: linear-gradient(180deg, transparent, #2563eb 12%, #7c3aed 50%, #2563eb 88%, transparent);
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.8);
     pointer-events: none;
 }
 
@@ -848,9 +869,9 @@ input[type="range"] {
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 9px solid #3b82f6;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 10px solid #2563eb;
 }
 
 /* =========================================================
@@ -858,35 +879,36 @@ input[type="range"] {
 ========================================================= */
 
 .prizes-title {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-top: 22px;
+    margin-bottom: 12px;
+    font-size: 15px;
     font-weight: 950;
-    color: #0f172a;
+    color: #1e1b4b;
 }
 
 .prizes-grid {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap: 7px;
+    gap: 8px;
 }
 
 .prize-small {
-    padding: 11px 5px;
+    padding: 12px 6px;
     text-align: center;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #f8fafc;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 2px solid rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.04);
 }
 
 .prize-small-icon {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .prize-small-value {
-    margin-top: 4px;
-    color: #ca8a04;
-    font-size: 11px;
+    margin-top: 5px;
+    color: #d97706;
+    font-size: 12px;
     font-weight: 950;
 }
 
@@ -895,28 +917,31 @@ input[type="range"] {
 ========================================================= */
 
 .case-result {
-    min-height: 24px;
-    margin: 7px 0 12px;
+    min-height: 26px;
+    margin: 8px 0 14px;
     text-align: center;
     color: #16a34a;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 950;
+    text-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
 }
 
 .case-timer {
-    min-height: 18px;
-    margin-top: 9px;
+    min-height: 20px;
+    margin-top: 10px;
     color: #64748b;
     text-align: center;
-    font-size: 11px;
+    font-size: 12px;
+    font-weight: 900;
 }
 
 .case-note {
-    margin-top: 12px;
+    margin-top: 14px;
     color: #64748b;
     text-align: center;
-    font-size: 10px;
-    line-height: 1.45;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.5;
 }
 
 /* =========================================================
@@ -925,21 +950,22 @@ input[type="range"] {
 
 .profile {
     text-align: center;
-    padding-top: 28px;
+    padding-top: 32px;
 }
 
 .avatar {
-    width: 84px;
-    height: 84px;
+    width: 90px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 13px;
+    margin: 0 auto 14px;
     border-radius: 50%;
-    background: #e2e8f0;
-    font-size: 42px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    font-size: 45px;
     overflow: hidden;
-    border: 2px solid rgba(0,0,0,0.06);
+    border: 3px solid #ffffff;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
 }
 
 .avatar img {
@@ -950,8 +976,9 @@ input[type="range"] {
 
 .profile h2 {
     margin: 0;
-    font-size: 21px;
-    color: #0f172a;
+    font-size: 23px;
+    font-weight: 950;
+    color: #1e1b4b;
 }
 
 /* =========================================================
@@ -965,11 +992,12 @@ nav {
     right: 0;
     bottom: 0;
     display: flex;
-    padding: 8px 5px calc(8px + env(safe-area-inset-bottom));
-    background: rgba(255, 255, 255, 0.9);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 10px 6px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.92);
+    border-top: 2px solid rgba(59, 130, 246, 0.1);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 -10px 30px rgba(37, 99, 235, 0.08);
 }
 
 nav button {
@@ -982,17 +1010,19 @@ nav button {
     border: 0;
     background: none;
     color: #64748b;
-    font-size: 9px;
-    font-weight: 900;
+    font-size: 10px;
+    font-weight: 950;
+    transition: color .15s;
 }
 
 nav button.active {
-    color: #3b82f6;
+    color: #2563eb;
+    filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.3));
 }
 
 .nav-icon {
-    height: 25px;
-    font-size: 21px;
+    height: 26px;
+    font-size: 22px;
 }
 
 /* =========================================================
@@ -1005,19 +1035,19 @@ nav button.active {
         padding-right: 10px;
     }
     .case-grid {
-        gap: 9px;
+        gap: 10px;
     }
     .case-card {
-        min-height: 210px;
+        min-height: 220px;
     }
     .case-card-image {
-        height: 110px;
+        height: 115px;
     }
     .case-big-image {
-        height: 205px;
+        height: 215px;
     }
     .roulette-prize {
-        flex-basis: 82px;
+        flex-basis: 85px;
     }
     .prizes-grid {
         grid-template-columns: repeat(2,1fr);
@@ -1069,10 +1099,10 @@ nav button.active {
         <button id="crash-button" class="primary" onclick="handleCrashAction()">СДЕЛАТЬ СТАВКУ</button>
     </div>
 
-    <div class="panel" style="margin-top:14px">
+    <div class="panel" style="margin-top:16px">
         <div class="section-head">
             <b>Игроки</b>
-            <span style="color:#16a34a; font-size:10px; font-weight:900;">● LIVE</span>
+            <span style="color:#16a34a; font-size:11px; font-weight:950;">● LIVE</span>
         </div>
         <div id="live-bets" class="players"></div>
     </div>
@@ -1083,7 +1113,7 @@ nav button.active {
     <div class="panel">
         <div class="section-head">
             <b>💣 МИНЫ</b>
-            <span id="mines-state-label" style="color:#64748b; font-size:11px;">Новая игра</span>
+            <span id="mines-state-label" style="color:#64748b; font-size:12px; font-weight:900;">Новая игра</span>
         </div>
 
         <div id="mines-grid" class="grid"></div>
@@ -1104,7 +1134,7 @@ nav button.active {
 
         <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
 
-        <div style="margin-top:11px; color:#64748b; text-align:center; font-size:10px; line-height:1.45;">
+        <div style="margin-top:12px; color:#64748b; text-align:center; font-size:11px; font-weight:800; line-height:1.45;">
             После проигрыша поле полностью открывается: мины показываются красным, безопасные клетки — золотыми звёздами.
         </div>
     </div>
@@ -1214,18 +1244,18 @@ nav button.active {
         <div id="avatar" class="avatar">👤</div>
         <h2 id="username">Игрок</h2>
 
-        <div class="balance" style="display:inline-flex; margin:14px 0 18px;">
+        <div class="balance" style="display:inline-flex; margin:16px 0 20px;">
             <span class="balance-icon">$</span>
             <span id="profile-balance">1.00</span>
         </div>
 
         <button id="bonus-button" class="primary green" onclick="claimBonus()">🎁 Получить $1.00</button>
 
-        <button onclick="openAdminPanel()" style="margin-top: 15px; background: none; border: none; color: #64748b; font-size: 11px; font-weight: 700; cursor: pointer;">
+        <button onclick="openAdminPanel()" style="margin-top: 18px; background: none; border: none; color: #64748b; font-size: 12px; font-weight: 900; cursor: pointer;">
             ⚙️ Админ-панель
         </button>
 
-        <div style="margin-top:13px; color:#64748b; font-size:10px;">
+        <div style="margin-top:14px; color:#64748b; font-size:11px; font-weight:800;">
             Баланс синхронизирован с базой.
         </div>
     </div>
@@ -1234,10 +1264,10 @@ nav button.active {
 </main>
 
 <!-- ADMIN MODAL -->
-<div id="admin-modal" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 999; display: none; flex-direction: column; padding: 20px; overflow-y: auto;">
+<div id="admin-modal" style="position: fixed; inset: 0; background: rgba(30, 27, 75, 0.85); z-index: 999; display: none; flex-direction: column; padding: 20px; overflow-y: auto;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3 style="margin: 0; font-size: 20px; color: #facc15;">👑 Панель Администратора</h3>
-        <button onclick="closeAdminPanel()" style="background: #e2e8f0; color: #0f172a; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold;">Закрыть ✕</button>
+        <button onclick="closeAdminPanel()" style="background: #ffffff; color: #1e1b4b; border: none; padding: 8px 14px; border-radius: 10px; font-weight: 950;">Закрыть ✕</button>
     </div>
     <div class="panel" style="margin-bottom: 15px;">
         <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #64748b;">Список игроков из базы данных:</h4>
@@ -1269,7 +1299,7 @@ try {
     tg?.ready();
     tg?.expand();
     tg?.setHeaderColor("#ffffff");
-    tg?.setBackgroundColor("#f1f5f9");
+    tg?.setBackgroundColor("#f0f4ff");
 } catch(e) {}
 
 const telegramUser = tg?.initDataUnsafe?.user || null;
@@ -1398,13 +1428,13 @@ function fetchAllPlayers() {
             }
             data.players.forEach(p => {
                 listDiv.innerHTML += `
-                    <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0,0,0,0.04)">
+                    <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid rgba(59,130,246,0.08)">
                         <div>
-                            <div style="font-weight: bold; font-size: 14px; color: #0f172a;">${p.username}</div>
-                            <div style="font-size: 11px; color: #64748b;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
-                            <div style="font-size: 13px; color: #16a34a; font-weight: bold; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
+                            <div style="font-weight: 950; font-size: 14px; color: #0f172a;">${p.username}</div>
+                            <div style="font-size: 11px; color: #64748b; font-weight: 800;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
+                            <div style="font-size: 13px; color: #16a34a; font-weight: 950; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
                         </div>
-                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;">Изменить $</button>
+                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #2563eb; color: white; border: none; padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 950;">Изменить $</button>
                     </div>
                 `;
             });
@@ -1526,7 +1556,7 @@ function startCrashRound() {
     crashMultiplier = 1;
     rocket.className = "flying";
     rocket.style.transform = "";
-    $("crash-status").style.color = "#0f172a";
+    $("crash-status").style.color = "#1e1b4b";
     $("crash-button").disabled = false;
     $("crash-button").className = "primary";
     $("crash-button").textContent = "СДЕЛАТЬ СТАВКУ";
@@ -1877,7 +1907,7 @@ function spinCase(winnerIndex, callback) {
     const item = strip.children[0];
     if (!item) { callback(); return; }
     const itemWidth = item.getBoundingClientRect().width;
-    const gap = 8;
+    const gap = 9;
     const step = itemWidth + gap;
     const viewportWidth = wrap.getBoundingClientRect().width;
     const centerPosition = (winnerIndex * step) + (itemWidth / 2);
