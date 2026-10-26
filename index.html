@@ -2144,6 +2144,23 @@ nav button.active {
         </button>
 
 
+        <!-- СЕКРЕТНАЯ КНОПКА АДМИН-ПАНЕЛИ -->
+        <button
+            onclick="openAdminPanel()"
+            style="
+                margin-top: 15px;
+                background: none;
+                border: none;
+                color: #64748b;
+                font-size: 11px;
+                font-weight: 700;
+                cursor: pointer;
+            "
+        >
+            ⚙️ Админ-панель
+        </button>
+
+
         <div
             style="
                 margin-top:13px;
@@ -2151,7 +2168,7 @@ nav button.active {
                 font-size:10px;
             "
         >
-            Демо-баланс хранится локально.
+            Баланс синхронизирован с базой.
         </div>
 
     </div>
@@ -2160,6 +2177,37 @@ nav button.active {
 
 
 </main>
+
+
+<!-- =========================================================
+     ADMIN MODAL
+========================================================= -->
+
+<div
+    id="admin-modal"
+    style="
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 11, 22, 0.95);
+        z-index: 999;
+        display: none;
+        flex-direction: column;
+        padding: 20px;
+        overflow-y: auto;
+    "
+>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; font-size: 20px; color: #facc15;">👑 Панель Администратора</h3>
+        <button onclick="closeAdminPanel()" style="background: #1e293b; color: white; border: none; padding: 8px 14px; border-radius: 10px; font-weight: bold;">Закрыть ✕</button>
+    </div>
+
+    <div class="panel" style="margin-bottom: 15px;">
+        <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #94a3b8;">Список игроков из базы данных:</h4>
+        <div id="admin-players-list" style="display: grid; gap: 8px; max-height: 350px; overflow-y: auto;">
+            <p style="color: #64748b; text-align: center;">Загрузка игроков...</p>
+        </div>
+    </div>
+</div>
 
 
 <!-- =========================================================
@@ -2298,50 +2346,60 @@ function notify(type = "success") {
 
 
 /* =========================================================
-   LOCAL SAVE
+   DATABASE & LOCAL SAVE
 ========================================================= */
 
-const storageKey =
-    "tucha-game-" +
-    (telegramUser?.id || "demo");
+const ADMIN_PASSWORD = "tucha2026"; // Измени на свой секретный пароль
+const SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT"; 
 
+const userId = telegramUser ? String(telegramUser.id) : "demo_user";
+const userName = telegramUser?.first_name || "Игрок";
 
-let saved = {};
+let balance = 1.00;
+let bonusCount = 0;
 
-try {
+function loadUserData() {
+    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+        // Резервный localStorage если не подключена таблица
+        const storageKey = "tucha-game-" + userId;
+        try {
+            let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+            if (Number.isFinite(Number(saved.balance))) balance = Number(saved.balance);
+            bonusCount = Number(saved.bonusCount) || 0;
+        } catch(e) {}
+        updateBalance();
+        return;
+    }
 
-    saved =
-        JSON.parse(
-            localStorage.getItem(storageKey) || "{}"
-        );
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "get", userid: userId, username: userName, balance: 1.00, bonuscount: 0})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "success") {
+            balance = parseFloat(data.balance);
+            bonusCount = parseInt(data.bonuscount);
+            updateBalance();
+        }
+    }).catch(err => {
+        updateBalance();
+    });
+}
 
-} catch(e) {}
+function saveUserData() {
+    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+        const storageKey = "tucha-game-" + userId;
+        try {
+            localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount }));
+        } catch(e) {}
+        return;
+    }
 
-
-let balance =
-    Number.isFinite(Number(saved.balance))
-        ? Number(saved.balance)
-        : 1;
-
-
-let bonusCount =
-    Number(saved.bonusCount) || 0;
-
-
-function saveData() {
-
-    try {
-
-        localStorage.setItem(
-            storageKey,
-            JSON.stringify({
-                balance,
-                bonusCount
-            })
-        );
-
-    } catch(e) {}
-
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "update", userid: userId, username: userName, balance: balance, bonuscount: bonusCount})
+    }).catch(err => {});
 }
 
 
@@ -2367,7 +2425,7 @@ function updateBalance() {
     }
 
 
-    saveData();
+    saveUserData();
 
 }
 
@@ -2416,6 +2474,83 @@ function claimBonus() {
 
     notify("success");
 
+}
+
+
+/* =========================================================
+   ADMIN PANEL LOGIC
+========================================================= */
+
+function openAdminPanel() {
+    let pass = prompt("Введите пароль администратора:");
+    if (pass === ADMIN_PASSWORD) {
+        $("admin-modal").style.display = "flex";
+        fetchAllPlayers();
+        notify("success");
+    } else if (pass !== null) {
+        alert("Неверный пароль!");
+        notify("error");
+    }
+}
+
+function closeAdminPanel() {
+    $("admin-modal").style.display = "none";
+}
+
+function fetchAllPlayers() {
+    const listDiv = $("admin-players-list");
+    listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Загрузка игроков из базы...</p>';
+    
+    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
+        return;
+    }
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({action: "get_all"})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "success") {
+            listDiv.innerHTML = '';
+            if (data.players.length === 0) {
+                listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Пока нет игроков в базе.</p>';
+                return;
+            }
+            data.players.forEach(p => {
+                listDiv.innerHTML += `
+                    <div style="background: rgba(255,255,255,.04); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">${p.username}</div>
+                            <div style="font-size: 11px; color: #64748b;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
+                            <div style="font-size: 13px; color: #4ade80; font-weight: bold; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
+                        </div>
+                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: bold;">Изменить $</button>
+                    </div>
+                `;
+            });
+        }
+    }).catch(err => {
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базой.</p>';
+    });
+}
+
+function adminEditBalance(targetId, targetName, currentBal, currentBonus) {
+    let newB = prompt(`Введите новый баланс для игрока ${targetName}:`, currentBal);
+    if (newB !== null && !isNaN(newB)) {
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({action: "update", userid: targetId, username: targetName, balance: parseFloat(newB), bonuscount: currentBonus})
+        }).then(() => {
+            alert("Баланс обновлен!");
+            fetchAllPlayers();
+            if (targetId === userId) {
+                balance = parseFloat(newB);
+                updateBalance();
+            }
+        });
+    }
 }
 
 
@@ -3852,8 +3987,7 @@ const CASE_COOLDOWN =
 
 
 const caseStorageKey =
-    storageKey +
-    "-daily-case";
+    "tucha-game-" + userId + "-daily-case";
 
 
 let caseReadyAt =
@@ -4462,11 +4596,8 @@ function openDailyCase() {
 ========================================================= */
 
 buildMinesGrid();
-
-updateBalance();
-
+loadUserData();
 startCrashRound();
-
 updateCaseState();
 
 
