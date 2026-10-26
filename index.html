@@ -26,7 +26,7 @@
         .mine-cell:active { transform: translateY(4px); border-bottom-width: 0px; margin-top: 4px;}
         .mine-cell.safe { background: #3b82f6; border-bottom-color: #1d4ed8; }
         .mine-cell.bomb { background: #ef4444; border-bottom-color: #b91c1c; }
-        .mine-cell img { width: 70%; height: 70%; object-fit: contain; display: none; animation: pop 0.3s ease-out; }
+        .mine-item { width: 70%; height: 70%; object-fit: contain; display: none; animation: pop 0.3s ease-out; }
         @keyframes pop { 0% { transform: scale(0.1); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
         
         .btn-tucha { border-bottom: 5px solid rgba(0,0,0,0.3); transition: all 0.1s; }
@@ -62,8 +62,11 @@
         <div id="tab-crash" class="tab-content active">
             <!-- Игровой экран -->
             <div class="rocket-container bg-slate-800/40 rounded-3xl mb-4 border border-slate-700 shadow-lg">
-                <!-- Ракетка грузится из твоего файла -->
-                <img src="rocket.gif" id="rocket" class="rocket-img" style="display:none;">
+                <!-- Умная загрузка ракетки: если нет файла, покажет эмодзи -->
+                <div id="rocket" class="rocket-img flex items-center justify-center text-7xl" style="display:none;">
+                    <img src="rocket.gif" class="w-full h-full object-contain" onerror="this.outerHTML='🚀'">
+                </div>
+                
                 <div id="crash-timer" class="absolute text-5xl font-extrabold text-white z-10">ОЖИДАНИЕ</div>
                 <div id="multiplier" class="absolute text-6xl font-extrabold text-white z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" style="display:none;">1.00x</div>
                 <div id="crash-msg" class="absolute text-4xl font-extrabold text-red-500 z-10 drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" style="display:none;">КРАШ!</div>
@@ -78,26 +81,33 @@
                 <button id="btn-crash-action" onclick="handleCrashAction()" class="btn-tucha w-full bg-blue-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide">Сделать ставку</button>
             </div>
             
-            <div class="bg-slate-800/60 rounded-3xl p-4 border border-slate-700 text-center text-slate-400 text-sm font-bold">
-                <span id="server-status">Сервер работает...</span>
+            <!-- Текущие ставки -->
+            <div class="bg-slate-800/60 rounded-3xl p-4 border border-slate-700">
+                <div class="text-sm text-slate-400 mb-3 text-center font-bold uppercase tracking-wider">Текущие ставки сервера</div>
+                <div id="live-bets" class="space-y-2 max-h-40 overflow-hidden text-sm font-semibold">
+                    <!-- Ставки генерируются тут -->
+                </div>
             </div>
         </div>
 
         <!-- МИНЫ -->
         <div id="tab-mines" class="tab-content">
             <div id="mines-grid" class="grid grid-cols-5 gap-2 mb-6">
-                <!-- 25 ячеек генерируются в JS -->
+                <!-- Ячейки генерируются скриптом -->
             </div>
 
             <div class="bg-slate-800/80 backdrop-blur-sm rounded-3xl p-5 border border-slate-700">
+                <div class="flex justify-between text-sm mb-2 text-slate-400 font-semibold">
+                    <span>Сумма ставки ($)</span>
+                </div>
                 <input type="number" id="mines-bet" value="0.10" step="0.01" class="w-full bg-slate-900 text-white p-4 rounded-2xl text-2xl font-bold text-center mb-6 outline-none border border-slate-700">
                 
                 <div class="mb-6 bg-slate-900/50 p-4 rounded-2xl border border-slate-700">
                     <div class="flex justify-between text-sm text-slate-300 mb-4 font-bold">
-                        <span>Количество бомб <img src="bomb.png" class="inline w-5 h-5 ml-1 align-sub" onerror="this.src=''; this.alt='💣'"></span>
+                        <span>Количество бомб 💣</span>
                         <span id="mines-count-val" class="text-yellow-400 text-lg">3</span>
                     </div>
-                    <input type="range" id="mines-slider" min="2" max="24" value="3" class="w-full" oninput="document.getElementById('mines-count-val').innerText = this.value; resetMinesUI();">
+                    <input type="range" id="mines-slider" min="2" max="24" value="3" class="w-full" oninput="document.getElementById('mines-count-val').innerText = this.value;">
                 </div>
 
                 <div id="mines-multiplier-display" class="text-center text-green-400 font-bold text-xl mb-4" style="display:none;">
@@ -111,15 +121,15 @@
         <!-- ПРОФИЛЬ -->
         <div id="tab-profile" class="tab-content">
             <div class="flex flex-col items-center pt-6">
-                <div id="tg-avatar" class="w-28 h-28 bg-slate-700 rounded-full mb-4 flex items-center justify-center text-4xl shadow-xl border-4 border-slate-600 overflow-hidden relative">👤</div>
-                <h2 id="tg-name" class="text-3xl font-extrabold mb-1">Игрок</h2>
+                <div id="tg-avatar" class="w-28 h-28 bg-slate-700 rounded-full mb-4 flex items-center justify-center text-5xl shadow-xl border-4 border-slate-600 overflow-hidden relative">👤</div>
+                <h2 id="tg-name" class="text-3xl font-extrabold mb-1">Загрузка...</h2>
                 
                 <div class="bg-slate-800/80 px-8 py-3 rounded-2xl mt-4 mb-8 border border-slate-600 shadow-inner">
                     <span class="text-green-400 font-extrabold text-3xl">$<span id="profile-balance">0.00</span></span>
                 </div>
 
                 <button id="test-bonus-btn" onclick="claimTestBonus()" class="btn-tucha w-full bg-green-500 py-4 rounded-2xl font-extrabold text-lg uppercase tracking-wide mb-4 shadow-[0_0_20px_rgba(34,197,94,0.4)]">
-                    🎁 Забрать $1.00 для теста
+                    🎁 Забрать $1.00
                 </button>
             </div>
         </div>
@@ -129,11 +139,15 @@
     <div class="fixed bottom-0 w-full bg-slate-900 border-t border-slate-700 pb-safe z-50">
         <div class="flex justify-around items-center p-2">
             <button onclick="switchTab('crash')" class="nav-btn text-blue-400 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="crash">
-                <img src="rocket.gif" class="w-8 h-8 mb-1 object-contain" onerror="this.src=''; this.alt='🚀'">
+                <span class="text-3xl mb-1 drop-shadow-md flex items-center justify-center">
+                    <img src="rocket.gif" class="w-8 h-8 object-contain" onerror="this.outerHTML='🚀'">
+                </span>
                 <span class="text-[11px] font-extrabold uppercase tracking-wide">Краш</span>
             </button>
             <button onclick="switchTab('mines')" class="nav-btn text-slate-500 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="mines">
-                <img src="bomb.png" class="w-8 h-8 mb-1 object-contain" onerror="this.src=''; this.alt='💣'">
+                <span class="text-3xl mb-1 drop-shadow-md flex items-center justify-center">
+                    <img src="bomb.png" class="w-8 h-8 object-contain" onerror="this.outerHTML='💣'">
+                </span>
                 <span class="text-[11px] font-extrabold uppercase tracking-wide">Мины</span>
             </button>
             <button onclick="switchTab('profile')" class="nav-btn text-slate-500 flex flex-col items-center p-2 transition-transform active:scale-95" data-tab="profile">
@@ -146,20 +160,40 @@
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand(); 
-        let balance = 0.00;
-        let testBonusClaimed = false;
+        
+        // --- СОХРАНЕНИЕ ДАННЫХ В ПАМЯТЬ ТЕЛЕФОНА ---
+        let balance = parseFloat(localStorage.getItem('tucha_balance')) || 0.00;
+        let testBonusClaimed = localStorage.getItem('tucha_bonus_claimed') === 'true';
+
+        function saveStats() {
+            localStorage.setItem('tucha_balance', balance.toFixed(2));
+            localStorage.setItem('tucha_bonus_claimed', testBonusClaimed);
+        }
+
+        // --- ДАННЫЕ ПРОФИЛЯ TELEGRAM ---
+        let userName = "Игрок";
+        let userAvatarHTML = "👤";
 
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('tg-name').innerText = tg.initDataUnsafe.user.first_name;
+            userName = tg.initDataUnsafe.user.first_name;
             if(tg.initDataUnsafe.user.photo_url) {
-                document.getElementById('tg-avatar').innerHTML = `<img src="${tg.initDataUnsafe.user.photo_url}" class="w-full h-full object-cover">`;
+                userAvatarHTML = `<img src="${tg.initDataUnsafe.user.photo_url}" class="w-full h-full object-cover">`;
             }
+        }
+        
+        document.getElementById('tg-name').innerText = userName;
+        document.getElementById('tg-avatar').innerHTML = userAvatarHTML;
+
+        // Прячем кнопку бонуса, если уже забирал
+        if (testBonusClaimed) {
+            document.getElementById('test-bonus-btn').style.display = 'none';
         }
 
         function updateBalanceDisplay() {
             const b = balance.toFixed(2);
             document.getElementById('header-balance').innerText = b;
             document.getElementById('profile-balance').innerText = b;
+            saveStats();
         }
 
         function claimTestBonus() {
@@ -182,8 +216,8 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // ================= ЛОГИКА РАКЕТКИ (НЕПРЕРЫВНЫЙ ЦИКЛ) =================
-        let crashState = 'waiting'; // waiting, flying, crashed
+        // ================= ЛОГИКА РАКЕТКИ =================
+        let crashState = 'waiting'; 
         let currentCrashMult = 1.00;
         let userCrashBet = 0;
         let userInCrash = false;
@@ -193,6 +227,31 @@
         const rktMult = document.getElementById('multiplier');
         const rktMsg = document.getElementById('crash-msg');
         const rktBtn = document.getElementById('btn-crash-action');
+        const liveBetsContainer = document.getElementById('live-bets');
+
+        function generateFakeBets(includeUser = false, userAmount = 0) {
+            const names = ['Саня', 'CryptoKing', 'Маша99', 'DarkPro', 'Иван', 'TuchaFan'];
+            liveBetsContainer.innerHTML = '';
+            
+            // Если юзер поставил ставку, добавляем его в список!
+            if(includeUser) {
+                liveBetsContainer.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-blue-900/50 rounded-xl border border-blue-500/50">
+                        <span class="flex items-center gap-2"><span class="w-6 h-6 rounded-full overflow-hidden bg-slate-700 flex items-center justify-center text-xs">${userAvatarHTML}</span> <span class="text-white font-bold">${userName}</span></span>
+                        <span class="text-green-400 font-bold">$${userAmount.toFixed(2)}</span>
+                    </div>`;
+            }
+
+            for(let i=0; i<3; i++) {
+                let name = names[Math.floor(Math.random()*names.length)];
+                let amt = (Math.random() * 5 + 0.1).toFixed(2);
+                liveBetsContainer.innerHTML += `
+                    <div class="flex justify-between items-center p-3 bg-slate-900/50 rounded-xl">
+                        <span class="flex items-center gap-2"><span class="text-xl">👤</span> <span class="text-slate-300">${name}</span></span>
+                        <span class="text-yellow-400 font-bold">$${amt}</span>
+                    </div>`;
+            }
+        }
 
         function startCrashLoop() {
             crashState = 'waiting';
@@ -200,6 +259,7 @@
             rktMult.style.display = 'none';
             rktMsg.style.display = 'none';
             rktTimer.style.display = 'block';
+            generateFakeBets(false);
             
             let timer = 5;
             rktTimer.innerText = `СТАРТ ЧЕРЕЗ ${timer}`;
@@ -217,12 +277,12 @@
         function flyCrash() {
             crashState = 'flying';
             rktTimer.style.display = 'none';
-            rktImg.style.display = 'block';
-            rktImg.className = 'rocket-img flying';
+            rktImg.style.display = 'flex';
+            rktImg.className = 'rocket-img flex items-center justify-center text-7xl flying';
             rktMult.style.display = 'block';
             currentCrashMult = 1.00;
             
-            const targetCrash = (Math.random() * 5 + 1).toFixed(2); // Краш от 1 до 6
+            const targetCrash = (Math.random() * 5 + 1).toFixed(2); 
             
             if(userInCrash) {
                 rktBtn.innerText = `ЗАБРАТЬ $${(userCrashBet * currentCrashMult).toFixed(2)}`;
@@ -249,7 +309,7 @@
 
         function doCrash() {
             crashState = 'crashed';
-            rktImg.className = 'rocket-img crashed';
+            rktImg.className = 'rocket-img flex items-center justify-center text-7xl crashed';
             rktMult.style.display = 'none';
             rktMsg.style.display = 'block';
             rktMsg.innerText = `КРАШ ${currentCrashMult.toFixed(2)}x`;
@@ -278,17 +338,21 @@
                 userCrashBet = bet;
                 userInCrash = true;
                 updateBalanceDisplay();
+                
+                // Обновляем список ставок, чтобы показать пользователя
+                generateFakeBets(true, bet);
+                
                 rktBtn.disabled = true;
                 rktBtn.innerText = "СТАВКА ПРИНЯТА";
                 rktBtn.classList.replace('bg-blue-500', 'bg-slate-600');
                 tg.HapticFeedback.impactOccurred('medium');
             } else if (crashState === 'flying' && userInCrash) {
-                // Кэшаут
+                // КЭШАУТ - Забираем выигрыш
                 const win = userCrashBet * currentCrashMult;
                 balance += win;
                 userInCrash = false;
                 userCrashBet = 0;
-                updateBalanceDisplay();
+                updateBalanceDisplay(); // Баланс сохраняется тут
                 rktBtn.disabled = true;
                 rktBtn.innerText = `ВЫИГРЫШ $${win.toFixed(2)}`;
                 rktBtn.className = "btn-tucha w-full bg-slate-600 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
@@ -296,10 +360,8 @@
             }
         }
 
-        startCrashLoop(); // Запускаем вечный цикл сервера
-
         // ================= ЛОГИКА МИН =================
-        let minesGameState = 'idle'; // idle, playing
+        let minesGameState = 'idle'; 
         let minesPositions = [];
         let currentMineBet = 0;
         let currentMineMult = 1.00;
@@ -311,27 +373,25 @@
         const mMultDisp = document.getElementById('mines-multiplier-display');
         const mMultVal = document.getElementById('current-mine-mult');
 
-        for(let i=0; i<25; i++) {
-            let div = document.createElement('div');
-            div.className = 'mine-cell';
-            div.dataset.index = i;
-            div.innerHTML = `<img src="star.png" class="safe-img"><img src="bomb.png" class="bomb-img">`;
-            mGrid.appendChild(div);
+        function buildMinesGrid() {
+            mGrid.innerHTML = ''; // Полностью очищаем сетку перед новой игрой
+            for(let i=0; i<25; i++) {
+                let div = document.createElement('div');
+                div.className = 'mine-cell';
+                div.dataset.index = i;
+                div.innerHTML = `
+                    <div class="mine-item safe-img flex items-center justify-center text-4xl">
+                        <img src="star.png" class="w-full h-full object-contain" onerror="this.outerHTML='💎'">
+                    </div>
+                    <div class="mine-item bomb-img flex items-center justify-center text-4xl">
+                        <img src="bomb.png" class="w-full h-full object-contain" onerror="this.outerHTML='💣'">
+                    </div>
+                `;
+                mGrid.appendChild(div);
+            }
         }
 
-        function resetMinesUI() {
-            if(minesGameState === 'playing') return;
-            const cells = document.querySelectorAll('.mine-cell');
-            cells.forEach(cell => {
-                cell.className = 'mine-cell';
-                cell.querySelector('.safe-img').style.display = 'none';
-                cell.querySelector('.bomb-img').style.display = 'none';
-                cell.onclick = null;
-            });
-            mMultDisp.style.display = 'none';
-            mBtn.innerText = "ИГРАТЬ";
-            mBtn.className = "btn-tucha w-full bg-blue-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
-        }
+        buildMinesGrid(); // Строим сетку при запуске
 
         function handleMinesAction() {
             if(minesGameState === 'idle') {
@@ -340,6 +400,10 @@
                     tg.HapticFeedback.notificationOccurred('error');
                     alert("Недостаточно средств!"); return;
                 }
+                
+                // НАЧАЛО НОВОЙ ИГРЫ: Очищаем всё с прошлого раунда
+                buildMinesGrid(); 
+                
                 balance -= bet;
                 updateBalanceDisplay();
                 
@@ -349,18 +413,18 @@
                 safeClicksCount = 0;
                 minesGameState = 'playing';
                 
-                // Генерация мин
+                // Рандомно генерируем новые мины
                 minesPositions = [];
                 while(minesPositions.length < totalBombs) {
                     let r = Math.floor(Math.random() * 25);
                     if(!minesPositions.includes(r)) minesPositions.push(r);
                 }
 
-                resetMinesUI();
                 mMultDisp.style.display = 'block';
                 mMultVal.innerText = currentMineMult.toFixed(2);
                 mBtn.innerText = "ВЫБЕРИТЕ ЯЧЕЙКУ";
                 mBtn.disabled = true;
+                mBtn.className = "btn-tucha w-full bg-slate-600 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
 
                 const cells = document.querySelectorAll('.mine-cell');
                 cells.forEach(cell => {
@@ -379,36 +443,33 @@
         function clickMine(index, cellEl) {
             if(minesGameState !== 'playing') return;
             
-            cellEl.onclick = null; // Больше не кликабельно
+            cellEl.onclick = null; 
             
             if(minesPositions.includes(index)) {
-                // Попал на мину
+                // Попал на мину! Проигрыш
                 cellEl.classList.add('bomb');
-                cellEl.querySelector('.bomb-img').style.display = 'block';
+                cellEl.querySelector('.bomb-img').style.display = 'flex';
                 tg.HapticFeedback.notificationOccurred('error');
                 
-                // Показываем остальные мины
+                // Показываем где были остальные мины
                 document.querySelectorAll('.mine-cell').forEach((c, i) => {
                     c.onclick = null;
                     if(minesPositions.includes(i) && i !== index) {
-                        c.querySelector('.bomb-img').style.display = 'block';
+                        c.querySelector('.bomb-img').style.display = 'flex';
                         c.querySelector('.bomb-img').style.opacity = '0.5';
                     }
                 });
                 endMinesGame("ПРОИГРЫШ", 'bg-red-500');
             } else {
-                // Безопасно
+                // Безопасная ячейка
                 cellEl.classList.add('safe');
-                cellEl.querySelector('.safe-img').style.display = 'block';
+                cellEl.querySelector('.safe-img').style.display = 'flex';
                 tg.HapticFeedback.impactOccurred('medium');
                 
                 safeClicksCount++;
                 
-                // Формула коэффициента казино: растет тем быстрее, чем больше бомб
                 const remainingSafe = 25 - totalBombs - (safeClicksCount - 1);
-                const stepMult = 25 / remainingSafe; 
                 currentMineMult = currentMineMult * (1 + (totalBombs * 0.02) + (safeClicksCount * 0.01));
-                
                 mMultVal.innerText = currentMineMult.toFixed(2);
                 
                 const currentWin = currentMineBet * currentMineMult;
@@ -417,7 +478,6 @@
                 mBtn.className = "btn-tucha w-full bg-green-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
                 
                 if(safeClicksCount === (25 - totalBombs)) {
-                    // Все открыты
                     balance += currentWin;
                     updateBalanceDisplay();
                     endMinesGame(`СУПЕР ВЫИГРЫШ $${currentWin.toFixed(2)}`, 'bg-yellow-500');
@@ -430,12 +490,20 @@
             mBtn.innerText = msg;
             mBtn.disabled = false;
             mBtn.className = `btn-tucha w-full ${colorClass} text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide`;
+            
+            // Через 3 секунды возвращаем кнопку в статус "ИГРАТЬ"
             setTimeout(() => {
-                if(minesGameState === 'idle') resetMinesUI();
+                if(minesGameState === 'idle') {
+                    mMultDisp.style.display = 'none';
+                    mBtn.innerText = "ИГРАТЬ";
+                    mBtn.className = "btn-tucha w-full bg-blue-500 text-white font-extrabold py-4 rounded-2xl text-xl uppercase tracking-wide";
+                }
             }, 3000);
         }
 
+        // Запуск
         updateBalanceDisplay();
+        startCrashLoop(); 
     </script>
 </body>
 </html>
