@@ -780,7 +780,7 @@ input[type="range"] {
 }
 
 .roulette-strip.spinning {
-    transition: transform 5.5s cubic-bezier(.08,.67,.07,1);
+    transition: transform 6s cubic-bezier(0.15, 0.75, 0.05, 1);
 }
 
 .roulette-prize {
@@ -1129,7 +1129,7 @@ nav button.active {
 
         <div class="case-grid">
             <!-- Бесплатный ежедневный кейс -->
-            <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00])">
+            <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00], [50, 30, 12, 5, 2, 1])">
                 <img class="case-card-image" src="./case.png" alt="Ежедневный кейс">
                 <div class="case-card-name">Ежедневный кейс</div>
                 <div class="case-card-price">$0.00</div>
@@ -1137,7 +1137,7 @@ nav button.active {
             </div>
 
             <!-- Кейс 1: $0.20 (casecase.png) -->
-            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.08, 0.12, 0.20, 0.35, 0.60, 1.20])">
+            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.05, 0.10, 0.18, 0.30, 0.60, 1.20], [55, 28, 11, 4, 1.8, 0.2])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
                 <div class="case-card-name">Mini Case</div>
                 <div class="case-card-price">$0.20</div>
@@ -1145,7 +1145,7 @@ nav button.active {
             </div>
 
             <!-- Кейс 2: $0.50 (casego.png) -->
-            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.20, 0.35, 0.50, 0.85, 1.50, 3.00])">
+            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.15, 0.30, 0.45, 0.75, 1.50, 3.00], [52, 30, 12, 4.5, 1.2, 0.3])">
                 <img class="case-card-image" src="./casego.png" alt="Go Case">
                 <div class="case-card-name">Go Case</div>
                 <div class="case-card-price">$0.50</div>
@@ -1153,7 +1153,7 @@ nav button.active {
             </div>
 
             <!-- Кейс 3: $1.00 (casepro.png) -->
-            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.40, 0.70, 1.00, 1.80, 3.50, 7.00])">
+            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.30, 0.60, 0.90, 1.60, 3.50, 7.00], [54, 28, 11, 5, 1.7, 0.3])">
                 <img class="case-card-image" src="./casepro.png" alt="Pro Case">
                 <div class="case-card-name">Pro Case</div>
                 <div class="case-card-price">$1.00</div>
@@ -1161,7 +1161,7 @@ nav button.active {
             </div>
 
             <!-- Кейс 4: $1.50 (caser.png) -->
-            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.60, 1.00, 1.50, 2.70, 5.50, 11.00])">
+            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.45, 0.90, 1.35, 2.40, 5.50, 11.00], [53, 29, 11, 4.8, 1.9, 0.3])">
                 <img class="case-card-image" src="./caser.png" alt="Rare Case">
                 <div class="case-card-name">Rare Case</div>
                 <div class="case-card-price">$1.50</div>
@@ -1169,7 +1169,7 @@ nav button.active {
             </div>
 
             <!-- Кейс 5: $2.00 (casevip.png) -->
-            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.80, 1.30, 2.00, 3.60, 8.00, 18.00])">
+            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.60, 1.20, 1.80, 3.20, 8.00, 18.00], [55, 27, 11, 5, 1.7, 0.3])">
                 <img class="case-card-image" src="./casevip.png" alt="VIP Case">
                 <div class="case-card-name">VIP Case</div>
                 <div class="case-card-price">$2.00</div>
@@ -1805,8 +1805,8 @@ function getCaseStorageKey(caseId) {
     return "tucha-game-" + userId + "-case-" + caseId;
 }
 
-function openCase(id, name, price, image, prizes) {
-    currentActiveCase = { id, name, price, image, prizes };
+function openCase(id, name, price, image, prizes, weights) {
+    currentActiveCase = { id, name, price, image, prizes, weights };
     
     $("cases-list").style.display = "none";
     $("case-detail").classList.add("active");
@@ -1840,8 +1840,7 @@ function closeCaseDetail() {
     haptic();
 }
 
-function choosePrizeFromList(prizes) {
-    const weights = prizes.map((_, i) => Math.max(1, (prizes.length - i) * 10));
+function chooseWeightedPrize(prizes, weights) {
     const total = weights.reduce((a, b) => a + b, 0);
     let rnd = Math.random() * total;
     for (let i = 0; i < prizes.length; i++) {
@@ -1891,13 +1890,13 @@ function formatTime(milliseconds) {
     return String(hours).padStart(2,"0") + ":" + String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
 }
 
-function createRoulette(winner, prizesList) {
+function createRoulette(winner, prizesList, weightsList) {
     const strip = $("roulette-strip");
     strip.innerHTML = "";
-    const winnerIndex = 24;
+    const winnerIndex = 28;
     const values = [];
     for (let i = 0; i < 45; i++) {
-        values.push(i === winnerIndex ? winner : prizesList[Math.floor(Math.random() * prizesList.length)]);
+        values.push(i === winnerIndex ? winner : chooseWeightedPrize(prizesList, weightsList));
     }
     values.forEach(value => {
         const item = document.createElement("div");
@@ -1920,15 +1919,19 @@ function spinCase(winnerIndex, callback) {
     const gap = 9;
     const step = itemWidth + gap;
     const viewportWidth = wrap.getBoundingClientRect().width;
-    const centerPosition = (winnerIndex * step) + (itemWidth / 2);
+    
+    // Добавляем плавное смещение внутри карточки для реалистичной остановки рулетки
+    const randomOffset = (Math.random() - 0.5) * (itemWidth * 0.5);
+    const centerPosition = (winnerIndex * step) + (itemWidth / 2) + randomOffset;
     const translate = centerPosition - (viewportWidth / 2);
+    
     strip.style.transition = "none";
     strip.style.transform = "translateX(0px)";
     strip.getBoundingClientRect();
     requestAnimationFrame(() => {
         strip.classList.add("spinning");
         strip.style.transform = "translateX(-" + translate + "px)";
-        setTimeout(callback, 5700);
+        setTimeout(callback, 6200);
     });
 }
 
@@ -1956,8 +1959,8 @@ function openCurrentCase() {
     updateActiveCaseState();
     $("case-result").textContent = "";
     
-    const winner = choosePrizeFromList(currentActiveCase.prizes);
-    const winnerIndex = createRoulette(winner, currentActiveCase.prizes);
+    const winner = chooseWeightedPrize(currentActiveCase.prizes, currentActiveCase.weights);
+    const winnerIndex = createRoulette(winner, currentActiveCase.prizes, currentActiveCase.weights);
     
     const image = $("case-big-image");
     image.style.transform = "scale(1.05)";
