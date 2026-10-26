@@ -1,2905 +1,487 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
 <title>Tucha Games</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <style>
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-body{
-  margin:0;
-  background:#0b1225;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-button,
-input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-}
-
-/* HEADER */
-
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px;
-  background:#111b32;
-  border-bottom:1px solid #293953;
-}
-
-.logo{
-  font-weight:900;
-  font-size:20px;
-}
-
-.logo span{
-  display:block;
-  color:#facc15;
-  font-size:12px;
-}
-
-.balance{
-  background:#202d45;
-  padding:10px 14px;
-  border-radius:12px;
-  font-weight:bold;
-}
-
-/* MAIN */
-
-main{
-  padding:14px;
-  padding-bottom:100px;
-  max-width:520px;
-  margin:auto;
-}
-
-.tab{
-  display:none;
-}
-
-.tab.active{
-  display:block;
-}
-
-/* PANELS */
-
-.panel{
-  background:#152139;
-  border:1px solid #293953;
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:14px;
-}
-
-/* CRASH */
-
-.history{
-  display:flex;
-  gap:7px;
-  overflow:auto;
-  margin-bottom:12px;
-}
-
-.history span{
-  background:#202d45;
-  border-radius:20px;
-  padding:7px 11px;
-  font-size:12px;
-  font-weight:bold;
-  white-space:nowrap;
-}
-
-/*
-  РАКЕТА
-
-  Область специально сделана без overflow:hidden,
-  чтобы сама GIF не выглядела как квадрат.
-*/
-
-.rocket-area{
-  height:270px;
-
-  position:relative;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      #203e70 0%,
-      #152b4c 38%,
-      #111b30 75%
-    );
-
-  border:1px solid #2a3d5d;
-  border-radius:22px;
-
-  margin:12px 0 16px;
-}
-
-/*
-  Мягкое свечение за ракетой.
-*/
-
-.rocket-area::before{
-  content:"";
-
-  position:absolute;
-
-  left:50%;
-  top:42%;
-
-  width:170px;
-  height:170px;
-
-  transform:translate(-50%,-50%);
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(30,120,255,.30) 0%,
-      rgba(30,100,220,.16) 35%,
-      rgba(30,80,180,.07) 55%,
-      transparent 72%
-    );
-
-  filter:blur(8px);
-
-  pointer-events:none;
-}
-
-/*
-  Контейнер GIF.
-*/
-
-#rocket-wrap{
-  position:absolute;
-
-  left:50%;
-  top:39%;
-
-  width:145px;
-  height:145px;
-
-  transform:translate(-50%,-50%);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  z-index:2;
-
-  pointer-events:none;
-}
-
-/*
-  Сама ракета.
-
-  Она стала немного меньше,
-  чтобы края GIF не бросались в глаза.
-*/
-
-#rocket{
-  width:105px;
-  height:105px;
-
-  object-fit:contain;
-
-  display:block;
-
-  filter:
-    drop-shadow(0 0 5px rgba(56,189,248,.9))
-    drop-shadow(0 0 14px rgba(37,99,235,.65))
-    drop-shadow(0 0 24px rgba(30,100,255,.35));
-}
-
-/*
-  Плавное движение ракеты.
-*/
-
-#rocket.flying{
-  animation:rocketFloat .45s ease-in-out infinite alternate;
-}
-
-@keyframes rocketFloat{
-
-  from{
-    transform:translateY(3px) rotate(-3deg);
-  }
-
-  to{
-    transform:translateY(-8px) rotate(5deg);
-  }
-
-}
-
-/*
-  После краша.
-*/
-
-#rocket.crashed{
-  animation:none;
-
-  filter:
-    grayscale(1)
-    drop-shadow(0 0 5px rgba(255,255,255,.2));
-
-  opacity:.65;
-}
-
-/*
-  Коэффициент теперь находится отдельно
-  под ракетой и не закрывает её.
-*/
-
-#crash-status{
-
-  position:absolute;
-
-  left:0;
-  right:0;
-
-  bottom:65px;
-
-  z-index:3;
-
-  text-align:center;
-
-  font-size:32px;
-
-  font-weight:900;
-
-  text-shadow:
-    0 2px 4px rgba(0,0,0,.95),
-    0 0 12px rgba(0,0,0,.8);
-}
-
-/* BUTTONS */
-
-.primary{
-  width:100%;
-
-  padding:15px;
-
-  border:0;
-
-  border-radius:13px;
-
-  border-bottom:4px solid #0004;
-
-  background:#3b82f6;
-
-  color:#fff;
-
-  font-weight:900;
-
-  font-size:15px;
-}
-
-.primary.green{
-  background:#16a34a;
-}
-
-.primary.red{
-  background:#dc2626;
-}
-
-.primary.gold{
-  background:#d97706;
-}
-
-.primary:active:not(:disabled){
-  transform:translateY(2px);
-  border-bottom-width:2px;
-}
-
-/* INPUT */
-
-input[type=number]{
-
-  width:100%;
-
-  background:#0b1427;
-
-  border:1px solid #34445e;
-
-  color:#fff;
-
-  border-radius:12px;
-
-  padding:14px;
-
-  font-size:22px;
-
-  text-align:center;
-
-  margin:10px 0 14px;
-
-  outline:none;
-}
-
-/* PLAYERS */
-
-.players{
-  display:grid;
-  gap:8px;
-  margin-top:12px;
-}
-
-.player{
-
-  display:grid;
-
-  grid-template-columns:minmax(0,1fr) auto;
-
-  gap:8px;
-
-  align-items:center;
-
-  padding:11px;
-
-  background:#101b30;
-
-  border:1px solid #263550;
-
-  border-radius:12px;
-
-  font-size:13px;
-}
-
-.player.you{
-
-  border-color:#3b82f6;
-
-  background:#172e50;
-
-  box-shadow:
-    0 0 0 1px rgba(59,130,246,.15),
-    0 4px 15px rgba(0,0,0,.15);
-}
-
-.player-left{
-  min-width:0;
-}
-
-.player-name{
-
-  font-weight:bold;
-
-  overflow:hidden;
-
-  text-overflow:ellipsis;
-
-  white-space:nowrap;
-}
-
-.player-detail{
-
-  color:#91a1bb;
-
-  font-size:11px;
-
-  margin-top:5px;
-}
-
-.player-result{
-  text-align:right;
-}
-
-.player-x{
-
-  font-size:15px;
-
-  font-weight:900;
-
-  color:#4ade80;
-}
-
-.player-status{
-
-  font-size:10px;
-
-  margin-top:4px;
-
-  font-weight:bold;
-}
-
-.status-win{
-  color:#4ade80;
-}
-
-.status-loss{
-  color:#f87171;
-}
-
-.status-live{
-  color:#facc15;
-}
-
-.status-wait{
-  color:#93a4bf;
-}
-
-.section-head{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:8px;
-}
-
-.live-indicator{
-
-  font-size:10px;
-
-  color:#4ade80;
-
-  white-space:nowrap;
-}
-
-.live-indicator:before{
-
-  content:"";
-
-  display:inline-block;
-
-  width:6px;
-  height:6px;
-
-  border-radius:50%;
-
-  background:#4ade80;
-
-  margin-right:5px;
-}
-
-/* MINES */
-
-.grid{
-
-  display:grid;
-
-  grid-template-columns:repeat(5,minmax(0,1fr));
-
-  gap:8px;
-
-  margin:14px 0 18px;
-}
-
-.cell{
-
-  aspect-ratio:1;
-
-  min-width:0;
-
-  border:0;
-
-  border-radius:12px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #344760,
-      #1d2b42
-    );
-
-  border-bottom:4px solid #101a2b;
-
-  color:white;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-}
-
-.cell:disabled{
-  opacity:1;
-}
-
-.cell.safe{
-
-  background:
-    linear-gradient(
-      145deg,
-      #2453a7,
-      #163b7d
-    );
-
-  border-color:#102c60;
-}
-
-.cell.bomb{
-
-  background:
-    linear-gradient(
-      145deg,
-      #ef4444,
-      #991b1b
-    );
-
-  border-color:#701818;
-}
-
-.cell.revealed-safe{
-
-  background:
-    linear-gradient(
-      145deg,
-      #1d3455,
-      #142640
-    );
-
-  border-color:#0c1b31;
-}
-
-.cell .star-svg{
-
-  width:75%;
-  height:75%;
-
-  filter:
-    drop-shadow(0 2px 3px #0006);
-}
-
-.cell .bomb-img{
-
-  width:78%;
-  height:78%;
-
-  object-fit:contain;
-}
-
-.cell.revealed-safe .star-svg{
-
-  width:56%;
-  height:56%;
-
-  opacity:.6;
-}
-
-.range-row{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  margin:14px 0;
-
-  font-weight:bold;
-}
-
-input[type=range]{
-
-  width:100%;
-
-  accent-color:#facc15;
-}
-
-.multiplier{
-
-  text-align:center;
-
-  color:#4ade80;
-
-  font-weight:bold;
-
-  font-size:19px;
-
-  margin:10px;
-}
-
-/* NOTE */
-
-.note{
-
-  color:#91a1bb;
-
-  font-size:11px;
-
-  text-align:center;
-
-  line-height:1.5;
-
-  margin-top:12px;
-}
-
-/* NAV */
-
-nav{
-
-  position:fixed;
-
-  bottom:0;
-
-  left:0;
-  right:0;
-
-  background:#101a2d;
-
-  border-top:1px solid #293953;
-
-  display:flex;
-
-  justify-content:space-around;
-
-  padding:
-    9px
-    4px
-    calc(9px + env(safe-area-inset-bottom));
-
-  z-index:10;
-}
-
-nav button{
-
-  background:none;
-
-  border:0;
-
-  color:#8190aa;
-
-  display:flex;
-
-  flex-direction:column;
-
-  align-items:center;
-
-  gap:4px;
-
-  font-size:11px;
-
-  font-weight:bold;
-}
-
-nav button.active{
-  color:#60a5fa;
-}
-
-.nav-icon{
-
-  font-size:24px;
-
-  height:28px;
-}
-
-/* PROFILE */
-
-.profile{
-
-  text-align:center;
-
-  padding-top:30px;
-}
-
-.avatar{
-
-  font-size:60px;
-
-  margin-bottom:12px;
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#0b1225;color:#fff;font-family:Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:not-allowed}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#111b32;border-bottom:1px solid #293953}
+.logo{font-weight:900;font-size:20px}.logo span{display:block;color:#facc15;font-size:12px}
+.balance{background:#202d45;padding:10px 14px;border-radius:12px;font-weight:bold}
+main{padding:14px;padding-bottom:100px;max-width:520px;margin:auto}
+.tab{display:none}.tab.active{display:block}
+.panel{background:#152139;border:1px solid #293953;border-radius:20px;padding:16px;margin-bottom:14px}
+.history{display:flex;gap:7px;overflow:auto;margin-bottom:12px}
+.history span{background:#202d45;border-radius:20px;padding:7px 11px;font-size:12px;font-weight:bold;white-space:nowrap}
+.rocket-area{height:270px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at center,#203e70 0%,#152b4c 38%,#111b30 75%);border:1px solid #2a3d5d;border-radius:22px;margin:12px 0 16px}
+.rocket-area:before{content:"";position:absolute;left:50%;top:42%;width:170px;height:170px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(30,120,255,.3),rgba(30,100,220,.16) 35%,rgba(30,80,180,.07) 55%,transparent 72%);filter:blur(8px);pointer-events:none}
+#rocket-wrap{position:absolute;left:50%;top:39%;width:145px;height:145px;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;z-index:2;pointer-events:none}
+#rocket{width:105px;height:105px;object-fit:contain;display:block;filter:drop-shadow(0 0 5px rgba(56,189,248,.9)) drop-shadow(0 0 14px rgba(37,99,235,.65)) drop-shadow(0 0 24px rgba(30,100,255,.35))}
+#rocket.flying{animation:rocketFloat .45s ease-in-out infinite alternate}
+@keyframes rocketFloat{from{transform:translateY(3px) rotate(-3deg)}to{transform:translateY(-8px) rotate(5deg)}}
+#rocket.crashed{animation:none;filter:grayscale(1) drop-shadow(0 0 5px #ffffff33);opacity:.65}
+#crash-status{position:absolute;left:0;right:0;bottom:65px;z-index:3;text-align:center;font-size:32px;font-weight:900;text-shadow:0 2px 4px #000e,0 0 12px #000c}
+.primary{width:100%;padding:15px;border:0;border-radius:13px;border-bottom:4px solid #0004;background:#3b82f6;color:#fff;font-weight:900;font-size:15px}
+.primary.green{background:#16a34a}.primary.red{background:#dc2626}.primary.gold{background:#d97706}
+.primary:active:not(:disabled){transform:translateY(2px);border-bottom-width:2px}
+input[type=number]{width:100%;background:#0b1427;border:1px solid #34445e;color:#fff;border-radius:12px;padding:14px;font-size:22px;text-align:center;margin:10px 0 14px;outline:none}
+.players{display:grid;gap:8px;margin-top:12px}
+.player{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:11px;background:#101b30;border:1px solid #263550;border-radius:12px;font-size:13px}
+.player.you{border-color:#3b82f6;background:#172e50;box-shadow:0 0 0 1px #3b82f626,0 4px 15px #0003}
+.player-left{min-width:0}.player-name{font-weight:bold;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-detail{color:#91a1bb;font-size:11px;margin-top:5px}.player-result{text-align:right}
+.player-x{font-size:15px;font-weight:900;color:#4ade80}.player-status{font-size:10px;margin-top:4px;font-weight:bold}
+.status-win{color:#4ade80}.status-loss{color:#f87171}.status-live{color:#facc15}.status-wait{color:#93a4bf}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.live-indicator{font-size:10px;color:#4ade80;white-space:nowrap}
+.live-indicator:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#4ade80;margin-right:5px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0 18px}
+.cell{aspect-ratio:1;min-width:0;border:0;border-radius:12px;background:linear-gradient(145deg,#344760,#1d2b42);border-bottom:4px solid #101a2b;color:white;display:flex;align-items:center;justify-content:center;padding:3px}
+.cell:disabled{opacity:1}.cell.safe{background:linear-gradient(145deg,#2453a7,#163b7d);border-color:#102c60}
+.cell.bomb{background:linear-gradient(145deg,#ef4444,#991b1b);border-color:#701818}
+.cell.revealed-safe{background:linear-gradient(145deg,#1d3455,#142640);border-color:#0c1b31}
+.cell .star-svg{width:75%;height:75%;filter:drop-shadow(0 2px 3px #0006)}
+.cell .bomb-img{width:78%;height:78%;object-fit:contain}
+.cell.revealed-safe .star-svg{width:56%;height:56%;opacity:.6}
+.range-row{display:flex;justify-content:space-between;margin:14px 0;font-weight:bold}
+input[type=range]{width:100%;accent-color:#facc15}
+.multiplier{text-align:center;color:#4ade80;font-weight:bold;font-size:19px;margin:10px}
+.note{color:#91a1bb;font-size:11px;text-align:center;line-height:1.5;margin-top:12px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#101a2d;border-top:1px solid #293953;display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:10}
+nav button{background:none;border:0;color:#8190aa;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:bold;flex:1}
+nav button.active{color:#60a5fa}.nav-icon{font-size:24px;height:28px}
+.profile{text-align:center;padding-top:30px}.avatar{font-size:60px;margin-bottom:12px}
+
+/* КЕЙСЫ */
+.case-panel{text-align:center}
+.case-image{display:block;width:100%;max-width:300px;height:230px;object-fit:contain;margin:8px auto 14px;filter:drop-shadow(0 0 20px #1677ff44)}
+.case-title{font-size:23px;font-weight:900;margin:8px 0}
+.case-subtitle{color:#91a1bb;font-size:13px;margin-bottom:14px}
+.case-roulette{position:relative;overflow:hidden;width:100%;height:108px;border-radius:15px;border:1px solid #344765;background:#0b1427;margin:18px 0}
+.case-roulette:before{content:"";position:absolute;z-index:2;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);background:#60a5fa;box-shadow:0 0 12px #3b82f6;pointer-events:none}
+.case-roulette:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0b1427 0%,transparent 18%,transparent 82%,#0b1427 100%)}
+.case-strip{display:flex;gap:8px;height:100%;width:max-content;align-items:center;padding:0 6px;transform:translateX(0)}
+.case-prize{flex:0 0 88px;height:80px;border:1px solid #30425f;border-radius:12px;background:linear-gradient(145deg,#1b2b45,#111b30);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px}
+.case-prize-icon{font-size:24px}.case-prize-value{color:#facc15;font-size:15px;font-weight:900}
+.case-result{min-height:25px;margin:12px 0;font-weight:900;color:#4ade80}
+.case-timer{margin-top:12px;font-size:12px;color:#91a1bb;line-height:1.5}
+.case-strip.spinning{transition:transform 5s cubic-bezier(.08,.65,.08,1)}
+@media(max-width:360px){.case-prize{flex-basis:78px}.case-image{height:190px}}
 </style>
 </head>
-
 <body>
-
 <header>
-
-  <div class="logo">
-    ☁️ TUCHA
-    <span>GAMES</span>
-  </div>
-
-  <div class="balance">
-    $ <span id="header-balance">1.00</span>
-  </div>
-
+  <div class="logo">☁️ TUCHA<span>GAMES</span></div>
+  <div class="balance">$ <span id="header-balance">1.00</span></div>
 </header>
 
-
 <main>
-
-<!-- ==================== CRASH ==================== -->
-
 <section id="tab-crash" class="tab active">
-
-  <div class="history" id="crash-history">
-
-    <span>1.95x</span>
-    <span>1.45x</span>
-    <span>2.80x</span>
-    <span>1.12x</span>
-
-  </div>
-
-
+  <div class="history" id="crash-history"><span>1.95x</span><span>1.45x</span><span>2.80x</span><span>1.12x</span></div>
   <div class="rocket-area">
-
-    <div id="rocket-wrap">
-
-      <img
-        id="rocket"
-        class="flying"
-        src="./rocket.gif.gif"
-        alt="Rocket"
-      >
-
-    </div>
-
-
-    <div id="crash-status">
-      ОЖИДАНИЕ
-    </div>
-
+    <div id="rocket-wrap"><img id="rocket" class="flying" src="./rocket.gif.gif" alt="Ракета"></div>
+    <div id="crash-status">ОЖИДАНИЕ</div>
   </div>
-
-
   <div class="panel">
-
-    <label for="crash-bet">
-      Сумма ставки ($)
-    </label>
-
-    <input
-      id="crash-bet"
-      type="number"
-      min="0.01"
-      step="0.01"
-      value="0.10"
-    >
-
-    <button
-      id="crash-button"
-      class="primary"
-      onclick="handleCrashAction()"
-    >
-      СДЕЛАТЬ СТАВКУ
-    </button>
-
+    <label for="crash-bet">Сумма ставки ($)</label>
+    <input id="crash-bet" type="number" min="0.01" step="0.01" value="0.10">
+    <button id="crash-button" class="primary" onclick="handleCrashAction()">СДЕЛАТЬ СТАВКУ</button>
   </div>
-
-
   <div class="panel">
-
-    <div class="section-head">
-
-      <b>
-        Игроки и их ставки
-      </b>
-
-      <span class="live-indicator">
-        РАУНД
-      </span>
-
-    </div>
-
-
-    <div
-      class="players"
-      id="live-bets"
-    ></div>
-
-
-    <div class="note">
-
-      Зелёный результат — игрок забрал выигрыш.
-      Красный — не успел.
-      Твоя ставка выделена синим.
-
-    </div>
-
+    <div class="section-head"><b>Игроки и их ставки</b><span class="live-indicator">РАУНД</span></div>
+    <div class="players" id="live-bets"></div>
+    <div class="note">Твоя ставка выделена синим. Игроки в этой версии демонстрационные.</div>
   </div>
-
 </section>
-
-
-<!-- ==================== MINES ==================== -->
 
 <section id="tab-mines" class="tab">
-
   <div class="panel">
-
-    <div class="section-head">
-
-      <b>
-        💣 МИНЫ
-      </b>
-
-      <span
-        id="mines-state-label"
-        style="color:#9caec9;font-size:12px"
-      >
-        Новая игра
-      </span>
-
-    </div>
-
-
-    <div
-      id="mines-grid"
-      class="grid"
-    ></div>
-
-
-    <label for="mines-bet">
-      Сумма ставки ($)
-    </label>
-
-    <input
-      id="mines-bet"
-      type="number"
-      min="0.01"
-      step="0.01"
-      value="0.10"
-    >
-
-
-    <div class="range-row">
-
-      <span>
-        Количество мин
-      </span>
-
-      <span id="mines-count">
-        3
-      </span>
-
-    </div>
-
-
-    <input
-      id="mines-slider"
-      type="range"
-      min="1"
-      max="24"
-      value="3"
-      oninput="$('mines-count').textContent=this.value"
-    >
-
-
-    <div
-      id="mines-multiplier"
-      class="multiplier"
-      style="display:none"
-    >
-
-      Коэффициент:
-      <span id="mine-mult">
-        1.00
-      </span>x
-
-    </div>
-
-
-    <button
-      id="mines-button"
-      class="primary"
-      onclick="handleMinesAction()"
-    >
-      СТАРТ
-    </button>
-
-
-    <div class="note">
-
-      ⭐ Золотая звезда — безопасная клетка.
-      После проигрыша поле покажет все мины
-      и безопасные клетки.
-
-    </div>
-
+    <div class="section-head"><b>💣 МИНЫ</b><span id="mines-state-label" style="color:#9caec9;font-size:12px">Новая игра</span></div>
+    <div id="mines-grid" class="grid"></div>
+    <label for="mines-bet">Сумма ставки ($)</label>
+    <input id="mines-bet" type="number" min="0.01" step="0.01" value="0.10">
+    <div class="range-row"><span>Количество мин</span><span id="mines-count">3</span></div>
+    <input id="mines-slider" type="range" min="1" max="24" value="3">
+    <div id="mines-multiplier" class="multiplier" style="display:none">Коэффициент: <span id="mine-mult">1.00</span>x</div>
+    <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
+    <div class="note">⭐ Золотая звезда — безопасная клетка. После завершения открывается всё поле.</div>
   </div>
-
 </section>
 
-
-<!-- ==================== PROFILE ==================== -->
+<section id="tab-cases" class="tab">
+  <div class="panel case-panel">
+    <div class="case-title">🎁 ЕЖЕДНЕВНЫЙ КЕЙС</div>
+    <div class="case-subtitle">Бесплатное открытие раз в 24 часа</div>
+    <img class="case-image" src="./case.png" alt="Кейс" onerror="this.alt='Добавь case.png рядом с index.html';this.style.opacity='.35'">
+    <div class="case-roulette"><div id="case-strip" class="case-strip"></div></div>
+    <div id="case-result" class="case-result">Открой кейс и выиграй демо-деньги!</div>
+    <button id="case-button" class="primary case-button" onclick="openDailyCase()">ОТКРЫТЬ БЕСПЛАТНО</button>
+    <div id="case-timer" class="case-timer"></div>
+  </div>
+  <div class="panel">
+    <b>Возможные призы</b>
+    <div class="players">
+      <div class="player"><div class="player-name">💵 Частый приз</div><b style="color:#facc15">$0.02</b></div>
+      <div class="player"><div class="player-name">💵 Частый приз</div><b style="color:#facc15">$0.05</b></div>
+      <div class="player"><div class="player-name">💵 Частый приз</div><b style="color:#facc15">$0.10</b></div>
+      <div class="player"><div class="player-name">💵 Редкий приз</div><b style="color:#facc15">$0.20</b></div>
+      <div class="player"><div class="player-name">💵 Очень редкий приз</div><b style="color:#facc15">$0.50</b></div>
+      <div class="player"><div class="player-name">🏆 Джекпот</div><b style="color:#facc15">$1.00</b></div>
+    </div>
+    <div class="note">Призы зачисляются на демо-баланс. Максимальный приз — $1.00.</div>
+  </div>
+</section>
 
 <section id="tab-profile" class="tab">
-
   <div class="panel profile">
-
-    <div
-      class="avatar"
-      id="avatar"
-    >
-      👤
-    </div>
-
-
-    <h2 id="username">
-      Игрок
-    </h2>
-
-
-    <div
-      class="balance"
-      style="display:inline-block;margin:12px"
-    >
-
-      $ <span id="profile-balance">
-        1.00
-      </span>
-
-    </div>
-
-
-    <button
-      class="primary green"
-      id="bonus-button"
-      onclick="claimBonus()"
-    >
-
-      🎁 Забрать $1.00
-
-      (
-      <span id="bonus-left">
-        2
-      </span>
-      /2
-      )
-
-    </button>
-
-
-    <p class="note">
-
-      Демо-баланс хранится
-      в браузере.
-
-    </p>
-
+    <div class="avatar" id="avatar">👤</div>
+    <h2 id="username">Игрок</h2>
+    <div class="balance" style="display:inline-block;margin:12px">$ <span id="profile-balance">1.00</span></div>
+    <button class="primary green" id="bonus-button" onclick="claimBonus()">🎁 Забрать $1.00 (<span id="bonus-left">2</span>/2)</button>
+    <p class="note">Демо-баланс хранится в браузере.</p>
   </div>
-
 </section>
-
 </main>
 
-
-<!-- ==================== NAVIGATION ==================== -->
-
 <nav>
-
-  <button
-    class="active"
-    data-tab="crash"
-    onclick="switchTab('crash')"
-  >
-
-    <span class="nav-icon">
-      🚀
-    </span>
-
-    КРАШ
-
-  </button>
-
-
-  <button
-    data-tab="mines"
-    onclick="switchTab('mines')"
-  >
-
-    <span class="nav-icon">
-      💣
-    </span>
-
-    МИНЫ
-
-  </button>
-
-
-  <button
-    data-tab="profile"
-    onclick="switchTab('profile')"
-  >
-
-    <span class="nav-icon">
-      👤
-    </span>
-
-    ПРОФИЛЬ
-
-  </button>
-
+  <button class="active" data-tab="crash" onclick="switchTab('crash')"><span class="nav-icon">🚀</span>РАКЕТКА</button>
+  <button data-tab="mines" onclick="switchTab('mines')"><span class="nav-icon">💣</span>МИНЫ</button>
+  <button data-tab="cases" onclick="switchTab('cases')"><span class="nav-icon">🎁</span>КЕЙСЫ</button>
+  <button data-tab="profile" onclick="switchTab('profile')"><span class="nav-icon">👤</span>ПРОФИЛЬ</button>
 </nav>
 
-
 <script>
+const tg=window.Telegram?.WebApp;
+try{tg?.ready();tg?.expand();tg?.setHeaderColor('#111b32');tg?.setBackgroundColor('#0b1225')}catch(e){}
+const user=tg?.initDataUnsafe?.user;
+const $=id=>document.getElementById(id);
+const money=n=>(Math.round((Number(n)+Number.EPSILON)*100)/100).toFixed(2);
 
-/* =========================
-   TELEGRAM
-========================= */
-
-const tg =
-  window.Telegram?.WebApp;
-
-try{
-
-  tg?.ready();
-
-  tg?.expand();
-
-  tg?.setHeaderColor(
-    '#111b32'
-  );
-
-  tg?.setBackgroundColor(
-    '#0b1225'
-  );
-
-}catch(e){}
-
-
-/* =========================
-   USER
-========================= */
-
-const user =
-  tg?.initDataUnsafe?.user;
-
-
-/* =========================
-   HELPERS
-========================= */
-
-const $ =
-  id => document.getElementById(id);
-
-
-const money =
-  n =>
-    (
-      Math.round(
-        (Number(n)+Number.EPSILON)*100
-      )/100
-    ).toFixed(2);
-
-
-/* =========================
-   LOCAL SAVE
-========================= */
-
-const key =
-  'tucha-demo-' +
-  (user?.id ?? 'demo');
-
-
+const storageKey='tucha-demo-'+(user?.id??'demo');
 let saved={};
-
-try{
-
-  saved =
-    JSON.parse(
-      localStorage.getItem(key)||'{}'
-    );
-
-}catch(e){}
-
-
-let balance =
-  Number.isFinite(
-    Number(saved.balance)
-  )
-  ?
-  Number(saved.balance)
-  :
-  1;
-
-
-let bonusCount =
-  Number(saved.bonusCount)||0;
-
-
-/* =========================
-   SAVE
-========================= */
+try{saved=JSON.parse(localStorage.getItem(storageKey)||'{}')}catch(e){}
+let balance=Number.isFinite(Number(saved.balance))?Number(saved.balance):1;
+let bonusCount=Number(saved.bonusCount)||0;
 
 function save(){
-
-  try{
-
-    localStorage.setItem(
-      key,
-      JSON.stringify({
-        balance,
-        bonusCount
-      })
-    );
-
-  }catch(e){}
-
+  try{localStorage.setItem(storageKey,JSON.stringify({balance,bonusCount}))}catch(e){}
 }
-
-
-/* =========================
-   BALANCE
-========================= */
-
 function updateBalance(){
-
-  $('header-balance')
-    .textContent =
-    money(balance);
-
-
-  $('profile-balance')
-    .textContent =
-    money(balance);
-
-
-  $('bonus-left')
-    .textContent =
-    Math.max(
-      0,
-      2-bonusCount
-    );
-
-
-  $('bonus-button').style.display =
-    bonusCount>=2
-    ?
-    'none'
-    :
-    'block';
-
-
+  $('header-balance').textContent=money(balance);
+  $('profile-balance').textContent=money(balance);
+  $('bonus-left').textContent=Math.max(0,2-bonusCount);
+  $('bonus-button').style.display=bonusCount>=2?'none':'block';
   save();
-
 }
-
-
-/* =========================
-   PROFILE
-========================= */
-
-$('username')
-  .textContent =
-  user?.first_name ||
-  'Игрок';
-
-
+$('username').textContent=user?.first_name||'Игрок';
 if(user?.photo_url){
-
-  const img =
-    document.createElement('img');
-
-  img.src =
-    user.photo_url;
-
-  img.style.cssText =
-    `
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    object-fit:cover;
-    `;
-
+  const img=document.createElement('img');
+  img.src=user.photo_url;
+  img.style.cssText='width:90px;height:90px;border-radius:50%;object-fit:cover';
   $('avatar').textContent='';
-
   $('avatar').append(img);
-
 }
-
-
-/* =========================
-   HAPTIC
-========================= */
-
-function haptic(
-  type='light'
-){
-
-  try{
-
-    tg
-      ?.HapticFeedback
-      ?.impactOccurred(type);
-
-  }catch(e){}
-
-}
-
-
-function notify(
-  type='success'
-){
-
-  try{
-
-    tg
-      ?.HapticFeedback
-      ?.notificationOccurred(type);
-
-  }catch(e){}
-
-}
-
-
-/* =========================
-   TABS
-========================= */
-
+function haptic(type='light'){try{tg?.HapticFeedback?.impactOccurred(type)}catch(e){}}
+function notify(type='success'){try{tg?.HapticFeedback?.notificationOccurred(type)}catch(e){}}
 function switchTab(name){
-
-  document
-    .querySelectorAll('.tab')
-    .forEach(el=>{
-
-      el.classList.toggle(
-        'active',
-        el.id==='tab-'+name
-      );
-
-    });
-
-
-  document
-    .querySelectorAll('nav button')
-    .forEach(el=>{
-
-      el.classList.toggle(
-        'active',
-        el.dataset.tab===name
-      );
-
-    });
-
-
+  document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.id==='tab-'+name));
+  document.querySelectorAll('nav button').forEach(el=>el.classList.toggle('active',el.dataset.tab===name));
   haptic();
-
 }
-
-
-/* =========================
-   BONUS
-========================= */
-
 function claimBonus(){
-
-  if(bonusCount>=2)
-    return;
-
-
-  balance+=1;
-
-  bonusCount++;
-
-  updateBalance();
-
-  notify('success');
-
+  if(bonusCount>=2)return;
+  balance+=1;bonusCount++;updateBalance();notify('success');
 }
-
-
-/* =========================
-   BET
-========================= */
-
 function readBet(id){
-
-  const n =
-    Number(
-      $(id).value
-    );
-
-
-  if(
-
-    !Number.isFinite(n) ||
-
-    n<=0 ||
-
-    Math.round(n*100)!==n*100 ||
-
-    n>balance
-
-  ){
-
-    alert(
-      'Проверь сумму ставки и баланс.'
-    );
-
-    return null;
-
+  const n=Number($(id).value);
+  if(!Number.isFinite(n)||n<=0||Math.round(n*100)!==n*100||n>balance){
+    alert('Проверь сумму ставки и баланс.');return null;
   }
-
-
   return Math.round(n*100)/100;
-
 }
-
-
-/* =========================================================
-   GOLD TELEGRAM STYLE STAR
-========================================================= */
-
 function starSVG(){
-
-  return `
-
-  <svg
-    class="star-svg"
-    viewBox="0 0 100 100"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="Золотая звезда"
-  >
-
-    <defs>
-
-      <linearGradient
-        id="goldStar"
-        x1="0"
-        y1="0"
-        x2="0.8"
-        y2="1"
-      >
-
-        <stop
-          offset="0%"
-          stop-color="#fff4a3"
-        />
-
-        <stop
-          offset="35%"
-          stop-color="#ffdc45"
-        />
-
-        <stop
-          offset="75%"
-          stop-color="#ffad18"
-        />
-
-        <stop
-          offset="100%"
-          stop-color="#f17b00"
-        />
-
-      </linearGradient>
-
-    </defs>
-
-
-    <path
-      d="
-        M50 5
-        L62 35
-        L94 37
-        L70 58
-        L78 90
-        L50 73
-        L22 90
-        L30 58
-        L6 37
-        L38 35
-        Z
-      "
-
-      fill="url(#goldStar)"
-
-      stroke="#ffed91"
-
-      stroke-width="2.5"
-
-      stroke-linejoin="round"
-    />
-
-
-    <path
-      d="
-        M50 16
-        L59 39
-        L82 41
-        L64 57
-        L70 78
-        L50 65
-        L30 78
-        L36 57
-        L18 41
-        L41 39
-        Z
-      "
-
-      fill="none"
-
-      stroke="#fff2a6"
-
-      stroke-opacity=".6"
-
-      stroke-width="1.5"
-    />
-
-  </svg>
-
-  `;
-
+  return `<svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="goldStar" x1="0" y1="0" x2=".8" y2="1"><stop offset="0%" stop-color="#fff4a3"/><stop offset="35%" stop-color="#ffdc45"/><stop offset="75%" stop-color="#ffad18"/><stop offset="100%" stop-color="#f17b00"/></linearGradient></defs><path d="M50 5L62 35L94 37L70 58L78 90L50 73L22 90L30 58L6 37L38 35Z" fill="url(#goldStar)" stroke="#ffed91" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
 }
 
-
-/* =========================================================
-   CRASH
-========================================================= */
-
-let crashState='waiting';
-
-let crashBet=0;
-
-let inCrash=false;
-
-let mult=1;
-
-let target=2;
-
-let crashTimer=null;
-
-let crashTick=null;
-
-let crashRoundTimer=null;
-
-let simulatedPlayers=[];
-
-let myCrashResult=null;
-
-
-const rocket =
-  $('rocket');
-
-
-/* =========================
-   DEMO PLAYERS
-========================= */
+/* РАКЕТКА: демонстрационная игра */
+let crashState='waiting',crashBet=0,inCrash=false,mult=1,target=2;
+let crashTimer=null,crashTick=null,crashRoundTimer=null;
+let simulatedPlayers=[],myCrashResult=null;
+const rocket=$('rocket');
 
 function makeDemoPlayers(){
-
-  const names=[
-
-    'Саня',
-    'CryptoKing',
-    'Маша99',
-    'DarkPro',
-    'Иван',
-    'TuchaFan',
-    'Макс',
-    'Алекс',
-    'Lucky',
-    'Роман'
-
-  ];
-
-
-  simulatedPlayers =
-    Array.from(
-      {length:7},
-      (_,i)=>({
-
-        id:'bot-'+i,
-
-        name:
-          names[
-            Math.floor(
-              Math.random()*
-              names.length
-            )
-          ],
-
-        bet:
-          Math.round(
-            (
-              .1+
-              Math.random()*2.5
-            )*100
-          )/100,
-
-        cashout:
-          Math.random()<.7
-          ?
-          Number(
-            (
-              1.1+
-              Math.random()*3.2
-            ).toFixed(2)
-          )
-          :
-          null,
-
-        status:'waiting'
-
-      })
-    );
-
+  const names=['Саня','CryptoKing','Маша99','DarkPro','Иван','TuchaFan','Макс','Алекс','Lucky','Роман'];
+  simulatedPlayers=Array.from({length:7},(_,i)=>({
+    id:'bot-'+i,
+    name:names[Math.floor(Math.random()*names.length)],
+    bet:Math.round((.1+Math.random()*2.5)*100)/100,
+    cashout:Math.random()<.7?Number((1.1+Math.random()*3.2).toFixed(2)):null,
+    status:'waiting'
+  }));
 }
-
-
-/* =========================
-   RENDER PLAYERS
-========================= */
-
 function renderBets(){
-
-  const list =
-    $('live-bets');
-
-
-  list.innerHTML='';
-
-
-  const entries =
-    simulatedPlayers.map(
-      p=>({...p,you:false})
-    );
-
-
-  if(crashBet>0){
-
-    entries.unshift({
-
-      id:'you',
-
-      name:
-        user?.first_name ||
-        'Ты',
-
-      bet:crashBet,
-
-      you:true,
-
-      cashout:
-        myCrashResult?.x ??
-        null,
-
-      status:
-        myCrashResult?.status ??
-        (
-          inCrash
-          ?
-          'playing'
-          :
-          'waiting'
-        )
-
-    });
-
-  }
-
-
+  const list=$('live-bets');list.innerHTML='';
+  const entries=simulatedPlayers.map(p=>({...p,you:false}));
+  if(crashBet>0)entries.unshift({
+    id:'you',name:user?.first_name||'Ты',bet:crashBet,you:true,
+    cashout:myCrashResult?.x??null,
+    status:myCrashResult?.status??(inCrash?'playing':'waiting')
+  });
   entries.forEach(p=>{
-
-    const row =
-      document.createElement('div');
-
-
-    row.className =
-      'player'+
-      (
-        p.you
-        ?
-        ' you'
-        :
-        ''
-      );
-
-
-    /* LEFT */
-
-    const left =
-      document.createElement('div');
-
-    left.className =
-      'player-left';
-
-
-    const name =
-      document.createElement('div');
-
-    name.className =
-      'player-name';
-
-
-    name.textContent =
-      (
-        p.you
-        ?
-        '👤 '
-        :
-        '👥 '
-      )+
-      p.name+
-      (
-        p.you
-        ?
-        ' (ТЫ)'
-        :
-        ''
-      );
-
-
-    const detail =
-      document.createElement('div');
-
-    detail.className =
-      'player-detail';
-
-
-    detail.textContent =
-      'Ставка: $'+
-      money(p.bet);
-
-
-    left.append(
-      name,
-      detail
-    );
-
-
-    /* RIGHT */
-
-    const right =
-      document.createElement('div');
-
-    right.className =
-      'player-result';
-
-
-    const x =
-      document.createElement('div');
-
-    x.className =
-      'player-x';
-
-
-    const status =
-      document.createElement('div');
-
-    status.className =
-      'player-status';
-
-
+    const row=document.createElement('div');row.className='player'+(p.you?' you':'');
+    const left=document.createElement('div');left.className='player-left';
+    const name=document.createElement('div');name.className='player-name';
+    name.textContent=(p.you?'👤 ':'👥 ')+p.name+(p.you?' (ТЫ)':'');
+    const detail=document.createElement('div');detail.className='player-detail';
+    detail.textContent='Ставка: $'+money(p.bet);left.append(name,detail);
+    const right=document.createElement('div');right.className='player-result';
+    const x=document.createElement('div');x.className='player-x';
+    const status=document.createElement('div');status.className='player-status';
     if(p.status==='won'){
-
-      x.textContent =
-        Number(
-          p.cashout
-        ).toFixed(2)+'x';
-
-
-      status.classList.add(
-        'status-win'
-      );
-
-
-      status.textContent =
-        '✓ ЗАБРАЛ $'+
-        money(
-          p.bet*p.cashout
-        );
-
+      x.textContent=Number(p.cashout).toFixed(2)+'x';
+      status.classList.add('status-win');status.textContent='✓ ЗАБРАЛ $'+money(p.bet*p.cashout);
+    }else if(p.status==='lost'){
+      x.textContent=target.toFixed(2)+'x';status.classList.add('status-loss');status.textContent='✕ НЕ УСПЕЛ';
+    }else if(p.status==='playing'){
+      x.textContent=mult.toFixed(2)+'x';status.classList.add('status-live');status.textContent='В ИГРЕ';
+    }else{
+      x.textContent='—';status.classList.add('status-wait');status.textContent='ОЖИДАНИЕ';
     }
-
-
-    else if(
-      p.status==='lost'
-    ){
-
-      x.textContent =
-        target.toFixed(2)+'x';
-
-
-      status.classList.add(
-        'status-loss'
-      );
-
-
-      status.textContent =
-        '✕ НЕ УСПЕЛ';
-
-    }
-
-
-    else if(
-      p.status==='playing'
-    ){
-
-      x.textContent =
-        mult.toFixed(2)+'x';
-
-
-      status.classList.add(
-        'status-live'
-      );
-
-
-      status.textContent =
-        'В ИГРЕ';
-
-    }
-
-
-    else if(
-      p.status==='waiting'
-    ){
-
-      x.textContent='—';
-
-
-      status.classList.add(
-        'status-wait'
-      );
-
-
-      status.textContent =
-        'ОЖИДАНИЕ';
-
-    }
-
-
-    else{
-
-      x.textContent='—';
-
-
-      status.classList.add(
-        'status-wait'
-      );
-
-
-      status.textContent =
-        'СТАВКА ПРИНЯТА';
-
-    }
-
-
-    right.append(
-      x,
-      status
-    );
-
-
-    row.append(
-      left,
-      right
-    );
-
-
-    list.append(row);
-
+    right.append(x,status);row.append(left,right);list.append(row);
   });
-
 }
-
-
-/* =========================
-   START CRASH
-========================= */
-
 function startCrashLoop(){
-
-  clearInterval(
-    crashTimer
-  );
-
-  clearInterval(
-    crashTick
-  );
-
-  clearTimeout(
-    crashRoundTimer
-  );
-
-
-  crashState='waiting';
-
-  inCrash=false;
-
-  crashBet=0;
-
-  myCrashResult=null;
-
-  mult=1;
-
-
-  rocket.className='flying';
-
-  rocket.style.transform='';
-
-
-  $('crash-status')
-    .style.color='white';
-
-
-  $('crash-button').disabled=false;
-
-  $('crash-button').className=
-    'primary';
-
-  $('crash-button').textContent=
-    'СДЕЛАТЬ СТАВКУ';
-
-
-  makeDemoPlayers();
-
-
-  let seconds=5;
-
-
-  $('crash-status')
-    .textContent=
-    'СТАРТ ЧЕРЕЗ '+seconds;
-
-
-  renderBets();
-
-
-  crashTimer =
-    setInterval(()=>{
-
-      seconds--;
-
-
-      if(seconds>0){
-
-        $('crash-status')
-          .textContent=
-          'СТАРТ ЧЕРЕЗ '+
-          seconds;
-
-      }
-
-
-      else{
-
-        clearInterval(
-          crashTimer
-        );
-
-        flyCrash();
-
-      }
-
-    },1000);
-
+  clearInterval(crashTimer);clearInterval(crashTick);clearTimeout(crashRoundTimer);
+  crashState='waiting';inCrash=false;crashBet=0;myCrashResult=null;mult=1;
+  rocket.className='flying';rocket.style.transform='';
+  $('crash-status').style.color='white';
+  $('crash-button').disabled=false;$('crash-button').className='primary';
+  $('crash-button').textContent='СДЕЛАТЬ СТАВКУ';
+  makeDemoPlayers();let seconds=5;
+  $('crash-status').textContent='СТАРТ ЧЕРЕЗ '+seconds;renderBets();
+  crashTimer=setInterval(()=>{
+    seconds--;
+    if(seconds>0)$('crash-status').textContent='СТАРТ ЧЕРЕЗ '+seconds;
+    else{clearInterval(crashTimer);flyCrash()}
+  },1000);
 }
-
-
-/* =========================
-   FLY
-========================= */
-
 function flyCrash(){
-
-  crashState='flying';
-
-  mult=1;
-
-
-  target =
-    Math.random()<.07
-    ?
-    5+
-    Math.random()*7
-    :
-    1.2+
-    Math.random()*3.8;
-
-
-  $('crash-status')
-    .textContent=
-    '1.00x';
-
-
-  $('crash-button').disabled=
-    !inCrash;
-
-
-  $('crash-button').textContent=
-    inCrash
-    ?
-    'ЗАБРАТЬ $'+
-    money(crashBet)
-    :
-    'ПОЛЁТ...';
-
-
-  simulatedPlayers.forEach(
-    p=>{
-      p.status='playing';
-    }
-  );
-
-
-  renderBets();
-
-
-  crashTick =
-    setInterval(()=>{
-
-      mult+=.01;
-
-
-      $('crash-status')
-        .textContent=
-        mult.toFixed(2)+'x';
-
-
-      if(inCrash){
-
-        $('crash-button')
-          .textContent=
-          'ЗАБРАТЬ $'+
-          money(
-            crashBet*mult
-          );
-
-      }
-
-
-      simulatedPlayers.forEach(
-        p=>{
-
-          if(
-
-            p.status==='playing' &&
-
-            p.cashout!==null &&
-
-            mult>=p.cashout &&
-
-            p.cashout<target
-
-          ){
-
-            p.status='won';
-
-          }
-
-        }
-      );
-
-
-      renderBets();
-
-
-      if(mult>=target){
-
-        doCrash();
-
-      }
-
-    },60);
-
+  crashState='flying';mult=1;
+  target=Math.random()<.07?5+Math.random()*7:1.2+Math.random()*3.8;
+  $('crash-status').textContent='1.00x';
+  $('crash-button').disabled=!inCrash;
+  $('crash-button').textContent=inCrash?'ЗАБРАТЬ $'+money(crashBet):'ПОЛЁТ...';
+  simulatedPlayers.forEach(p=>p.status='playing');renderBets();
+  crashTick=setInterval(()=>{
+    mult+=.01;$('crash-status').textContent=mult.toFixed(2)+'x';
+    if(inCrash)$('crash-button').textContent='ЗАБРАТЬ $'+money(crashBet*mult);
+    simulatedPlayers.forEach(p=>{
+      if(p.status==='playing'&&p.cashout!==null&&mult>=p.cashout&&p.cashout<target)p.status='won';
+    });
+    renderBets();
+    if(mult>=target)doCrash();
+  },60);
 }
-
-
-/* =========================
-   CRASH
-========================= */
-
 function doCrash(){
-
-  clearInterval(
-    crashTick
-  );
-
-
-  crashState='crashed';
-
-
-  rocket.className=
-    'crashed';
-
-
-  rocket.style.transform=
-    'rotate(140deg)';
-
-
-  $('crash-status')
-    .textContent=
-    'КРАШ '+
-    target.toFixed(2)+
-    'x';
-
-
-  $('crash-status')
-    .style.color=
-    '#f87171';
-
-
-  if(inCrash){
-
-    inCrash=false;
-
-    myCrashResult={
-
-      status:'lost',
-
-      x:null
-
-    };
-
-  }
-
-
-  simulatedPlayers.forEach(
-    p=>{
-
-      if(
-        p.status==='playing'
-      ){
-
-        p.status='lost';
-
-      }
-
-    }
-  );
-
-
-  renderBets();
-
-
-  $('crash-button')
-    .disabled=true;
-
-
-  $('crash-button')
-    .textContent=
-    'РАУНД ЗАВЕРШЁН';
-
-
-  const item =
-    document.createElement('span');
-
-
-  item.textContent =
-    target.toFixed(2)+'x';
-
-
-  $('crash-history')
-    .prepend(item);
-
-
-  while(
-    $('crash-history')
-      .children.length>10
-  ){
-
-    $('crash-history')
-      .lastElementChild
-      .remove();
-
-  }
-
-
-  notify('error');
-
-
-  crashRoundTimer =
-    setTimeout(()=>{
-
-      $('crash-status')
-        .style.color=
-        'white';
-
-
-      startCrashLoop();
-
-    },3000);
-
+  clearInterval(crashTick);crashState='crashed';rocket.className='crashed';rocket.style.transform='rotate(140deg)';
+  $('crash-status').textContent='КРАШ '+target.toFixed(2)+'x';$('crash-status').style.color='#f87171';
+  if(inCrash){inCrash=false;myCrashResult={status:'lost',x:null}}
+  simulatedPlayers.forEach(p=>{if(p.status==='playing')p.status='lost'});
+  renderBets();$('crash-button').disabled=true;$('crash-button').textContent='РАУНД ЗАВЕРШЁН';notify('error');
+  crashRoundTimer=setTimeout(()=>{ $('crash-status').style.color='white';startCrashLoop(); },3000);
 }
-
-
-/* =========================
-   CRASH BUTTON
-========================= */
-
 function handleCrashAction(){
-
-  /* СТАВКА */
-
-  if(
-    crashState==='waiting'
-  ){
-
-    const bet =
-      readBet(
-        'crash-bet'
-      );
-
-
-    if(bet===null)
-      return;
-
-
-    balance-=bet;
-
-    crashBet=bet;
-
-    inCrash=true;
-
-
-    myCrashResult={
-
-      status:'playing',
-
-      x:null
-
-    };
-
-
-    updateBalance();
-
-    renderBets();
-
-
-    $('crash-button')
-      .textContent=
-      'СТАВКА ПРИНЯТА';
-
-
-    $('crash-button')
-      .disabled=true;
-
-
-    haptic('medium');
-
-
-    return;
-
+  if(crashState==='waiting'){
+    const bet=readBet('crash-bet');if(bet===null)return;
+    balance-=bet;crashBet=bet;inCrash=true;myCrashResult={status:'playing',x:null};
+    updateBalance();renderBets();$('crash-button').textContent='СТАВКА ПРИНЯТА';$('crash-button').disabled=true;haptic('medium');return;
   }
-
-
-  /* ЗАБРАТЬ */
-
-  if(
-
-    crashState==='flying' &&
-
-    inCrash
-
-  ){
-
-    const x =
-      Number(
-        mult.toFixed(2)
-      );
-
-
-    const win =
-      Math.floor(
-        crashBet*x*100
-      )/100;
-
-
-    balance+=win;
-
-    inCrash=false;
-
-
-    myCrashResult={
-
-      status:'won',
-
-      x:x
-
-    };
-
-
-    updateBalance();
-
-    renderBets();
-
-
-    $('crash-button')
-      .disabled=true;
-
-
-    $('crash-button')
-      .textContent=
-      'ВЫИГРАНО $'+
-      money(win);
-
-
-    $('crash-button')
-      .className=
-      'primary green';
-
-
-    notify('success');
-
+  if(crashState==='flying'&&inCrash){
+    const x=Number(mult.toFixed(2));const win=Math.floor(crashBet*x*100)/100;
+    balance+=win;inCrash=false;myCrashResult={status:'won',x};
+    updateBalance();renderBets();$('crash-button').disabled=true;
+    $('crash-button').textContent='ВЫИГРАНО $'+money(win);$('crash-button').className='primary green';notify('success');
   }
-
 }
 
-
-/* =========================================================
-   MINES
-========================================================= */
-
-let minesState='idle';
-
-let minePositions=[];
-
-let mineBet=0;
-
-let mineMult=1;
-
-let safeOpened=0;
-
-let bombCount=3;
-
-
-const grid =
-  $('mines-grid');
-
-
-/* =========================
-   BUILD GRID
-========================= */
-
+/* МИНЫ */
+let minesState='idle',minePositions=[],mineBet=0,mineMult=1,safeOpened=0,bombCount=3;
+const grid=$('mines-grid');
 function buildGrid(){
-
   grid.innerHTML='';
-
-
-  for(
-    let i=0;
-    i<25;
-    i++
-  ){
-
-    const cell =
-      document.createElement(
-        'button'
-      );
-
-
-    cell.className=
-      'cell';
-
-
-    cell.type=
-      'button';
-
-
-    cell.dataset.index=
-      i;
-
-
-    cell.disabled=
-      true;
-
-
-    grid.append(cell);
-
+  for(let i=0;i<25;i++){
+    const cell=document.createElement('button');
+    cell.className='cell';cell.type='button';cell.dataset.index=i;cell.disabled=true;grid.append(cell);
   }
-
 }
-
-
-/* =========================
-   SAFE CELL
-========================= */
-
-function renderSafe(
-  cell,
-  revealed=false
-){
-
-  cell.className =
-    'cell '+
-    (
-      revealed
-      ?
-      'revealed-safe'
-      :
-      'safe'
-    );
-
-
-  cell.innerHTML =
-    starSVG();
-
-
-  cell.disabled=true;
-
+function renderSafe(cell,revealed=false){
+  cell.className='cell '+(revealed?'revealed-safe':'safe');
+  cell.innerHTML=starSVG();cell.disabled=true;
 }
-
-
-/* =========================
-   BOMB CELL
-========================= */
-
 function renderBomb(cell){
-
-  cell.className=
-    'cell bomb';
-
-
-  cell.innerHTML='';
-
-
-  const img =
-    document.createElement(
-      'img'
-    );
-
-
-  img.src=
-    './bomb.png';
-
-
-  img.alt=
-    'Мина';
-
-
-  img.className=
-    'bomb-img';
-
-
-  img.onerror=()=>{
-
-    cell.innerHTML='';
-
-    cell.textContent='💣';
-
-  };
-
-
-  cell.append(img);
-
-
-  cell.disabled=true;
-
+  cell.className='cell bomb';cell.innerHTML='';
+  const img=document.createElement('img');img.src='./bomb.png';img.alt='Мина';img.className='bomb-img';
+  img.onerror=()=>{cell.innerHTML='💣'};cell.append(img);cell.disabled=true;
 }
-
-
-/* =========================
-   RESET MINES
-========================= */
-
 function resetMinesField(){
-
-  buildGrid();
-
-  minePositions=[];
-
-  safeOpened=0;
-
-  mineMult=1;
-
-
-  $('mines-multiplier')
-    .style.display=
-    'none';
-
-
-  $('mine-mult')
-    .textContent=
-    '1.00';
-
+  buildGrid();minePositions=[];safeOpened=0;mineMult=1;
+  $('mines-multiplier').style.display='none';$('mine-mult').textContent='1.00';
 }
-
-
-/* =========================
-   START MINES
-========================= */
-
 function startMines(){
-
-  const bet =
-    readBet(
-      'mines-bet'
-    );
-
-
-  if(bet===null)
-    return;
-
-
-  bombCount =
-    Number(
-      $('mines-slider')
-        .value
-    );
-
-
-  balance-=bet;
-
-  updateBalance();
-
-
-  mineBet=bet;
-
-  mineMult=1;
-
-  safeOpened=0;
-
-  minePositions=[];
-
-
-  while(
-    minePositions.length<
-    bombCount
-  ){
-
-    const p =
-      Math.floor(
-        Math.random()*25
-      );
-
-
-    if(
-      !minePositions
-        .includes(p)
-    ){
-
-      minePositions.push(p);
-
-    }
-
+  const bet=readBet('mines-bet');if(bet===null)return false;
+  bombCount=Number($('mines-slider').value);
+  balance-=bet;updateBalance();mineBet=bet;mineMult=1;safeOpened=0;minePositions=[];
+  while(minePositions.length<bombCount){
+    const p=Math.floor(Math.random()*25);
+    if(!minePositions.includes(p))minePositions.push(p);
   }
-
-
-  buildGrid();
-
-
-  minesState='playing';
-
-
-  $('mines-state-label')
-    .textContent=
-    'Игра идёт';
-
-
-  $('mines-multiplier')
-    .style.display=
-    'block';
-
-
-  $('mine-mult')
-    .textContent=
-    '1.00';
-
-
-  $('mines-slider')
-    .disabled=true;
-
-
-  [
-    ...grid.children
-  ].forEach(cell=>{
-
+  buildGrid();minesState='playing';$('mines-state-label').textContent='Игра идёт';
+  $('mines-multiplier').style.display='block';$('mine-mult').textContent='1.00';
+  $('mines-slider').disabled=true;
+  [...grid.children].forEach(cell=>{
     cell.disabled=false;
-
-
-    cell.onclick=()=>{
-
-      clickMine(
-        Number(
-          cell.dataset.index
-        ),
-        cell
-      );
-
-    };
-
+    cell.onclick=()=>clickMine(Number(cell.dataset.index),cell);
   });
-
-
-  $('mines-button')
-    .disabled=true;
-
-
-  $('mines-button')
-    .className=
-    'primary';
-
-
-  $('mines-button')
-    .textContent=
-    'ОТКРОЙТЕ КЛЕТКУ';
-
-
-  haptic('medium');
-
+  $('mines-button').disabled=true;$('mines-button').className='primary';
+  $('mines-button').textContent='ОТКРОЙТЕ КЛЕТКУ';haptic('medium');return true;
 }
-
-
-/* =========================
-   MINES BUTTON
-========================= */
-
 function handleMinesAction(){
-
-  /*
-    После проигрыша или выигрыша
-    новый раунд НЕ запускается сам.
-
-    Только после нажатия кнопки.
-  */
-
-  if(
-
-    minesState==='idle' ||
-
-    minesState==='finished'
-
-  ){
-
-    resetMinesField();
-
-
-    $('mines-state-label')
-      .textContent=
-      'Новая игра';
-
-
-    startMines();
-
-
-    return;
-
+  if(minesState==='idle'||minesState==='finished'){
+    resetMinesField();$('mines-state-label').textContent='Новая игра';
+    startMines();return;
   }
-
-
-  if(
-    minesState!=='playing'
-  )
-    return;
-
-
-  const win =
-    Math.floor(
-      mineBet*
-      mineMult*
-      100
-    )/100;
-
-
-  balance+=win;
-
-
-  updateBalance();
-
-
-  /*
-    Перед завершением показываем
-    всё поле.
-  */
-
-  [
-    ...grid.children
-  ].forEach(
-    (c,i)=>{
-
-      if(
-        minePositions
-          .includes(i)
-      ){
-
-        renderBomb(c);
-
-      }
-
-      else{
-
-        renderSafe(
-          c,
-          true
-        );
-
-      }
-
-    }
-  );
-
-
-  finishMines(
-    'ВЫИГРЫШ $'+
-    money(win),
-
-    'green'
-  );
-
-
-  notify('success');
-
+  if(minesState!=='playing')return;
+  const win=Math.floor(mineBet*mineMult*100)/100;
+  balance+=win;updateBalance();revealMines();
+  finishMines('ВЫИГРЫШ $'+money(win),'green');notify('success');
 }
-
-
-/* =========================
-   CLICK MINE
-========================= */
-
-function clickMine(
-  index,
-  cell
-){
-
-  if(
-    minesState!=='playing' ||
-    cell.disabled
-  )
-    return;
-
-
-  /* МИНА */
-
-  if(
-    minePositions
-      .includes(index)
-  ){
-
-    /*
-      При проигрыше раскрываем
-      ВСЕ поле.
-    */
-
-    [
-      ...grid.children
-    ].forEach(
-      (c,i)=>{
-
-        if(
-          minePositions
-            .includes(i)
-        ){
-
-          renderBomb(c);
-
-        }
-
-        else{
-
-          renderSafe(
-            c,
-            true
-          );
-
-        }
-
-      }
-    );
-
-
-    finishMines(
-      'ПРОИГРЫШ −$'+
-      money(mineBet),
-
-      'red'
-    );
-
-
-    notify('error');
-
-
-    return;
-
-  }
-
-
-  /* БЕЗОПАСНАЯ КЛЕТКА */
-
-  renderSafe(cell);
-
-
-  safeOpened++;
-
-
-  haptic();
-
-
-  let probability=1;
-
-
-  for(
-    let i=0;
-    i<safeOpened;
-    i++
-  ){
-
-    probability *=
-      (
-        25-
-        bombCount-
-        i
-      )/
-      (
-        25-i
-      );
-
-  }
-
-
-  mineMult =
-    .95/probability;
-
-
-  $('mine-mult')
-    .textContent=
-    mineMult.toFixed(2);
-
-
-  $('mines-button')
-    .disabled=false;
-
-
-  $('mines-button')
-    .textContent=
-    'ЗАБРАТЬ $'+
-    money(
-      mineBet*mineMult
-    );
-
-
-  $('mines-button')
-    .className=
-    'primary green';
-
-
-  /* ОТКРЫТЫ ВСЕ БЕЗОПАСНЫЕ */
-
-  if(
-    safeOpened===
-    25-bombCount
-  ){
-
-    const win =
-      Math.floor(
-        mineBet*
-        mineMult*
-        100
-      )/100;
-
-
-    balance+=win;
-
-
-    updateBalance();
-
-
-    [
-      ...grid.children
-    ].forEach(
-      (c,i)=>{
-
-        if(
-          minePositions
-            .includes(i)
-        ){
-
-          renderBomb(c);
-
-        }
-
-        else{
-
-          renderSafe(
-            c,
-            true
-          );
-
-        }
-
-      }
-    );
-
-
-    finishMines(
-      'ВЫИГРЫШ $'+
-      money(win),
-
-      'gold'
-    );
-
-
-    notify('success');
-
-  }
-
-}
-
-
-/* =========================
-   FINISH MINES
-========================= */
-
-function finishMines(
-  message,
-  color
-){
-
-  minesState=
-    'finished';
-
-
-  [
-    ...grid.children
-  ].forEach(c=>{
-
-    c.disabled=true;
-
-    c.onclick=null;
-
+function revealMines(){
+  [...grid.children].forEach((cell,i)=>{
+    if(minePositions.includes(i))renderBomb(cell);
+    else renderSafe(cell,true);
   });
-
-
-  $('mines-state-label')
-    .textContent=
-    message;
-
-
-  $('mines-slider')
-    .disabled=false;
-
-
-  $('mines-button')
-    .disabled=false;
-
-
-  /*
-    После завершения поле
-    остаётся открытым.
-
-    Новый раунд только
-    после нажатия кнопки.
-  */
-
-  $('mines-button')
-    .textContent=
-    'СТАРТ НОВЫЙ РАУНД';
-
-
-  $('mines-button')
-    .className=
-    'primary '+
-    color;
-
+}
+function clickMine(index,cell){
+  if(minesState!=='playing'||cell.disabled)return;
+  if(minePositions.includes(index)){
+    revealMines();finishMines('ПРОИГРЫШ −$'+money(mineBet),'red');notify('error');return;
+  }
+  renderSafe(cell);safeOpened++;haptic();
+  let probability=1;
+  for(let i=0;i<safeOpened;i++)probability*=(25-bombCount-i)/(25-i);
+  mineMult=.95/probability;$('mine-mult').textContent=mineMult.toFixed(2);
+  $('mines-button').disabled=false;$('mines-button').textContent='ЗАБРАТЬ $'+money(mineBet*mineMult);
+  $('mines-button').className='primary green';
+  if(safeOpened===25-bombCount){
+    const win=Math.floor(mineBet*mineMult*100)/100;
+    balance+=win;updateBalance();revealMines();finishMines('ВЫИГРЫШ $'+money(win),'gold');notify('success');
+  }
+}
+function finishMines(message,color){
+  minesState='finished';
+  [...grid.children].forEach(cell=>{cell.disabled=true;cell.onclick=null});
+  $('mines-state-label').textContent=message;$('mines-slider').disabled=false;
+  $('mines-button').disabled=false;$('mines-button').textContent='СТАРТ НОВЫЙ РАУНД';
+  $('mines-button').className='primary '+color;
 }
 
+/* ЕЖЕДНЕВНЫЙ КЕЙС */
+const CASE_COOLDOWN=24*60*60*1000;
+const caseStorageKey=storageKey+'-daily-case';
+let caseReadyAt=0,caseOpening=false,caseTimerInterval=null;
+try{caseReadyAt=Number(localStorage.getItem(caseStorageKey)||0)}catch(e){}
+const casePrizes=[
+  {value:.02,weight:30},
+  {value:.05,weight:30},
+  {value:.10,weight:22},
+  {value:.20,weight:12},
+  {value:.50,weight:5},
+  {value:1,weight:1}
+];
+function chooseCasePrize(){
+  const total=casePrizes.reduce((sum,p)=>sum+p.weight,0);
+  let roll=Math.random()*total;
+  for(const prize of casePrizes){roll-=prize.weight;if(roll<0)return prize.value}
+  return .02;
+}
+function formatCaseTime(ms){
+  const sec=Math.max(0,Math.ceil(ms/1000));
+  return [Math.floor(sec/3600),Math.floor((sec%3600)/60),sec%60]
+    .map(n=>String(n).padStart(2,'0')).join(':');
+}
+function updateCaseButton(){
+  const btn=$('case-button'),timer=$('case-timer');
+  if(!btn||!timer)return;
+  if(caseOpening){
+    btn.disabled=true;btn.textContent='ОТКРЫВАЕМ КЕЙС...';
+    timer.textContent='Прокрутка призов';return;
+  }
+  const left=caseReadyAt-Date.now();
+  if(left>0){
+    btn.disabled=true;btn.textContent='КЕЙС УЖЕ ОТКРЫТ';
+    timer.textContent='Следующее открытие через '+formatCaseTime(left);
+  }else{
+    btn.disabled=false;btn.textContent='ОТКРЫТЬ БЕСПЛАТНО';
+    timer.textContent='Кейс доступен!';
+  }
+}
+function renderCaseStrip(prizes){
+  const strip=$('case-strip');strip.innerHTML='';
+  prizes.forEach(value=>{
+    const item=document.createElement('div');item.className='case-prize';
+    const icon=document.createElement('div');icon.className='case-prize-icon';icon.textContent='💵';
+    const amount=document.createElement('div');amount.className='case-prize-value';
+    amount.textContent='$'+Number(value).toFixed(2);
+    item.append(icon,amount);strip.append(item);
+  });
+}
+function openDailyCase(){
+  if(caseOpening||Date.now()<caseReadyAt){updateCaseButton();return}
+  caseOpening=true;updateCaseButton();$('case-result').textContent='';
+  const prize=chooseCasePrize(),winnerIndex=22,prizes=[];
+  for(let i=0;i<36;i++)prizes.push(i===winnerIndex?prize:chooseCasePrize());
+  renderCaseStrip(prizes);
+  const strip=$('case-strip');
+  strip.classList.remove('spinning');strip.style.transition='none';strip.style.transform='translateX(0px)';
+  requestAnimationFrame(()=>{
+    const item=strip.children[0];
+    if(!item){caseOpening=false;updateCaseButton();return}
+    const step=item.getBoundingClientRect().width+8;
+    const viewport=strip.parentElement.getBoundingClientRect();
+    const destination=winnerIndex*step+6+item.getBoundingClientRect().width/2-viewport.width/2;
+    strip.getBoundingClientRect();
+    strip.classList.add('spinning');
+    strip.style.transition='transform 5s cubic-bezier(.08,.65,.08,1)';
+    strip.style.transform=`translateX(${-destination}px)`;
+    setTimeout(()=>{
+      balance=Math.round((balance+prize)*100)/100;
+      caseReadyAt=Date.now()+CASE_COOLDOWN;
+      try{localStorage.setItem(caseStorageKey,String(caseReadyAt))}catch(e){}
+      updateBalance();
+      $('case-result').textContent='🎉 ТВОЙ ВЫИГРЫШ: $'+prize.toFixed(2);
+      caseOpening=false;updateCaseButton();notify('success');
+    },5200);
+  });
+}
 
-/* =========================
-   INIT
-========================= */
-
+/* ЗАПУСК */
+$('mines-slider').addEventListener('input',()=>{
+  $('mines-count').textContent=$('mines-slider').value;
+});
+function initDailyCase(){
+  renderCaseStrip([.02,.05,.10,.02,.20,.05,.10]);
+  updateCaseButton();
+  caseTimerInterval=setInterval(updateCaseButton,1000);
+}
 buildGrid();
-
 updateBalance();
-
+initDailyCase();
 startCrashLoop();
-
 </script>
-
 </body>
 </html>
