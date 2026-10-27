@@ -1292,11 +1292,11 @@ function notify(type = "success") {
 }
 
 // =========================================================
-// ЕДИНСТВЕННОЕ МЕСТО ДЛЯ ССЫЛКИ GOOGLE APPS SCRIPT
+// НАСТРОЙКИ (ССЫЛКА НА БАЗУ ДАННЫХ)
 // =========================================================
 const ADMIN_PASSWORD = "tucha2026"; 
 
-// 🟢 ВСТАВЬ СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT СЮДА МЕЖДУ КАВЫЧЕК (1 РАЗ!):
+// 🟢 ВСТАВЬ СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT СЮДА (1 РАЗ!):
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4L4uFeBBGDb9hxCjAuc6L9YHv-IT77kz6sWEJEYyvKURRojhb8SjjBOS4ViCnK_af/exec"; 
 
 // =========================================================
@@ -1366,8 +1366,9 @@ if (telegramUser) {
 }
 
 /* =========================================================
-   CRYPTO BOT PAYMENT INTEGRATION (СЕРВЕРНАЯ ВЕРСИЯ)
+   CRYPTO BOT PAYMENT INTEGRATION (ПРЯМОЙ МЕТОД)
 ========================================================= */
+const CRYPTO_PAY_TOKEN = "657356:AACtmBHlvsBeMmcvDSJqSW54TVIu4mFUGfF"; 
 let checkPaymentInterval = null;
 
 async function createCryptoInvoice() {
@@ -1379,23 +1380,24 @@ async function createCryptoInvoice() {
         return;
     }
 
-    if (!isDatabaseConnected()) {
-        alert("Укажите SCRIPT_URL в коде для работы пополнения!");
-        return;
-    }
-
     $("deposit-btn").disabled = true;
     $("deposit-status").textContent = "Создание счета...";
 
     try {
         haptic("medium");
 
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
+        const response = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://pay.crypt.bot/api/createInvoice'), {
+            method: 'POST',
+            headers: {
+                'Crypto-Pay-API-Token': CRYPTO_PAY_TOKEN,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
-                action: "create_invoice",
-                amount: amount,
-                username: userName
+                asset: 'USDT',
+                amount: amount.toString(),
+                description: `Пополнение баланса Tucha Games для ${userName}`,
+                paid_btn_name: 'openBot',
+                paid_btn_url: 'https://t.me/tucha_games_bot'
             })
         });
 
@@ -1406,7 +1408,7 @@ async function createCryptoInvoice() {
             const payUrl = data.result.pay_url;
             const miniAppPayUrl = data.result.mini_app_pay_url || payUrl;
 
-            $("deposit-status").textContent = "Счет создан! Оплатите в боте...";
+            $("deposit-status").textContent = "Счет создан! Откройте оплату...";
 
             if (window.Telegram?.WebApp) {
                 window.Telegram.WebApp.openInvoice(miniAppPayUrl, (status) => {
@@ -1421,13 +1423,13 @@ async function createCryptoInvoice() {
             startCheckingPayment(invoiceId, amount);
 
         } else {
-            alert("Ошибка создания счета: " + (data.error?.message || "Проверьте настройки скрипта"));
+            alert("Ошибка создания счета: " + (data.error?.message || "Проверьте токен"));
             $("deposit-btn").disabled = false;
             $("deposit-status").textContent = "";
         }
     } catch (error) {
         console.error("CryptoBot Error:", error);
-        alert("Ошибка соединения с сервером.");
+        alert("Не удалось связаться с платежным шлюзом.");
         $("deposit-btn").disabled = false;
         $("deposit-status").textContent = "";
     }
@@ -1441,7 +1443,7 @@ function startCheckingPayment(invoiceId, amount) {
 
     checkPaymentInterval = setInterval(async () => {
         attempts++;
-        if (attempts > 100) {
+        if (attempts > 300) {
             clearInterval(checkPaymentInterval);
             $("deposit-btn").disabled = false;
             $("deposit-status").textContent = "Время ожидания истекло.";
@@ -1449,12 +1451,11 @@ function startCheckingPayment(invoiceId, amount) {
         }
 
         try {
-            const res = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "check_invoice",
-                    invoice_id: invoiceId
-                })
+            const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(`https://pay.crypt.bot/api/getInvoices?invoice_ids=${invoiceId}`), {
+                method: 'GET',
+                headers: {
+                    'Crypto-Pay-API-Token': CRYPTO_PAY_TOKEN
+                }
             });
             const data = await res.json();
 
@@ -1466,7 +1467,7 @@ function startCheckingPayment(invoiceId, amount) {
                 }
             }
         } catch (e) {
-            console.log("Проверка оплаты...", e);
+            console.log("Проверка статуса...", e);
         }
     }, 3000);
 }
