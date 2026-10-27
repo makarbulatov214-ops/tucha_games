@@ -1306,7 +1306,7 @@ let balance = 0.10;
 let bonusCount = 0;
 
 function loadUserData() {
-    if (SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbx8kOH5iRfSlTkgBLvOunKLw4bhvMyhuqwtn8R0Jf0KAKmlZLpng5qvPm_FH0I4yZXU/exec")) {
+    if (SCRIPT_URL.includes("")) {
         const storageKey = "tucha-game-" + userId;
         try {
             let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
@@ -1331,7 +1331,7 @@ function loadUserData() {
 }
 
 function saveUserData() {
-    if (SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbx8kOH5iRfSlTkgBLvOunKLw4bhvMyhuqwtn8R0Jf0KAKmlZLpng5qvPm_FH0I4yZXU/exec")) {
+    if (SCRIPT_URL.includes("")) {
         const storageKey = "tucha-game-" + userId;
         try { localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount })); } catch(e) {}
         return;
