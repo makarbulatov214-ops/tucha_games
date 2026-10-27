@@ -1048,7 +1048,7 @@ nav button.active {
     </div>
     <div class="balance">
         <span class="balance-icon">$</span>
-        <span id="header-balance">1.00</span>
+        <span id="header-balance">0.10</span>
     </div>
 </header>
 
@@ -1128,14 +1128,6 @@ nav button.active {
         </div>
 
         <div class="case-grid">
-            <!-- Ежедневный кейс -->
-            <div class="case-card available" onclick="openCase('daily', 'Ежедневный кейс', 0, './case.png', [0.02, 0.05, 0.10, 0.20, 0.50, 1.00], [50, 30, 12, 5, 2, 1])">
-                <img class="case-card-image" src="./case.png" alt="Ежедневный кейс">
-                <div class="case-card-name">Ежедневный кейс</div>
-                <div class="case-card-price">$0.00</div>
-                <div class="case-card-arrow">›</div>
-            </div>
-
             <!-- Кейс 1: $0.20 (casecase.png) -->
             <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.05, 0.10, 0.18, 0.30, 0.60, 1.20], [55, 28, 11, 4, 1.8, 0.2])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
@@ -1220,10 +1212,8 @@ nav button.active {
 
         <div class="balance" style="display:inline-flex; margin:16px 0 20px;">
             <span class="balance-icon">$</span>
-            <span id="profile-balance">1.00</span>
+            <span id="profile-balance">0.10</span>
         </div>
-
-        <button id="bonus-button" class="primary green" onclick="claimBonus()">🎁 Получить $1.00</button>
 
         <!-- БЛОК ПОПОЛНЕНИЯ ЧЕРЕЗ CRYPTO BOT -->
         <div style="margin-top: 20px; text-align: left; background: #f8fafc; padding: 14px; border-radius: 16px; border: 2px solid rgba(59,130,246,0.1)">
@@ -1306,13 +1296,13 @@ function notify(type = "success") {
 // =========================================================
 const ADMIN_PASSWORD = "tucha2026"; 
 
-// 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySraagAakwDhKdyiXP65uiBFSpCZ0prfczjhQKJpM9X6JlKtXK11XiDbeHLyQhLW1H/exec"; 
+// ⬇️ ВАЖНО_ССЫЛКА_СЮДА: ВСТАВЬ СВОЮ ССЫЛКУ МЕЖДУ КАВЫЧЕК НИЖЕ ⬇️
+const SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_GOOGLE_APPS_SCRIPT"; 
 
 const userId = telegramUser ? String(telegramUser.id) : "demo_user";
 const userName = telegramUser?.first_name || "Игрок";
 
-let balance = 1.00;
+let balance = 0.10;
 let bonusCount = 0;
 
 function loadUserData() {
@@ -1321,24 +1311,23 @@ function loadUserData() {
         try {
             let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
             if (Number.isFinite(Number(saved.balance))) balance = Number(saved.balance);
-            bonusCount = Number(saved.bonusCount) || 0;
         } catch(e) {}
-        updateBalance();
+        updateBalance(false);
         return;
     }
 
     fetch(SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify({action: "get", userid: userId, username: userName, balance: 1.00, bonuscount: 0})
+        body: JSON.stringify({action: "get", userid: userId, username: userName, balance: 0.10, bonuscount: 0})
     })
     .then(res => res.json())
     .then(data => {
         if(data.status === "success") {
             balance = parseFloat(data.balance);
-            bonusCount = parseInt(data.bonuscount);
-            updateBalance();
+            bonusCount = parseInt(data.bonuscount) || 0;
+            updateBalance(false);
         }
-    }).catch(err => { updateBalance(); });
+    }).catch(err => { updateBalance(false); });
 }
 
 function saveUserData() {
@@ -1353,13 +1342,12 @@ function saveUserData() {
     }).catch(err => {});
 }
 
-function updateBalance() {
+function updateBalance(shouldSave = true) {
     $("header-balance").textContent = money(balance);
     $("profile-balance").textContent = money(balance);
-    if ($("bonus-button")) {
-        $("bonus-button").style.display = bonusCount >= 2 ? "none" : "block";
+    if (shouldSave) {
+        saveUserData();
     }
-    saveUserData();
 }
 
 if (telegramUser) {
@@ -1370,14 +1358,6 @@ if (telegramUser) {
         $("avatar").innerHTML = "";
         $("avatar").appendChild(img);
     }
-}
-
-function claimBonus() {
-    if (bonusCount >= 2) return;
-    balance += 1;
-    bonusCount++;
-    updateBalance();
-    notify("success");
 }
 
 /* =========================================================
@@ -1489,7 +1469,7 @@ function startCheckingPayment(invoiceId, amount) {
 
 function finishDeposit(amount) {
     balance = Math.round((balance + amount) * 100) / 100;
-    updateBalance();
+    updateBalance(true);
     $("deposit-btn").disabled = false;
     $("deposit-status").textContent = "✅ Оплата прошла успешно! +$" + amount.toFixed(2);
     alert("Оплата получена! Баланс пополнен на $" + amount.toFixed(2));
@@ -1518,7 +1498,7 @@ function closeAdminPanel() {
 function fetchAllPlayers() {
     const listDiv = $("admin-players-list");
     listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Загрузка игроков из базы...</p>';
-    if (SCRIPT_URL.includes("ВСТАВЬ_СЮДА")) {
+    if (SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbx8kOH5iRfSlTkgBLvOunKLw4bhvMyhuqwtn8R0Jf0KAKmlZLpng5qvPm_FH0I4yZXU/exec")) {
         listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
         return;
     }
@@ -1539,7 +1519,7 @@ function fetchAllPlayers() {
                     <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid rgba(59,130,246,0.08)">
                         <div>
                             <div style="font-weight: 950; font-size: 14px; color: #0f172a;">${p.username}</div>
-                            <div style="font-size: 11px; color: #64748b; font-weight: 800;">ID: ${p.userid} | Бонусов: ${p.bonuscount}/2</div>
+                            <div style="font-size: 11px; color: #64748b; font-weight: 800;">ID: ${p.userid}</div>
                             <div style="font-size: 13px; color: #16a34a; font-weight: 950; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
                         </div>
                         <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #2563eb; color: white; border: none; padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 950;">Изменить $</button>
@@ -1557,13 +1537,13 @@ function adminEditBalance(targetId, targetName, currentBal, currentBonus) {
     if (newB !== null && !isNaN(newB)) {
         fetch(SCRIPT_URL, {
             method: "POST",
-            body: JSON.stringify({action: "update", userid: targetId, username: targetName, balance: parseFloat(newB), bonuscount: currentBonus})
+            body: JSON.stringify({action: "update", userid: targetId, username: targetName, balance: parseFloat(newB), bonuscount: currentBonus || 0})
         }).then(() => {
             alert("Баланс обновлен!");
             fetchAllPlayers();
             if (targetId === userId) {
                 balance = parseFloat(newB);
-                updateBalance();
+                updateBalance(false);
             }
         });
     }
@@ -1747,7 +1727,7 @@ function handleCrashAction() {
         crashBet = bet;
         inCrash = true;
         myCrashResult = { status: "playing", x: null };
-        updateBalance();
+        updateBalance(true);
         renderCrashPlayers();
         $("crash-button").disabled = true;
         $("crash-button").textContent = "СТАВКА ПРИНЯТА";
@@ -1760,7 +1740,7 @@ function handleCrashAction() {
         balance += win;
         inCrash = false;
         myCrashResult = { status: "won", x: x };
-        updateBalance();
+        updateBalance(true);
         renderCrashPlayers();
         $("crash-button").disabled = true;
         $("crash-button").className = "primary green";
@@ -1843,7 +1823,7 @@ function startMines() {
     if (bet === null) return;
     bombCount = Number($("mines-slider").value);
     balance -= bet;
-    updateBalance();
+    updateBalance(true);
     mineBet = bet;
     safeOpened = 0;
     mineMultiplier = 1;
@@ -1890,7 +1870,7 @@ function clickMine(index, cell) {
     if (safeOpened === 25 - bombCount) {
         const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
         balance += win;
-        updateBalance();
+        updateBalance(true);
         revealAllMines();
         finishMines("ВЫИГРЫШ $" + money(win), "gold");
         notify("success");
@@ -1917,7 +1897,7 @@ function handleMinesAction() {
     if (minesState !== "playing") return;
     const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
     balance += win;
-    updateBalance();
+    updateBalance(true);
     revealAllMines();
     finishMines("ВЫИГРЫШ $" + money(win), "green");
     notify("success");
@@ -1928,14 +1908,8 @@ $("mines-slider").addEventListener("input", () => {
 });
 
 /* CASES LOGIC */
-const CASE_COOLDOWN = 24 * 60 * 60 * 1000;
 let currentActiveCase = null; 
 let caseOpening = false;
-let caseTimer = null;
-
-function getCaseStorageKey(caseId) {
-    return "tucha-game-" + userId + "-case-" + caseId;
-}
 
 function openCase(id, name, price, image, prizes, weights) {
     currentActiveCase = { id, name, price, image, prizes, weights };
@@ -1944,7 +1918,7 @@ function openCase(id, name, price, image, prizes, weights) {
     $("case-detail").classList.add("active");
     
     $("detail-case-title").textContent = name;
-    $("detail-case-price").textContent = price === 0 ? "БЕСПЛАТНО · $0.00" : "$" + price.toFixed(2);
+    $("detail-case-price").textContent = "$" + price.toFixed(2);
     $("case-big-image").src = image;
     
     const prizesGrid = $("prizes-grid");
@@ -1994,32 +1968,9 @@ function updateActiveCaseState() {
         return;
     }
     
-    if (currentActiveCase.id === "daily") {
-        let readyAt = 0;
-        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
-        const remaining = readyAt - Date.now();
-        if (remaining > 0) {
-            button.disabled = true;
-            button.textContent = "КЕЙС УЖЕ ОТКРЫТ";
-            timer.textContent = "Следующее открытие через " + formatTime(remaining);
-        } else {
-            button.disabled = false;
-            button.textContent = "ОТКРЫТЬ БЕСПЛАТНО";
-            timer.textContent = "Кейс доступен прямо сейчас";
-        }
-    } else {
-        button.disabled = false;
-        button.textContent = "ОТКРЫТЬ ЗА $" + currentActiveCase.price.toFixed(2);
-        timer.textContent = "Стоимость списывается с баланса";
-    }
-}
-
-function formatTime(milliseconds) {
-    const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const sec = seconds % 60;
-    return String(hours).padStart(2,"0") + ":" + String(minutes).padStart(2,"0") + ":" + String(sec).padStart(2,"0");
+    button.disabled = false;
+    button.textContent = "ОТКРЫТЬ ЗА $" + currentActiveCase.price.toFixed(2);
+    timer.textContent = "Стоимость списывается с баланса";
 }
 
 function createRoulette(winner, prizesList, weightsList) {
@@ -2069,22 +2020,13 @@ function spinCase(winnerIndex, callback) {
 function openCurrentCase() {
     if (!currentActiveCase || caseOpening) return;
     
-    if (currentActiveCase.id !== "daily") {
-        if (balance < currentActiveCase.price) {
-            alert("Недостаточно средств на балансе!");
-            notify("error");
-            return;
-        }
-        balance -= currentActiveCase.price;
-        updateBalance();
-    } else {
-        let readyAt = 0;
-        try { readyAt = Number(localStorage.getItem(getCaseStorageKey("daily")) || 0); } catch(e) {}
-        if (Date.now() < readyAt) {
-            updateActiveCaseState();
-            return;
-        }
+    if (balance < currentActiveCase.price) {
+        alert("Недостаточно средств на балансе!");
+        notify("error");
+        return;
     }
+    balance -= currentActiveCase.price;
+    updateBalance(true);
     
     caseOpening = true;
     updateActiveCaseState();
@@ -2099,13 +2041,7 @@ function openCurrentCase() {
     
     spinCase(winnerIndex, () => {
         balance = Math.round((balance + winner) * 100) / 100;
-        
-        if (currentActiveCase.id === "daily") {
-            const nextTime = Date.now() + CASE_COOLDOWN;
-            try { localStorage.setItem(getCaseStorageKey("daily"), String(nextTime)); } catch(e) {}
-        }
-        
-        updateBalance();
+        updateBalance(true);
         
         image.style.transform = "scale(1)";
         image.style.opacity = "1";
@@ -2120,13 +2056,7 @@ function openCurrentCase() {
 loadUserData();
 startCrashRound();
 
-caseTimer = setInterval(() => {
-    if ($("case-detail").classList.contains("active")) {
-        updateActiveCaseState();
-    }
-}, 1000);
-
-const preloadImgs = ["./case.png", "./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png"];
+const preloadImgs = ["./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png"];
 preloadImgs.forEach(src => {
     const img = new Image();
     img.src = src;
