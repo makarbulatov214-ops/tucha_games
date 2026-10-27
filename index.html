@@ -1292,21 +1292,26 @@ function notify(type = "success") {
 }
 
 // =========================================================
-// НАСТРОЙКИ И ИНИЦИАЛИЗАЦИЯ
+// ЕДИНСТВЕННОЕ МЕСТО ДЛЯ ССЫЛКИ
 // =========================================================
 const ADMIN_PASSWORD = "tucha2026"; 
 
-// ⬇️ ВАЖНО_ССЫЛКА_СЮДА: ВСТАВЬ СВОЮ ССЫЛКУ МЕЖДУ КАВЫЧЕК НИЖЕ ⬇️
+// 🟢 ВСТАВЬ СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT СЮДА МЕЖДУ КАВЫЧЕК (1 РАЗ!):
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8kOH5iRfSlTkgBLvOunKLw4bhvMyhuqwtn8R0Jf0KAKmlZLpng5qvPm_FH0I4yZXU/exec"; 
 
+// =========================================================
 const userId = telegramUser ? String(telegramUser.id) : "demo_user";
 const userName = telegramUser?.first_name || "Игрок";
 
 let balance = 0.10;
 let bonusCount = 0;
 
+function isDatabaseConnected() {
+    return SCRIPT_URL && !SCRIPT_URL.includes("ВСТАВЬ_СЮДА") && SCRIPT_URL.startsWith("http");
+}
+
 function loadUserData() {
-    if (SCRIPT_URL.includes("")) {
+    if (!isDatabaseConnected()) {
         const storageKey = "tucha-game-" + userId;
         try {
             let saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
@@ -1331,7 +1336,7 @@ function loadUserData() {
 }
 
 function saveUserData() {
-    if (SCRIPT_URL.includes("")) {
+    if (!isDatabaseConnected()) {
         const storageKey = "tucha-game-" + userId;
         try { localStorage.setItem(storageKey, JSON.stringify({ balance, bonusCount })); } catch(e) {}
         return;
@@ -1498,7 +1503,7 @@ function closeAdminPanel() {
 function fetchAllPlayers() {
     const listDiv = $("admin-players-list");
     listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Загрузка игроков из базы...</p>';
-    if (SCRIPT_URL.includes("https://script.google.com/macros/s/AKfycbx8kOH5iRfSlTkgBLvOunKLw4bhvMyhuqwtn8R0Jf0KAKmlZLpng5qvPm_FH0I4yZXU/exec")) {
+    if (!isDatabaseConnected()) {
         listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Укажи ссылку на Google Таблицу в коде (SCRIPT_URL)!</p>';
         return;
     }
@@ -1510,11 +1515,12 @@ function fetchAllPlayers() {
     .then(data => {
         if(data.status === "success") {
             listDiv.innerHTML = '';
-            if (data.players.length === 0) {
+            if (!data.players || data.players.length === 0) {
                 listDiv.innerHTML = '<p style="color: #64748b; text-align: center;">Пока нет игроков в базе.</p>';
                 return;
             }
             data.players.forEach(p => {
+                const bCount = p.bonuscount !== undefined ? p.bonuscount : 0;
                 listDiv.innerHTML += `
                     <div style="background: #f8fafc; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 2px solid rgba(59,130,246,0.08)">
                         <div>
@@ -1522,7 +1528,7 @@ function fetchAllPlayers() {
                             <div style="font-size: 11px; color: #64748b; font-weight: 800;">ID: ${p.userid}</div>
                             <div style="font-size: 13px; color: #16a34a; font-weight: 950; margin-top: 2px;">$${parseFloat(p.balance).toFixed(2)}</div>
                         </div>
-                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${p.bonuscount})" style="background: #2563eb; color: white; border: none; padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 950;">Изменить $</button>
+                        <button onclick="adminEditBalance('${p.userid}', '${p.username}', ${p.balance}, ${bCount})" style="background: #2563eb; color: white; border: none; padding: 7px 14px; border-radius: 9px; font-size: 12px; font-weight: 950;">Изменить $</button>
                     </div>
                 `;
             });
