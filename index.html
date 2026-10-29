@@ -1128,7 +1128,7 @@ nav button.active {
         </div>
 
         <div class="case-grid">
-            <!-- Кейс 1: $0.20 (casecase.png) -->
+            <!-- Кейс 1: $0.20 -->
             <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.05, 0.10, 0.18, 0.30, 0.60, 1.20], [55, 28, 11, 4, 1.8, 0.2])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
                 <div class="case-card-name">Mini Case</div>
@@ -1136,7 +1136,7 @@ nav button.active {
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 2: $0.50 (casego.png) -->
+            <!-- Кейс 2: $0.50 -->
             <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.15, 0.30, 0.45, 0.75, 1.50, 3.00], [52, 30, 12, 4.5, 1.2, 0.3])">
                 <img class="case-card-image" src="./casego.png" alt="Go Case">
                 <div class="case-card-name">Go Case</div>
@@ -1144,7 +1144,7 @@ nav button.active {
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 3: $1.00 (casepro.png) -->
+            <!-- Кейс 3: $1.00 -->
             <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.30, 0.60, 0.90, 1.60, 3.50, 7.00], [54, 28, 11, 5, 1.7, 0.3])">
                 <img class="case-card-image" src="./casepro.png" alt="Pro Case">
                 <div class="case-card-name">Pro Case</div>
@@ -1152,7 +1152,7 @@ nav button.active {
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 4: $1.50 (caser.png) -->
+            <!-- Кейс 4: $1.50 -->
             <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.45, 0.90, 1.35, 2.40, 5.50, 11.00], [53, 29, 11, 4.8, 1.9, 0.3])">
                 <img class="case-card-image" src="./caser.png" alt="Rare Case">
                 <div class="case-card-name">Rare Case</div>
@@ -1160,7 +1160,7 @@ nav button.active {
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 5: $2.00 (casevip.png) -->
+            <!-- Кейс 5: $2.00 -->
             <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.60, 1.20, 1.80, 3.20, 8.00, 18.00], [55, 27, 11, 5, 1.7, 0.3])">
                 <img class="case-card-image" src="./casevip.png" alt="VIP Case">
                 <div class="case-card-name">VIP Case</div>
@@ -1215,7 +1215,7 @@ nav button.active {
             <span id="profile-balance">0.10</span>
         </div>
 
-        <!-- БЛОК ПОПОЛНЕНИЯ ЧЕРЕЗ XROCKET -->
+        <!-- БЛОК ПОПОЛНЕНИЯ ЧЕРЕЗ АДМИНА -->
         <div style="margin-top: 20px; text-align: left; background: #f8fafc; padding: 14px; border-radius: 16px; border: 2px solid rgba(59,130,246,0.1)">
             <label style="display:block; margin-bottom: 6px; font-weight:950; color:#1e1b4b;">💳 Пополнить баланс ($)</label>
             <div style="display: flex; gap: 8px;">
@@ -1296,7 +1296,7 @@ function notify(type = "success") {
 // =========================================================
 const ADMIN_PASSWORD = "tucha2026"; 
 
-// 🟢 ВСТАВЬ СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT СЮДА (1 РАЗ!):
+// 🟢 ТВОЯ ССЫЛКА ИЗ GOOGLE APPS SCRIPT
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvovPzVt3nQADQ4eFQE9ditpsOWRuvx2dekh0sU4uG_BimwMZdLjRCVDko1B1-aqo/exec"; 
 
 // =========================================================
@@ -1365,12 +1365,10 @@ if (telegramUser) {
     }
 }
 
-/* =========================================================
-   XROCKET PAYMENT INTEGRATION
-========================================================= */
-let checkPaymentInterval = null;
-
-async function createCryptoInvoice() {
+// =========================================================
+// НАДЕЖНОЕ ПОПОЛНЕНИЕ ЧЕРЕЗ АДМИНА
+// =========================================================
+function createCryptoInvoice() {
     const amountInput = $("deposit-amount");
     const amount = parseFloat(amountInput.value);
     
@@ -1379,103 +1377,26 @@ async function createCryptoInvoice() {
         return;
     }
 
-    if (!isDatabaseConnected()) {
-        alert("Укажите SCRIPT_URL в коде игры!");
-        return;
-    }
-
-    $("deposit-btn").disabled = true;
-    $("deposit-status").textContent = "Создание счета xRocket...";
-
-    try {
-        haptic("medium");
-
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({
-                action: "create_invoice",
-                amount: amount,
-                username: userName
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success && data.data) {
-            const invoiceId = data.data.id || data.data.invoiceId;
-            const link = data.data.link || data.data.payUrl;
-
-            $("deposit-status").textContent = "Счет создан! Откройте оплату...";
-
-            if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.openTelegramLink(link);
-            } else {
-                window.open(link, '_blank');
-            }
-
-            startCheckingPayment(invoiceId, amount);
-
-        } else {
-            alert("Ошибка создания счета: " + (data.message || "Проверьте токен xRocket в таблице"));
-            $("deposit-btn").disabled = false;
-            $("deposit-status").textContent = "";
-        }
-    } catch (error) {
-        console.error("xRocket Error:", error);
-        alert("Ошибка соединения с сервером.");
-        $("deposit-btn").disabled = false;
-        $("deposit-status").textContent = "";
-    }
-}
-
-function startCheckingPayment(invoiceId, amount) {
-    if (checkPaymentInterval) clearInterval(checkPaymentInterval);
+    haptic("medium");
     
-    let attempts = 0;
-    $("deposit-status").textContent = "Ожидание оплаты...";
-
-    checkPaymentInterval = setInterval(async () => {
-        attempts++;
-        if (attempts > 300) {
-            clearInterval(checkPaymentInterval);
-            $("deposit-btn").disabled = false;
-            $("deposit-status").textContent = "Время ожидания истекло.";
-            return;
-        }
-
-        try {
-            const res = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    action: "check_invoice",
-                    invoice_id: invoiceId
-                })
-            });
-            const data = await res.json();
-
-            if (data.success && data.data) {
-                const status = data.data.status;
-                if (status === 'paid' || status === 'Completed') {
-                    clearInterval(checkPaymentInterval);
-                    finishDeposit(amount);
-                }
-            }
-        } catch (e) {
-            console.log("Проверка статуса...", e);
-        }
-    }, 3000);
-}
-
-function finishDeposit(amount) {
-    balance = Math.round((balance + amount) * 100) / 100;
-    updateBalance(true);
-    $("deposit-btn").disabled = false;
-    $("deposit-status").textContent = "✅ Оплата прошла успешно! +$" + amount.toFixed(2);
-    alert("Оплата получена! Баланс пополнен на $" + amount.toFixed(2));
-    notify("success");
+    // 👇👇 ВСТАВЬ СВОЙ ЮЗЕРНЕЙМ В ТЕЛЕГРАМЕ БЕЗ @ (Например: makar_bulatov) 👇👇
+    const adminUsername = "ymabut"; 
+    
+    const message = `Привет! Хочу пополнить баланс в Tucha Games на $${amount.toFixed(2)}. Мой ник в игре: ${userName}, ID: ${userId}`;
+    
+    const tgLink = `https://t.me/${adminUsername}?text=${encodeURIComponent(message)}`;
+    
+    $("deposit-status").textContent = "Перенаправление к администратору...";
+    
+    if (window.Telegram?.WebApp) {
+        window.Telegram.WebApp.openTelegramLink(tgLink);
+    } else {
+        window.open(tgLink, '_blank');
+    }
+    
     setTimeout(() => {
         $("deposit-status").textContent = "";
-    }, 5000);
+    }, 3000);
 }
 
 /* =========================================================
