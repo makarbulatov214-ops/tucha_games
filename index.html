@@ -159,17 +159,33 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
 }
 .cell:not(:disabled):hover { filter: brightness(1.06); transform: translateY(-3px); border-bottom-width: 6px; }
 .cell:not(:disabled):active { transform: scale(0.92) translateY(3px); border-bottom-width: 2px; }
+
+/* Обновленный фон безопасной ячейки под камень (Minecraft стиль) */
 .cell.safe {
-    background: linear-gradient(145deg, #3b82f6, #1d4ed8); border-bottom: 5px solid #1e3a8a;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+    background: linear-gradient(145deg, #e2e8f0, #cbd5e1); 
+    border-bottom: 5px solid #94a3b8;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
 }
-.cell.revealed-safe { background: linear-gradient(145deg, #cbd5e1, #94a3b8); border-bottom: 3px solid #64748b; opacity: 0.6; }
+.cell.revealed-safe { 
+    background: linear-gradient(145deg, #f1f5f9, #e2e8f0); 
+    border-bottom: 3px solid #cbd5e1; 
+    opacity: 0.7; 
+}
 .cell.bomb {
     background: linear-gradient(145deg, #ef4444, #b91c1c); border-bottom: 5px solid #7f1d1d;
     box-shadow: 0 0 22px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
 }
-.star-svg { width: 78%; height: 78%; filter: drop-shadow(0 3px 8px rgba(234, 179, 8, 0.6)); }
 .bomb-img { width: 74%; height: 74%; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); }
+
+/* Золотая подсветка изумрудной ячейки */
+.cell[data-emerald="true"] img {
+    animation: emeraldPulse 2s infinite alternate;
+}
+@keyframes emeraldPulse {
+    from { filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5)); }
+    to { filter: drop-shadow(0 0 18px rgba(251, 191, 36, 1)); }
+}
+
 .range-row { display: flex; justify-content: space-between; margin: 14px 0; color: #475569; font-size: 14px; font-weight: 900; }
 .range-row span:last-child { color: #2563eb; font-size: 16px; }
 input[type="range"] { width: 100%; accent-color: #2563eb; margin-bottom: 16px; height: 8px; background: #e2e8f0; border-radius: 4px; }
@@ -465,7 +481,7 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
         <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
 
         <div style="margin-top:12px; color:#64748b; text-align:center; font-size:11px; font-weight:800; line-height:1.45;">
-            После проигрыша поле полностью открывается: мины показываются красным, безопасные клетки — золотыми звёздами.
+            После проигрыша поле полностью открывается: мины-криперы показываются красным, руды — своим цветом.
         </div>
     </div>
 </section>
@@ -1042,21 +1058,13 @@ function handleCrashAction() {
 let minesState = "idle", minePositions = [], mineBet = 0, mineMultiplier = 1, safeOpened = 0, bombCount = 3;
 const minesGrid = $("mines-grid");
 
-function starSVG() {
-    return `
-        <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="goldStar" x1="0" y1="0" x2=".8" y2="1">
-                    <stop offset="0%" stop-color="#fff4a3"/>
-                    <stop offset="35%" stop-color="#ffdc45"/>
-                    <stop offset="75%" stop-color="#ffad18"/>
-                    <stop offset="100%" stop-color="#f17b00"/>
-                </linearGradient>
-            </defs>
-            <path d="M50 5 L62 35 L94 37 L70 58 L78 90 L50 73 L22 90 L30 58 L6 37 L38 35 Z" fill="url(#goldStar)" stroke="#ffed91" stroke-width="2.5" stroke-linejoin="round"/>
-        </svg>
-    `;
-}
+const regularOres = [
+    "./ore_coal.png",
+    "./ore_iron.png",
+    "./ore_gold.png",
+    "./ore_redstone.png",
+    "./ore_diamond.png"
+];
 
 function buildMinesGrid() {
     minesGrid.innerHTML = "";
@@ -1077,6 +1085,8 @@ function resetMines() {
     mineMultiplier = 1;
     $("mines-multiplier").style.display = "none";
     $("mine-mult").textContent = "1.00";
+    $("mine-mult").style.color = "";
+    $("mine-mult").style.textShadow = "";
 }
 
 function renderMine(cell) {
@@ -1084,16 +1094,33 @@ function renderMine(cell) {
     cell.innerHTML = "";
     const image = document.createElement("img");
     image.className = "bomb-img";
-    image.src = "./bomb.png";
+    image.src = "./creeper.png";
     image.alt = "Мина";
     image.onerror = () => { cell.innerHTML = "💣"; };
     cell.appendChild(image);
     cell.disabled = true;
 }
 
-function renderSafe(cell, revealed = false) {
+function renderOre(cell, isEmerald = false, revealed = false) {
     cell.className = "cell " + (revealed ? "revealed-safe" : "safe");
-    cell.innerHTML = starSVG();
+    cell.innerHTML = "";
+    const image = document.createElement("img");
+    image.style.width = "75%";
+    image.style.height = "75%";
+    image.style.objectFit = "contain";
+    
+    if (isEmerald) {
+        image.src = "./ore_emerald.png";
+        image.style.filter = "drop-shadow(0 0 12px rgba(251, 191, 36, 0.9))";
+    } else {
+        const randomOre = regularOres[Math.floor(Math.random() * regularOres.length)];
+        image.src = randomOre;
+        image.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,0.2))";
+    }
+    
+    image.onerror = () => { cell.innerHTML = isEmerald ? "💎" : "🪨"; };
+    
+    cell.appendChild(image);
     cell.disabled = true;
 }
 
@@ -1102,7 +1129,7 @@ function revealAllMines() {
         if (minePositions.includes(index)) {
             renderMine(cell);
         } else {
-            renderSafe(cell, true);
+            renderOre(cell, false, true);
         }
     });
 }
@@ -1117,45 +1144,81 @@ function startMines() {
     safeOpened = 0;
     mineMultiplier = 1;
     minePositions = [];
+    
     while (minePositions.length < bombCount) {
         const position = Math.floor(Math.random() * 25);
         if (!minePositions.includes(position)) minePositions.push(position);
     }
+    
     buildMinesGrid();
+    
+    [...minesGrid.children].forEach((cell, index) => {
+        if (!minePositions.includes(index)) {
+            if (Math.random() < 0.07) {
+                cell.dataset.emerald = "true";
+            }
+        }
+    });
+
     minesState = "playing";
     $("mines-state-label").textContent = "Игра идёт";
     $("mines-multiplier").style.display = "block";
     $("mines-slider").disabled = true;
+    
     [...minesGrid.children].forEach(cell => {
         cell.disabled = false;
         cell.onclick = () => { clickMine(Number(cell.dataset.index), cell); };
     });
+    
     $("mines-button").disabled = true;
     $("mines-button").textContent = "ОТКРОЙ КЛЕТКУ";
     $("mines-button").className = "primary";
+    
+    $("mine-mult").style.color = "";
+    $("mine-mult").style.textShadow = "";
+    
     haptic("medium");
 }
 
 function clickMine(index, cell) {
     if (minesState !== "playing" || cell.disabled) return;
+    
     if (minePositions.includes(index)) {
         revealAllMines();
         finishMines("ПРОИГРЫШ −$" + money(mineBet), "red");
         notify("error");
         return;
     }
-    renderSafe(cell);
+    
+    const isEmerald = cell.dataset.emerald === "true";
+    renderOre(cell, isEmerald);
     safeOpened++;
+    
     let probability = 1;
     for (let i = 0; i < safeOpened; i++) {
         probability *= (25 - bombCount - i) / (25 - i);
     }
-    mineMultiplier = .95 / probability;
+    
+    let stepMultiplier = .95 / probability;
+    
+    if (isEmerald) {
+        mineMultiplier = mineMultiplier * 3;
+        $("mine-mult").style.color = "#f59e0b"; 
+        $("mine-mult").style.textShadow = "0 0 15px rgba(251, 191, 36, 0.7)";
+        haptic("heavy");
+    } else {
+        mineMultiplier = stepMultiplier;
+        $("mine-mult").style.color = "";
+        $("mine-mult").style.textShadow = "";
+        haptic();
+    }
+    
     $("mine-mult").textContent = mineMultiplier.toFixed(2);
+    
     $("mines-button").disabled = false;
     $("mines-button").className = "primary green";
     $("mines-button").textContent = "ЗАБРАТЬ $" + money(mineBet * mineMultiplier);
-    haptic();
+    
     if (safeOpened === 25 - bombCount) {
         const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
         balance += win;
@@ -1184,6 +1247,7 @@ function handleMinesAction() {
         return;
     }
     if (minesState !== "playing") return;
+    
     const win = Math.floor(mineBet * mineMultiplier * 100) / 100;
     balance += win;
     updateBalance(true);
