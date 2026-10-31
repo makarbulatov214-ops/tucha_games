@@ -206,7 +206,7 @@ input[type="range"] { width: 100%; accent-color: #2563eb; margin-bottom: 16px; h
     background: #e0e7ff; color: #2563eb; font-size: 15px; font-weight: 950;
 }
 
-/* ===== CASE DETAIL ===== */
+/* ===== CASE DETAIL & MULTI-OPENING ===== */
 .case-detail { display: none; }
 .case-detail.active { display: block; }
 .case-back {
@@ -234,9 +234,26 @@ input[type="range"] { width: 100%; accent-color: #2563eb; margin-bottom: 16px; h
     to { transform: translateY(-8px); }
 }
 
-/* ===== CASE ROULETTE ===== */
+.case-quantity-selector {
+    display: flex; justify-content: center; gap: 8px; margin: 15px 0 10px;
+}
+.qty-btn {
+    width: 36px; height: 36px; border-radius: 10px; border: 2px solid rgba(59, 130, 246, 0.2);
+    background: #f8fafc; color: #2563eb; font-size: 14px; font-weight: 950;
+    transition: all .15s;
+}
+.qty-btn:active { transform: scale(0.9); }
+.qty-btn.active {
+    background: #2563eb; color: #fff; border-color: #2563eb; 
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+#roulettes-container {
+    display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px;
+}
+
 .roulette-wrap {
-    position: relative; overflow: hidden; height: 110px; margin: 8px 0 14px; border-radius: 18px;
+    position: relative; overflow: hidden; height: 90px; margin: 0; border-radius: 18px;
     background: linear-gradient(135deg, #e0e7ff, #ede9fe); border: 2px solid rgba(59, 130, 246, 0.2);
     box-shadow: inset 0 2px 8px rgba(37, 99, 235, 0.08);
 }
@@ -246,12 +263,12 @@ input[type="range"] { width: 100%; accent-color: #2563eb; margin-bottom: 16px; h
 }
 .roulette-strip.spinning { transition: transform 6s cubic-bezier(0.15, 0.75, 0.05, 1); }
 .roulette-prize {
-    flex: 0 0 95px; height: 82px; display: flex; flex-direction: column; align-items: center;
+    flex: 0 0 80px; height: 74px; display: flex; flex-direction: column; align-items: center;
     justify-content: center; gap: 5px; border-radius: 14px; background: #ffffff;
     border: 2px solid rgba(59, 130, 246, 0.15); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
-.prize-icon { font-size: 26px; }
-.prize-value { color: #d97706; font-size: 15px; font-weight: 950; }
+.prize-icon { font-size: 22px; }
+.prize-value { color: #d97706; font-size: 13px; font-weight: 950; }
 .roulette-fade-left, .roulette-fade-right { position: absolute; z-index: 3; top: 0; bottom: 0; width: 75px; pointer-events: none; }
 .roulette-fade-left { left: 0; background: linear-gradient(90deg, #e0e7ff, transparent); }
 .roulette-fade-right { right: 0; background: linear-gradient(270deg, #ede9fe, transparent); }
@@ -317,7 +334,7 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
     .case-card { min-height: 220px; }
     .case-card-image { height: 115px; }
     .case-big-image { height: 215px; }
-    .roulette-prize { flex-basis: 85px; }
+    .roulette-prize { flex-basis: 75px; }
     .prizes-grid { grid-template-columns: repeat(2,1fr); }
 }
 
@@ -462,40 +479,40 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
         </div>
 
         <div class="case-grid">
-            <!-- Кейс 1: $0.20 -->
-            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.05, 0.10, 0.18, 0.30, 0.60, 1.20], [55, 28, 11, 4, 1.8, 0.2])">
+            <!-- Кейс 1: $0.20 (RTP 92.5%) -->
+            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.10, 0.15, 0.25, 0.50, 1.00, 2.00], [50, 30, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
                 <div class="case-card-name">Mini Case</div>
                 <div class="case-card-price">$0.20</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 2: $0.50 -->
-            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.15, 0.30, 0.45, 0.75, 1.50, 3.00], [52, 30, 12, 4.5, 1.2, 0.3])">
+            <!-- Кейс 2: $0.50 (RTP 94.4%) -->
+            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.25, 0.40, 0.60, 1.20, 2.50, 5.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casego.png" alt="Go Case">
                 <div class="case-card-name">Go Case</div>
                 <div class="case-card-price">$0.50</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 3: $1.00 -->
-            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.30, 0.60, 0.90, 1.60, 3.50, 7.00], [54, 28, 11, 5, 1.7, 0.3])">
+            <!-- Кейс 3: $1.00 (RTP 94.9%) -->
+            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.50, 0.80, 1.20, 2.50, 5.00, 10.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casepro.png" alt="Pro Case">
                 <div class="case-card-name">Pro Case</div>
                 <div class="case-card-price">$1.00</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 4: $1.50 -->
-            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.45, 0.90, 1.35, 2.40, 5.50, 11.00], [53, 29, 11, 4.8, 1.9, 0.3])">
+            <!-- Кейс 4: $1.50 (RTP 94%) -->
+            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.75, 1.20, 1.80, 3.50, 7.50, 15.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./caser.png" alt="Rare Case">
                 <div class="case-card-name">Rare Case</div>
                 <div class="case-card-price">$1.50</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 5: $2.00 -->
-            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [0.60, 1.20, 1.80, 3.20, 8.00, 18.00], [55, 27, 11, 5, 1.7, 0.3])">
+            <!-- Кейс 5: $2.00 (RTP 96.7%) -->
+            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [1.00, 1.60, 2.50, 5.00, 10.00, 25.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casevip.png" alt="VIP Case">
                 <div class="case-card-name">VIP Case</div>
                 <div class="case-card-price">$2.00</div>
@@ -514,12 +531,17 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
 
             <img id="case-big-image" class="case-big-image" src="./case.png" alt="Кейс">
 
-            <div id="roulette-wrap" class="roulette-wrap">
-                <div id="roulette-strip" class="roulette-strip"></div>
-                <div class="roulette-fade-left"></div>
-                <div class="roulette-fade-right"></div>
-                <div class="roulette-marker"></div>
+            <!-- Кнопки выбора количества кейсов -->
+            <div class="case-quantity-selector">
+                <button class="qty-btn active" onclick="setCaseQuantity(1)">1</button>
+                <button class="qty-btn" onclick="setCaseQuantity(2)">2</button>
+                <button class="qty-btn" onclick="setCaseQuantity(3)">3</button>
+                <button class="qty-btn" onclick="setCaseQuantity(4)">4</button>
+                <button class="qty-btn" onclick="setCaseQuantity(5)">5</button>
             </div>
+
+            <!-- Контейнер для рулеток -->
+            <div id="roulettes-container"></div>
 
             <div id="case-result" class="case-result">Нажми на кнопку, чтобы открыть кейс</div>
 
@@ -713,7 +735,6 @@ function saveUserData() {
     })
     .then(res => res.json())
     .then(data => {
-        // Сервер добавил оплаченное пополнение к балансу — добавляем и у себя
         const credited = Number(data && data.credited) || 0;
         if (credited > 0) {
             balance = Math.round((balance + credited) * 100) / 100;
@@ -796,7 +817,7 @@ function fetchAllPlayers() {
             });
         }
     }).catch(err => {
-        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базой.</p>';
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базы.</p>';
     });
 }
 
@@ -1178,6 +1199,7 @@ $("mines-slider").addEventListener("input", () => {
 /* CASES LOGIC */
 let currentActiveCase = null;
 let caseOpening = false;
+let caseQuantity = 1; 
 
 function openCase(id, name, price, image, prizes, weights) {
     currentActiveCase = { id, name, price, image, prizes, weights };
@@ -1186,7 +1208,6 @@ function openCase(id, name, price, image, prizes, weights) {
     $("case-detail").classList.add("active");
 
     $("detail-case-title").textContent = name;
-    $("detail-case-price").textContent = "$" + price.toFixed(2);
     $("case-big-image").src = image;
 
     const prizesGrid = $("prizes-grid");
@@ -1201,7 +1222,7 @@ function openCase(id, name, price, image, prizes, weights) {
         `;
     });
 
-    updateActiveCaseState();
+    setCaseQuantity(1); 
     window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
 }
@@ -1212,6 +1233,20 @@ function closeCaseDetail() {
     $("cases-list").style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
     haptic();
+}
+
+function setCaseQuantity(qty) {
+    if (caseOpening) return;
+    caseQuantity = qty;
+    
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (parseInt(btn.textContent) === qty) btn.classList.add('active');
+    });
+    
+    updateActiveCaseState();
+    renderIdleRoulettes();
+    haptic("light");
 }
 
 function chooseWeightedPrize(prizes, weights) {
@@ -1228,97 +1263,150 @@ function updateActiveCaseState() {
     if (!currentActiveCase) return;
     const button = $("case-button");
     const timer = $("case-timer");
+    const totalPrice = currentActiveCase.price * caseQuantity;
+
+    $("detail-case-price").textContent = "1шт = $" + currentActiveCase.price.toFixed(2);
 
     if (caseOpening) {
         button.disabled = true;
         button.textContent = "ОТКРЫВАЕМ...";
-        timer.textContent = "Рулетка запускается...";
+        timer.textContent = "Рулетки запускаются...";
         return;
     }
 
     button.disabled = false;
-    button.textContent = "ОТКРЫТЬ ЗА $" + currentActiveCase.price.toFixed(2);
-    timer.textContent = "Стоимость списывается с баланса";
+    button.textContent = `ОТКРЫТЬ ${caseQuantity} ЗА $${totalPrice.toFixed(2)}`;
+    timer.textContent = "Стоимость спишется с баланса";
 }
 
-function createRoulette(winner, prizesList, weightsList) {
-    const strip = $("roulette-strip");
-    strip.innerHTML = "";
+function createRouletteDOM(winner, prizesList, weightsList) {
+    const wrap = document.createElement("div");
+    wrap.className = "roulette-wrap";
+    wrap.innerHTML = `
+        <div class="roulette-strip"></div>
+        <div class="roulette-fade-left"></div>
+        <div class="roulette-fade-right"></div>
+        <div class="roulette-marker"></div>
+    `;
+    const strip = wrap.querySelector(".roulette-strip");
+    
     const winnerIndex = 28;
     const values = [];
     for (let i = 0; i < 45; i++) {
         values.push(i === winnerIndex ? winner : chooseWeightedPrize(prizesList, weightsList));
     }
+    
+    const maxPrize = Math.max(...prizesList);
     values.forEach(value => {
+        const isTopPrize = value === maxPrize;
         const item = document.createElement("div");
         item.className = "roulette-prize";
+        if (isTopPrize) {
+            item.style.background = "linear-gradient(135deg, #fef08a, #f59e0b)";
+            item.style.borderColor = "#d97706";
+        }
         item.innerHTML = `
-            <div class="prize-icon">💵</div>
-            <div class="prize-value">$${Number(value).toFixed(2)}</div>
+            <div class="prize-icon">${isTopPrize ? '🏆' : '💵'}</div>
+            <div class="prize-value" style="${isTopPrize ? 'color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.2)' : ''}">$${Number(value).toFixed(2)}</div>
         `;
         strip.appendChild(item);
     });
-    return winnerIndex;
+    
+    return { wrap, strip, winnerIndex };
 }
 
-function spinCase(winnerIndex, callback) {
-    const strip = $("roulette-strip");
-    const wrap = $("roulette-wrap");
-    const item = strip.children[0];
-    if (!item) { callback(); return; }
-    const itemWidth = item.getBoundingClientRect().width;
-    const gap = 9;
-    const step = itemWidth + gap;
-    const viewportWidth = wrap.getBoundingClientRect().width;
+function renderIdleRoulettes() {
+    const container = $("roulettes-container");
+    container.innerHTML = "";
+    for (let i = 0; i < caseQuantity; i++) {
+        const { wrap } = createRouletteDOM(currentActiveCase.prizes[0], currentActiveCase.prizes, currentActiveCase.weights);
+        container.appendChild(wrap);
+    }
+}
 
-    const randomOffset = (Math.random() - 0.5) * (itemWidth * 0.5);
-    const centerPosition = (winnerIndex * step) + (itemWidth / 2) + randomOffset;
-    const translate = centerPosition - (viewportWidth / 2);
+function spinCaseElem(strip, wrap, winnerIndex) {
+    return new Promise((resolve) => {
+        const item = strip.children[0];
+        if (!item) { resolve(); return; }
 
-    strip.style.transition = "none";
-    strip.style.transform = "translateX(0px)";
-    strip.getBoundingClientRect();
-    requestAnimationFrame(() => {
-        strip.classList.add("spinning");
-        strip.style.transform = "translateX(-" + translate + "px)";
-        setTimeout(callback, 6200);
+        const itemWidth = item.getBoundingClientRect().width;
+        const gap = 9; 
+        const step = itemWidth + gap;
+        const viewportWidth = wrap.getBoundingClientRect().width;
+
+        const randomOffset = (Math.random() - 0.5) * (itemWidth * 0.7);
+        const centerPosition = (winnerIndex * step) + (itemWidth / 2) + randomOffset;
+        const translate = centerPosition - (viewportWidth / 2);
+
+        strip.style.transition = "none"; 
+        strip.classList.remove("spinning");
+        strip.style.transform = "translateX(0px)";
+        strip.getBoundingClientRect(); 
+
+        requestAnimationFrame(() => {
+            strip.style.transition = ""; 
+            strip.classList.add("spinning");
+            strip.style.transform = `translateX(-${translate}px)`;
+            setTimeout(resolve, 6200); 
+        });
     });
 }
 
-function openCurrentCase() {
+async function openCurrentCase() {
     if (!currentActiveCase || caseOpening) return;
 
-    if (balance < currentActiveCase.price) {
+    const totalCost = currentActiveCase.price * caseQuantity;
+    
+    if (balance < totalCost) {
         alert("Недостаточно средств на балансе!");
         notify("error");
         return;
     }
-    balance -= currentActiveCase.price;
+    
+    balance -= totalCost;
     updateBalance(true);
 
     caseOpening = true;
     updateActiveCaseState();
     $("case-result").textContent = "";
 
-    const winner = chooseWeightedPrize(currentActiveCase.prizes, currentActiveCase.weights);
-    const winnerIndex = createRoulette(winner, currentActiveCase.prizes, currentActiveCase.weights);
-
     const image = $("case-big-image");
     image.style.transform = "scale(1.05)";
     image.style.opacity = ".85";
 
-    spinCase(winnerIndex, () => {
-        balance = Math.round((balance + winner) * 100) / 100;
-        updateBalance(true);
+    const container = $("roulettes-container");
+    container.innerHTML = "";
 
-        image.style.transform = "scale(1)";
-        image.style.opacity = "1";
+    const spinPromises = [];
+    let totalWin = 0;
 
-        $("case-result").textContent = "🎉 ТВОЙ ВЫИГРЫШ: $" + Number(winner).toFixed(2);
-        caseOpening = false;
-        updateActiveCaseState();
-        notify("success");
-    });
+    for (let i = 0; i < caseQuantity; i++) {
+        const winner = chooseWeightedPrize(currentActiveCase.prizes, currentActiveCase.weights);
+        totalWin += winner;
+        
+        const { wrap, strip, winnerIndex } = createRouletteDOM(winner, currentActiveCase.prizes, currentActiveCase.weights);
+        container.appendChild(wrap);
+        
+        const spinPromise = new Promise(resolve => {
+            setTimeout(() => {
+                spinCaseElem(strip, wrap, winnerIndex).then(resolve);
+            }, i * 150); 
+        });
+        spinPromises.push(spinPromise);
+    }
+
+    await Promise.all(spinPromises);
+
+    balance = Math.round((balance + totalWin) * 100) / 100;
+    updateBalance(true);
+
+    image.style.transform = "scale(1)";
+    image.style.opacity = "1";
+
+    $("case-result").textContent = `🎉 ТВОЙ ВЫИГРЫШ: $${Number(totalWin).toFixed(2)}`;
+    caseOpening = false;
+    updateActiveCaseState();
+    notify("success");
 }
 
 /* =========================================================
@@ -1408,7 +1496,6 @@ function createDeposit() {
     });
 }
 
-// Проверяем оплату каждые 10 секунд в течение 10 минут после создания счёта
 function startDepositPolling() {
     depositPollUntil = Date.now() + 10 * 60 * 1000;
     clearInterval(depositPollTimer);
@@ -1434,7 +1521,6 @@ function checkPayments(silent) {
     .then(data => {
         if (data.status !== "success") throw new Error(data.message || "Ошибка сервера");
         if (Number(data.found) > 0) {
-            // Деньги зачислятся в ответе на сохранение баланса
             saveUserData();
         } else if (!silent) {
             setDepositStatus("Оплата пока не найдена. Если вы уже оплатили — подождите минуту.", "wait");
@@ -1460,7 +1546,6 @@ function onDepositCredited(amount) {
     } catch(e) {}
 }
 
-// Игрок вернулся в игру после оплаты — сразу проверяем
 document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") checkPayments(true);
 });
