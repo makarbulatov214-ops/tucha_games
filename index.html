@@ -144,7 +144,7 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
 .status-live { color: #d97706; }
 .status-wait { color: #64748b; }
 
-/* ===== MINES ===== */
+/* ===== MINES (MINECRAFT STYLE) ===== */
 .grid {
     display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0;
     background: linear-gradient(135deg, #e0e7ff, #ede9fe); padding: 14px; border-radius: 22px;
@@ -155,35 +155,36 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
     background: linear-gradient(145deg, #ffffff, #e2e8f0); border-bottom: 5px solid #cbd5e1;
     box-shadow: 0 6px 15px rgba(37, 99, 235, 0.12); color: #0f172a;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
+    overflow: hidden; padding: 0;
     transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
 }
 .cell:not(:disabled):hover { filter: brightness(1.06); transform: translateY(-3px); border-bottom-width: 6px; }
 .cell:not(:disabled):active { transform: scale(0.92) translateY(3px); border-bottom-width: 2px; }
 
-/* Обновленный фон безопасной ячейки под камень (Minecraft стиль) */
+/* Картинка на всю ячейку без отступов */
+.cell img {
+    width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px;
+}
+
 .cell.safe {
     background: linear-gradient(145deg, #e2e8f0, #cbd5e1); 
     border-bottom: 5px solid #94a3b8;
-    box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
 }
 .cell.revealed-safe { 
-    background: linear-gradient(145deg, #f1f5f9, #e2e8f0); 
-    border-bottom: 3px solid #cbd5e1; 
-    opacity: 0.7; 
+    opacity: 0.6; 
 }
 .cell.bomb {
     background: linear-gradient(145deg, #ef4444, #b91c1c); border-bottom: 5px solid #7f1d1d;
-    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+    box-shadow: 0 0 22px rgba(239, 68, 68, 0.5);
 }
-.bomb-img { width: 74%; height: 74%; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3)); }
 
-/* Золотая подсветка изумрудной ячейки */
+/* Золотая пульсация для изумруда */
 .cell[data-emerald="true"] img {
-    animation: emeraldPulse 2s infinite alternate;
+    animation: emeraldPulse 1.5s infinite alternate;
 }
 @keyframes emeraldPulse {
-    from { filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.5)); }
-    to { filter: drop-shadow(0 0 18px rgba(251, 191, 36, 1)); }
+    from { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6)); }
+    to { filter: drop-shadow(0 0 14px rgba(251, 191, 36, 1)); }
 }
 
 .range-row { display: flex; justify-content: space-between; margin: 14px 0; color: #475569; font-size: 14px; font-weight: 900; }
@@ -424,7 +425,7 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
 
 <!-- CRASH TAB -->
 <section id="tab-crash" class="tab active">
-    <div class="history">
+    <div id="crash-history" class="history">
         <span>1.42x</span>
         <span>2.15x</span>
         <span>1.08x</span>
@@ -481,7 +482,7 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
         <button id="mines-button" class="primary" onclick="handleMinesAction()">СТАРТ</button>
 
         <div style="margin-top:12px; color:#64748b; text-align:center; font-size:11px; font-weight:800; line-height:1.45;">
-            После проигрыша поле полностью открывается: мины-криперы показываются красным, руды — своим цветом.
+            В каждой игре гарантированно есть Изумруд (даёт x3 к текущему коэффициенту!). Мины — Криперы.
         </div>
     </div>
 </section>
@@ -495,7 +496,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
         </div>
 
         <div class="case-grid">
-            <!-- Кейс 1: $0.20 (RTP 92.5%) -->
             <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.10, 0.15, 0.25, 0.50, 1.00, 2.00], [50, 30, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
                 <div class="case-card-name">Mini Case</div>
@@ -503,7 +503,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 2: $0.50 (RTP 94.4%) -->
             <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.25, 0.40, 0.60, 1.20, 2.50, 5.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casego.png" alt="Go Case">
                 <div class="case-card-name">Go Case</div>
@@ -511,7 +510,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 3: $1.00 (RTP 94.9%) -->
             <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.50, 0.80, 1.20, 2.50, 5.00, 10.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casepro.png" alt="Pro Case">
                 <div class="case-card-name">Pro Case</div>
@@ -519,7 +517,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 4: $1.50 (RTP 94%) -->
             <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.75, 1.20, 1.80, 3.50, 7.50, 15.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./caser.png" alt="Rare Case">
                 <div class="case-card-name">Rare Case</div>
@@ -527,7 +524,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <!-- Кейс 5: $2.00 (RTP 96.7%) -->
             <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [1.00, 1.60, 2.50, 5.00, 10.00, 25.00], [45, 35, 12, 5, 2.5, 0.5])">
                 <img class="case-card-image" src="./casevip.png" alt="VIP Case">
                 <div class="case-card-name">VIP Case</div>
@@ -547,7 +543,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
 
             <img id="case-big-image" class="case-big-image" src="./case.png" alt="Кейс">
 
-            <!-- Кнопки выбора количества кейсов -->
             <div class="case-quantity-selector">
                 <button class="qty-btn active" onclick="setCaseQuantity(1)">1</button>
                 <button class="qty-btn" onclick="setCaseQuantity(2)">2</button>
@@ -556,7 +551,6 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
                 <button class="qty-btn" onclick="setCaseQuantity(5)">5</button>
             </div>
 
-            <!-- Контейнер для рулеток -->
             <div id="roulettes-container"></div>
 
             <div id="case-result" class="case-result">Нажми на кнопку, чтобы открыть кейс</div>
@@ -694,11 +688,8 @@ function notify(type = "success") {
 // НАСТРОЙКИ (ССЫЛКА НА БАЗУ ДАННЫХ)
 // =========================================================
 const ADMIN_PASSWORD = "tucha2026";
-
-// 🟢 ТВОЯ ССЫЛКА ИЗ GOOGLE APPS SCRIPT
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4L4uFeBBGDb9hxCjAuc6L9YHv-IT77kz6sWEJEYyvKURRojhb8SjjBOS4ViCnK_af/exec";
 
-// =========================================================
 const userId = telegramUser ? String(telegramUser.id) : "demo_user";
 const userName = telegramUser?.first_name || "Игрок";
 
@@ -780,9 +771,7 @@ if (telegramUser) {
     }
 }
 
-/* =========================================================
-   ADMIN PANEL
-========================================================= */
+/* ADMIN PANEL */
 function openAdminPanel() {
     let pass = prompt("Введите пароль администратора:");
     if (pass === ADMIN_PASSWORD) {
@@ -833,7 +822,7 @@ function fetchAllPlayers() {
             });
         }
     }).catch(err => {
-        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базы.</p>';
+        listDiv.innerHTML = '<p style="color: #f87171; text-align: center;">Ошибка соединения с базой.</p>';
     });
 }
 
@@ -867,7 +856,19 @@ function switchTab(name) {
 /* CRASH LOGIC */
 let crashState = "waiting", crashBet = 0, inCrash = false, crashMultiplier = 1, crashTarget = 2;
 let crashTimer = null, crashTick = null, crashRestart = null, simulatedPlayers = [], myCrashResult = null;
+let crashHistoryList = [1.42, 2.15, 1.08, 3.72, 1.31];
 const rocket = $("rocket");
+
+function updateCrashHistoryUI() {
+    const container = $("crash-history");
+    if (!container) return;
+    container.innerHTML = "";
+    crashHistoryList.forEach(val => {
+        const span = document.createElement("span");
+        span.textContent = val.toFixed(2) + "x";
+        container.appendChild(span);
+    });
+}
 
 function createDemoPlayers() {
     const names = ["Саня", "CryptoKing", "Masha", "DarkPro", "Ivan", "TuchaFan", "Lucky"];
@@ -954,7 +955,7 @@ function startCrashRound() {
     $("crash-button").className = "primary";
     $("crash-button").textContent = "СДЕЛАТЬ СТАВКУ";
     createDemoPlayers();
-    let seconds = 5;
+    let seconds = 3;
     $("crash-status").textContent = "СТАРТ ЧЕРЕЗ " + seconds;
     renderCrashPlayers();
     crashTimer = setInterval(() => {
@@ -971,13 +972,24 @@ function startCrashRound() {
 function runCrash() {
     crashState = "flying";
     crashMultiplier = 1;
-    crashTarget = Math.random() < .08 ? 5 + Math.random() * 7 : 1.2 + Math.random() * 3.8;
+    
+    // Новая рандомизация: в 65% случаев краш от 1.05 до 2.0x, в 25% до 4.5x, в 10% до 12x
+    const rand = Math.random();
+    if (rand < 0.65) {
+        crashTarget = 1.05 + Math.random() * 0.95;
+    } else if (rand < 0.90) {
+        crashTarget = 2.0 + Math.random() * 2.5;
+    } else {
+        crashTarget = 4.5 + Math.random() * 7.5;
+    }
+
     $("crash-status").textContent = "1.00x";
     $("crash-button").disabled = !inCrash;
     simulatedPlayers.forEach(player => { player.status = "playing"; });
     renderCrashPlayers();
+    
     crashTick = setInterval(() => {
-        crashMultiplier += .01;
+        crashMultiplier += .02;
         $("crash-status").textContent = crashMultiplier.toFixed(2) + "x";
         if (inCrash) {
             $("crash-button").textContent = "ЗАБРАТЬ $" + money(crashBet * crashMultiplier);
@@ -1001,6 +1013,12 @@ function crashEnd() {
     rocket.style.transform = "rotate(140deg)";
     $("crash-status").textContent = "КРАШ " + crashTarget.toFixed(2) + "x";
     $("crash-status").style.color = "#dc2626";
+
+    // Добавляем результат в историю и оставляем последние 8 штук
+    crashHistoryList.push(Number(crashTarget.toFixed(2)));
+    if (crashHistoryList.length > 8) crashHistoryList.shift();
+    updateCrashHistoryUI();
+
     if (inCrash) {
         inCrash = false;
         myCrashResult = { status: "lost", x: null };
@@ -1054,7 +1072,7 @@ function handleCrashAction() {
     }
 }
 
-/* MINES LOGIC */
+/* MINES LOGIC (MINECRAFT STYLE) */
 let minesState = "idle", minePositions = [], mineBet = 0, mineMultiplier = 1, safeOpened = 0, bombCount = 3;
 const minesGrid = $("mines-grid");
 
@@ -1093,9 +1111,8 @@ function renderMine(cell) {
     cell.className = "cell bomb";
     cell.innerHTML = "";
     const image = document.createElement("img");
-    image.className = "bomb-img";
-    image.src = "./creeper.png";
-    image.alt = "Мина";
+    image.src = "./creeper.png"; // Крипер вместо бомбы
+    image.alt = "Крипер";
     image.onerror = () => { cell.innerHTML = "💣"; };
     cell.appendChild(image);
     cell.disabled = true;
@@ -1105,21 +1122,15 @@ function renderOre(cell, isEmerald = false, revealed = false) {
     cell.className = "cell " + (revealed ? "revealed-safe" : "safe");
     cell.innerHTML = "";
     const image = document.createElement("img");
-    image.style.width = "75%";
-    image.style.height = "75%";
-    image.style.objectFit = "contain";
     
     if (isEmerald) {
         image.src = "./ore_emerald.png";
-        image.style.filter = "drop-shadow(0 0 12px rgba(251, 191, 36, 0.9))";
     } else {
         const randomOre = regularOres[Math.floor(Math.random() * regularOres.length)];
         image.src = randomOre;
-        image.style.filter = "drop-shadow(0 3px 6px rgba(0,0,0,0.2))";
     }
     
     image.onerror = () => { cell.innerHTML = isEmerald ? "💎" : "🪨"; };
-    
     cell.appendChild(image);
     cell.disabled = true;
 }
@@ -1129,7 +1140,7 @@ function revealAllMines() {
         if (minePositions.includes(index)) {
             renderMine(cell);
         } else {
-            renderOre(cell, false, true);
+            renderOre(cell, cell.dataset.emerald === "true", true);
         }
     });
 }
@@ -1152,13 +1163,18 @@ function startMines() {
     
     buildMinesGrid();
     
-    [...minesGrid.children].forEach((cell, index) => {
-        if (!minePositions.includes(index)) {
-            if (Math.random() < 0.07) {
-                cell.dataset.emerald = "true";
-            }
+    // Гарантированный Изумруд в одной из безопасных клеток
+    const safeIndices = [];
+    for(let i=0; i<25; i++) {
+        if(!minePositions.includes(i)) safeIndices.push(i);
+    }
+    if(safeIndices.length > 0) {
+        const emeraldIndex = safeIndices[Math.floor(Math.random() * safeIndices.length)];
+        const targetCell = minesGrid.children[emeraldIndex];
+        if(targetCell) {
+            targetCell.dataset.emerald = "true";
         }
-    });
+    }
 
     minesState = "playing";
     $("mines-state-label").textContent = "Игра идёт";
@@ -1473,9 +1489,7 @@ async function openCurrentCase() {
     notify("success");
 }
 
-/* =========================================================
-   DEPOSIT (CRYPTO BOT)
-========================================================= */
+/* DEPOSIT (CRYPTO BOT) */
 const DEPOSIT_MIN = 1;
 const DEPOSIT_MAX = 1000;
 let depositPollTimer = null;
@@ -1616,9 +1630,10 @@ document.addEventListener("visibilitychange", () => {
 try { tg?.onEvent?.("activated", () => checkPayments(true)); } catch(e) {}
 
 loadUserData();
+updateCrashHistoryUI();
 startCrashRound();
 
-const preloadImgs = ["./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png"];
+const preloadImgs = ["./casecase.png", "./casego.png", "./casepro.png", "./caser.png", "./casevip.png", "./creeper.png", "./ore_emerald.png"];
 preloadImgs.forEach(src => {
     const img = new Image();
     img.src = src;
