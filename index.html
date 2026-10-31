@@ -161,9 +161,9 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
 .cell:not(:disabled):hover { filter: brightness(1.06); transform: translateY(-3px); border-bottom-width: 6px; }
 .cell:not(:disabled):active { transform: scale(0.92) translateY(3px); border-bottom-width: 2px; }
 
-/* Картинка на всю ячейку без отступов */
+/* Картинки занимают 100% ячейки полностью, со скругленными краями */
 .cell img {
-    width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px;
+    width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 14px;
 }
 
 .cell.safe {
@@ -171,7 +171,7 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
     border-bottom: 5px solid #94a3b8;
 }
 .cell.revealed-safe { 
-    opacity: 0.6; 
+    opacity: 0.65; 
 }
 .cell.bomb {
     background: linear-gradient(145deg, #ef4444, #b91c1c); border-bottom: 5px solid #7f1d1d;
@@ -184,7 +184,7 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
 }
 @keyframes emeraldPulse {
     from { filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6)); }
-    to { filter: drop-shadow(0 0 14px rgba(251, 191, 36, 1)); }
+    to { filter: drop-shadow(0 0 16px rgba(251, 191, 36, 1)); }
 }
 
 .range-row { display: flex; justify-content: space-between; margin: 14px 0; color: #475569; font-size: 14px; font-weight: 900; }
@@ -496,35 +496,36 @@ nav button.active { color: #2563eb; filter: drop-shadow(0 2px 6px rgba(37, 99, 2
         </div>
 
         <div class="case-grid">
-            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.10, 0.15, 0.25, 0.50, 1.00, 2.00], [50, 30, 12, 5, 2.5, 0.5])">
+            <!-- Повышенный RTP во всех кейсах -->
+            <div class="case-card available" onclick="openCase('paid_02', 'Mini Case', 0.20, './casecase.png', [0.10, 0.15, 0.25, 0.50, 1.00, 2.00], [45, 28, 15, 7, 3.5, 1.5])">
                 <img class="case-card-image" src="./casecase.png" alt="Mini Case">
                 <div class="case-card-name">Mini Case</div>
                 <div class="case-card-price">$0.20</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.25, 0.40, 0.60, 1.20, 2.50, 5.00], [45, 35, 12, 5, 2.5, 0.5])">
+            <div class="case-card available" onclick="openCase('paid_05', 'Go Case', 0.50, './casego.png', [0.25, 0.40, 0.60, 1.20, 2.50, 5.00], [42, 30, 15, 8, 4, 2])">
                 <img class="case-card-image" src="./casego.png" alt="Go Case">
                 <div class="case-card-name">Go Case</div>
                 <div class="case-card-price">$0.50</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.50, 0.80, 1.20, 2.50, 5.00, 10.00], [45, 35, 12, 5, 2.5, 0.5])">
+            <div class="case-card available" onclick="openCase('paid_10', 'Pro Case', 1.00, './casepro.png', [0.50, 0.80, 1.20, 2.50, 5.00, 10.00], [42, 30, 15, 8, 4, 2])">
                 <img class="case-card-image" src="./casepro.png" alt="Pro Case">
                 <div class="case-card-name">Pro Case</div>
                 <div class="case-card-price">$1.00</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.75, 1.20, 1.80, 3.50, 7.50, 15.00], [45, 35, 12, 5, 2.5, 0.5])">
+            <div class="case-card available" onclick="openCase('paid_15', 'Rare Case', 1.50, './caser.png', [0.75, 1.20, 1.80, 3.50, 7.50, 15.00], [42, 30, 15, 8, 4, 2])">
                 <img class="case-card-image" src="./caser.png" alt="Rare Case">
                 <div class="case-card-name">Rare Case</div>
                 <div class="case-card-price">$1.50</div>
                 <div class="case-card-arrow">›</div>
             </div>
 
-            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [1.00, 1.60, 2.50, 5.00, 10.00, 25.00], [45, 35, 12, 5, 2.5, 0.5])">
+            <div class="case-card available" onclick="openCase('paid_20', 'VIP Case', 2.00, './casevip.png', [1.00, 1.60, 2.50, 5.00, 10.00, 25.00], [40, 30, 16, 9, 4.5, 2.5])">
                 <img class="case-card-image" src="./casevip.png" alt="VIP Case">
                 <div class="case-card-name">VIP Case</div>
                 <div class="case-card-price">$2.00</div>
@@ -973,7 +974,6 @@ function runCrash() {
     crashState = "flying";
     crashMultiplier = 1;
     
-    // Новая рандомизация: в 65% случаев краш от 1.05 до 2.0x, в 25% до 4.5x, в 10% до 12x
     const rand = Math.random();
     if (rand < 0.65) {
         crashTarget = 1.05 + Math.random() * 0.95;
@@ -1014,7 +1014,6 @@ function crashEnd() {
     $("crash-status").textContent = "КРАШ " + crashTarget.toFixed(2) + "x";
     $("crash-status").style.color = "#dc2626";
 
-    // Добавляем результат в историю и оставляем последние 8 штук
     crashHistoryList.push(Number(crashTarget.toFixed(2)));
     if (crashHistoryList.length > 8) crashHistoryList.shift();
     updateCrashHistoryUI();
@@ -1111,7 +1110,7 @@ function renderMine(cell) {
     cell.className = "cell bomb";
     cell.innerHTML = "";
     const image = document.createElement("img");
-    image.src = "./creeper.png"; // Крипер вместо бомбы
+    image.src = "./creeper.png";
     image.alt = "Крипер";
     image.onerror = () => { cell.innerHTML = "💣"; };
     cell.appendChild(image);
@@ -1163,7 +1162,6 @@ function startMines() {
     
     buildMinesGrid();
     
-    // Гарантированный Изумруд в одной из безопасных клеток
     const safeIndices = [];
     for(let i=0; i<25; i++) {
         if(!minePositions.includes(i)) safeIndices.push(i);
