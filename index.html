@@ -161,7 +161,7 @@ input[type="number"]:focus { border-color: #2563eb; background: #ffffff; box-sha
 .cell:not(:disabled):hover { filter: brightness(1.06); transform: translateY(-3px); border-bottom-width: 6px; }
 .cell:not(:disabled):active { transform: scale(0.92) translateY(3px); border-bottom-width: 2px; }
 
-/* ИСПРАВЛЕНИЕ: Картинка заполняет всю кнопку целиком без отступов */
+/* Картинка заполняет ячейку полностью без отступов */
 .cell img {
     width: 100%; height: 100%; object-fit: fill; display: block; border-radius: inherit;
 }
@@ -1071,6 +1071,7 @@ function handleCrashAction() {
 
 /* MINES LOGIC (MINECRAFT STYLE) */
 let minesState = "idle", minePositions = [], mineBet = 0, mineMultiplier = 1, safeOpened = 0, bombCount = 3;
+let emeraldMultiplierApplied = false; // Флаг для отслеживания бонуса изумруда
 const minesGrid = $("mines-grid");
 
 const regularOres = [
@@ -1098,6 +1099,7 @@ function resetMines() {
     minePositions = [];
     safeOpened = 0;
     mineMultiplier = 1;
+    emeraldMultiplierApplied = false;
     $("mines-multiplier").style.display = "none";
     $("mine-mult").textContent = "1.00";
     $("mine-mult").style.color = "";
@@ -1151,6 +1153,7 @@ function startMines() {
     mineBet = bet;
     safeOpened = 0;
     mineMultiplier = 1;
+    emeraldMultiplierApplied = false;
     minePositions = [];
     
     while (minePositions.length < bombCount) {
@@ -1213,11 +1216,17 @@ function clickMine(index, cell) {
     
     let stepMultiplier = .95 / probability;
     
+    // Если игрок открывает изумруд или ранее уже открыл его — применяем множитель x3 к базовому значению текущего шага
     if (isEmerald) {
-        mineMultiplier = mineMultiplier * 3;
+        emeraldMultiplierApplied = true;
+    }
+    
+    if (emeraldMultiplierApplied) {
+        mineMultiplier = stepMultiplier * 3;
         $("mine-mult").style.color = "#f59e0b"; 
         $("mine-mult").style.textShadow = "0 0 15px rgba(251, 191, 36, 0.7)";
-        haptic("heavy");
+        if (isEmerald) haptic("heavy");
+        else haptic();
     } else {
         mineMultiplier = stepMultiplier;
         $("mine-mult").style.color = "";
